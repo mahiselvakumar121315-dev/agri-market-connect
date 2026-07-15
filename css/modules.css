@@ -1,0 +1,1220 @@
+/* Specific modules styling: Marketplace, Farmer Hub, Buyer Portal, Admin panel, Chatbot */
+
+/* 1. MARKETPLACE / CROP CATALOG */
+.marketplace-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.filter-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary-glow);
+}
+
+.filter-btn.active {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.crop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.crop-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-speed), border-color var(--transition-speed);
+}
+
+.crop-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-glow);
+    box-shadow: var(--shadow-lg);
+}
+
+.crop-image-wrapper {
+    position: relative;
+    height: 180px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.crop-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.crop-badge-overlay {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.crop-organic-tag {
+    background-color: #10b981;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.crop-price-tag {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background-color: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(4px);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.crop-card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-grow: 1;
+}
+
+.crop-card-title {
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+}
+
+.crop-card-category {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.farmer-info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 12px;
+    margin-top: 4px;
+}
+
+.farmer-info-row i {
+    color: var(--primary);
+}
+
+.crop-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.crop-card-actions button {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 0.8rem;
+    border-radius: 10px;
+}
+
+/* 2. FARMER HUB MODULE */
+.iot-status-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: rgba(16, 185, 129, 0.08);
+    border: 1px solid var(--border-glow);
+    padding: 12px 18px;
+    border-radius: 16px;
+}
+
+.iot-icon {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.iot-details {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.iot-lbl {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.iot-val {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.iot-irrigation {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.stat-icon.green { background-color: rgba(16, 185, 129, 0.1); color: var(--primary); }
+.stat-icon.blue { background-color: rgba(99, 102, 241, 0.1); color: var(--secondary); }
+.stat-icon.orange { background-color: rgba(245, 158, 11, 0.1); color: var(--warning); }
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    margin: 2px 0;
+}
+
+.stat-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.stat-sub.positive {
+    color: var(--primary) !important;
+}
+
+.farmer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 24px;
+}
+
+.farmer-left-panel, .farmer-right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sec-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* AI Crop Disease Scanner Layout */
+.disease-scanner-box {
+    margin-top: 10px;
+}
+
+.scanner-dropzone {
+    width: 100%;
+    height: 180px;
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(15, 23, 42, 0.3);
+    transition: all var(--transition-speed);
+}
+
+.scanner-dropzone:hover {
+    border-color: var(--primary);
+    background-color: rgba(16, 185, 129, 0.02);
+}
+
+.scanner-icon {
+    font-size: 2rem;
+    color: var(--text-muted);
+}
+
+.scanner-dropzone p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.scan-laser-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #10b981, transparent);
+    box-shadow: 0 0 10px var(--primary);
+    animation: scanning 2.5s infinite linear;
+    z-index: 5;
+}
+
+@keyframes scanning {
+    0% { top: 0%; }
+    50% { top: 100%; }
+    100% { top: 0%; }
+}
+
+.disease-scanner-box canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.disease-results {
+    background-color: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 15px;
+}
+
+.disease-results .result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.disease-results .result-header h4 {
+    font-size: 1rem;
+    color: var(--danger);
+}
+
+.conf-badge {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: var(--danger);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.diagnosis-desc {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 14px;
+}
+
+.solution-card {
+    background-color: rgba(16, 185, 129, 0.08);
+    border: 1px dashed var(--primary);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 14px;
+}
+
+.solution-card h5 {
+    color: var(--primary);
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.solution-card p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+/* AI Price Predictions selectors */
+.predictor-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+}
+
+.predictor-selector select {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.prediction-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.predict-card {
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.predict-card .lbl {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.predict-card h4 {
+    font-size: 0.95rem;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.predict-card .change {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+/* 3. BUYER PORTAL MODULE */
+.buyer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 24px;
+}
+
+.buyer-left-panel, .buyer-right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* GPS Map simulation container */
+.gps-map-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background-color: #0b0f19;
+}
+
+#gps-map-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.map-overlay-controls {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+.map-btn {
+    background-color: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-speed);
+}
+
+.map-btn.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* E-Negotiation Desk Styles */
+.negotiation-target-crop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+}
+
+.negotiation-target-crop select {
+    background-color: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.negotiation-box {
+    display: flex;
+    flex-direction: column;
+    height: 380px;
+}
+
+.chat-display {
+    flex-grow: 1;
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.chat-bubble {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    position: relative;
+}
+
+.chat-bubble .chat-time {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 4px;
+}
+
+.chat-bubble.farmer-msg {
+    align-self: flex-start;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border-bottom-left-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.chat-bubble.buyer-msg {
+    align-self: flex-end;
+    background-color: var(--primary);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-input-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input-bar input {
+    flex-grow: 1;
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+}
+
+.chat-input-bar button {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+}
+
+.negotiation-quick-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quick-btn {
+    flex-grow: 1;
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--primary);
+    border: 1px solid var(--primary-glow);
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.quick-btn:hover:not(:disabled) {
+    background-color: var(--primary);
+    color: white;
+}
+
+.quick-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.quick-btn.secondary {
+    background-color: transparent;
+    color: var(--text-muted);
+    border-color: var(--border-color);
+}
+
+.quick-btn.secondary:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Cart Checkout design */
+.cart-items-container {
+    max-height: 180px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+}
+
+.cart-item-row .info h5 {
+    font-size: 0.85rem;
+}
+
+.cart-item-row .info p {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+}
+
+.cart-item-row .qty-price {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.cart-item-row .price {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.cart-item-row .remove-item-btn {
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+}
+
+.empty-msg {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 20px 0;
+}
+
+.cart-total-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 14px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+}
+
+.total-row strong {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+/* Order Logistics Delivery Tracker */
+.order-tracking-card {
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 10px;
+}
+
+.tracking-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+}
+
+.tracking-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 20px 0;
+}
+
+.tracking-steps::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background-color: var(--border-color);
+    z-index: 1;
+}
+
+.step-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    position: relative;
+    z-index: 2;
+}
+
+.step-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--bg-surface);
+    border: 2px solid var(--border-color);
+}
+
+.step-node.completed .step-dot {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 8px var(--primary-glow);
+}
+
+.step-node.active .step-dot {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    box-shadow: 0 0 8px var(--secondary-glow);
+}
+
+.step-node.completed span, .step-node.active span {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.driver-info-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+}
+
+.driver-lbl {
+    color: var(--text-muted);
+}
+
+/* 4. ADMIN CONTROL PANEL MODULE */
+.admin-charts-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.2fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-panel {
+    min-height: 280px;
+}
+
+.admin-chart-box {
+    margin-top: 15px;
+    position: relative;
+    width: 100%;
+}
+
+.admin-chart-box canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.pie-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.75rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.verification-list, .complaints-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.verification-card, .complaint-card {
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.card-header-row h4 {
+    font-size: 0.9rem;
+}
+
+.card-body-details {
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.card-actions-row {
+    display: flex;
+    gap: 10px;
+}
+
+.card-actions-row button {
+    flex-grow: 1;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* FLOATING AI ASSISTANT CHATBOT MODULE */
+.chatbot-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.chatbot-trigger {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.chatbot-trigger:hover {
+    transform: scale(1.08) rotate(5deg);
+    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.6);
+}
+
+.chatbot-trigger .tooltip {
+    position: absolute;
+    right: 75px;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: var(--shadow-sm);
+    transition: opacity var(--transition-speed);
+}
+
+.chatbot-trigger:hover .tooltip {
+    opacity: 1;
+}
+
+.chatbot-window {
+    position: absolute;
+    bottom: 75px;
+    right: 0;
+    width: 360px;
+    height: 480px;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: bottom right;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+
+.chatbot-window.hidden {
+    display: none;
+}
+
+.chatbot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background-color: rgba(15, 23, 42, 0.6);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.bot-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bot-info i {
+    font-size: 1.25rem;
+    color: var(--primary);
+}
+
+.bot-info h4 {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.bot-info .status {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.close-chat-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.close-chat-btn:hover {
+    color: var(--danger);
+}
+
+.chatbot-lang-selector {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.lang-btn {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.lang-btn.active {
+    color: var(--primary);
+    background-color: rgba(16, 185, 129, 0.05);
+    border-bottom: 2px solid var(--primary);
+}
+
+.chatbot-messages {
+    flex-grow: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chatbot-messages .bot-bubble, .chatbot-messages .user-bubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.chatbot-messages .bot-bubble {
+    align-self: flex-start;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-bottom-left-radius: 4px;
+}
+
+.chatbot-messages .user-bubble {
+    align-self: flex-end;
+    background-color: var(--primary);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.chatbot-quick-prompts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 16px;
+    background-color: rgba(15, 23, 42, 0.2);
+    border-top: 1px solid var(--border-color);
+}
+
+.prompt-pill {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.prompt-pill:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.chatbot-input-bar {
+    display: flex;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border-color);
+    gap: 8px;
+    background-color: rgba(15, 23, 42, 0.6);
+}
+
+.chatbot-input-bar input {
+    flex-grow: 1;
+    background-color: var(--bg-app);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+.chatbot-input-bar button {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+/* BLOCKCHAIN TIMELINE LAYOUT */
+.blockchain-summary-card {
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.blockchain-summary-card .summary-details {
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.65rem;
+    color: var(--primary);
+}
+
+.svg-qr {
+    width: 65px;
+    height: 65px;
+    background-color: white;
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.blockchain-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    padding-left: 24px;
+}
+
+.blockchain-timeline::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 7px;
+    width: 2px;
+    background-color: var(--border-color);
+}
+
+.bc-step {
+    position: relative;
+}
+
+.bc-step-icon {
+    position: absolute;
+    left: -24px;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--bg-surface);
+    border: 3px solid var(--primary);
+    box-shadow: 0 0 6px var(--primary-glow);
+}
+
+.bc-step-card {
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.bc-step-card h5 {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.bc-step-card .time {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.bc-step-card .hash {
+    font-family: monospace;
+    font-size: 0.65rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: var(--secondary);
+    display: block;
+    word-break: break-all;
+}
+
+/* Logistics modal savings tag */
+.carbon-saving-tag {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+.logistics-calculation-card {
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+.calc-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+.calc-row.total {
+    margin-top: 8px;
+    font-size: 1rem;
+}

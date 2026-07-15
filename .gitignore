@@ -1,0 +1,8 @@
+# Agri Market Connect - Git Ignore
+.DS_Store
+Thumbs.db
+*.log
+*.env
+.env.local
+node_modules/
+.vscode/settings.json

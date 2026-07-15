@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri Market Connect - Smart Digital Agri-Marketplace</title>
+    
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Style Sheets -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/modules.css">
+</head>
+<body class="dark-theme">
+    
+    <!-- Main App Container -->
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>AgriMarket</h1>
+                    <span>Connect</span>
+                </div>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#marketplace" class="nav-item active" data-tab="marketplace">
+                    <i class="fa-solid fa-store"></i>
+                    <span>Marketplace</span>
+                </a>
+                <a href="#farmer" class="nav-item" data-tab="farmer" id="nav-farmer">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                    <span>Farmer Hub</span>
+                </a>
+                <a href="#buyer" class="nav-item" data-tab="buyer" id="nav-buyer">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span>Buyer Portal</span>
+                </a>
+                <a href="#admin" class="nav-item" data-tab="admin" id="nav-admin">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Admin Panel</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile-badge">
+                    <div class="avatar" id="current-user-avatar">F</div>
+                    <div class="user-details">
+                        <p class="name" id="current-user-name">Rajesh Kumar</p>
+                        <p class="role" id="current-user-role">Farmer Mode</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Screen -->
+        <main class="main-content">
+            
+            <!-- Header bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="search-bar-container">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="marketplace-search" placeholder="Search crops, farmers, locations...">
+                        <button class="voice-search-btn" id="voice-search-trigger" title="Voice Search (English / Tamil)">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <!-- Voice Search Glowing Indicator -->
+                    <div class="voice-status-pill hidden" id="voice-status">
+                        <span class="pulse-dot"></span>
+                        <span id="voice-status-text">Listening... (Speak now)</span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- User Profile Picker -->
+                    <div class="view-selector">
+                        <label for="role-select"><i class="fa-solid fa-user-gear"></i> View As:</label>
+                        <select id="role-select">
+                            <option value="farmer">Farmer (Rajesh)</option>
+                            <option value="buyer">Buyer (Hotel Fresh & Co)</option>
+                            <option value="admin">Admin Dashboard</option>
+                        </select>
+                    </div>
+
+                    <!-- Weather Mini Widget -->
+                    <div class="header-weather-widget" id="header-weather">
+                        <i class="fa-solid fa-cloud-sun-rain weather-icon"></i>
+                        <div class="weather-info">
+                            <span class="temp">29°C</span>
+                            <span class="desc">Rain expected</span>
+                        </div>
+                    </div>
+
+                    <!-- Wallet Card -->
+                    <div class="header-wallet">
+                        <i class="fa-solid fa-wallet"></i>
+                        <div class="wallet-info">
+                            <span class="label">Wallet Balance</span>
+                            <span class="value" id="wallet-balance-display">₹42,500.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Notification Indicator -->
+                    <div class="notification-bell" id="notification-trigger">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge" id="notification-count">3</span>
+                        
+                        <!-- Notifications Dropdown -->
+                        <div class="notifications-dropdown hidden" id="notifications-dropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <button id="mark-all-read">Clear All</button>
+                            </div>
+                            <div class="dropdown-list" id="notifications-list">
+                                <!-- Dynamic notifications -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Module Containers -->
+            <div class="module-wrapper">
+                
+                <!-- 1. MARKETPLACE MODULE -->
+                <section id="marketplace" class="tab-content active">
+                    <div class="module-header">
+                        <div>
+                            <h2>Digital Crop Marketplace</h2>
+                            <p>Direct trading from farmers. Zero commission. Transparent prices.</p>
+                        </div>
+                        <div class="marketplace-filters">
+                            <button class="filter-btn active" data-filter="all">All Crops</button>
+                            <button class="filter-btn" data-filter="organic">Organic</button>
+                            <button class="filter-btn" data-filter="fresh">Just Harvested</button>
+                            <button class="filter-btn" data-filter="nearby">Nearby (&lt; 10km)</button>
+                            <button class="filter-btn" data-filter="vegetables">Vegetables</button>
+                            <button class="filter-btn" data-filter="grains">Grains</button>
+                        </div>
+                    </div>
+
+                    <div class="crop-grid" id="crop-catalog">
+                        <!-- Dynamic crop cards generated here -->
+                    </div>
+                </section>
+
+                <!-- 2. FARMER HUB MODULE -->
+                <section id="farmer" class="tab-content">
+                    <div class="module-header">
+                        <div>
+                            <h2>Farmer Dashboard</h2>
+                            <p>Manage your crop inventory, predict prices, and scan for crop health.</p>
+                        </div>
+                        <!-- Soil IoT Quick Card -->
+                        <div class="iot-status-card">
+                            <div class="iot-icon"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="iot-details">
+                                <span class="iot-lbl">IoT Soil Moisture</span>
+                                <span class="iot-val" id="soil-moisture-val">42% (Optimal)</span>
+                                <span class="iot-irrigation" id="irrigation-suggestion">Next Watering: In 14 hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Farmer Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon green"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Total Earnings</span>
+                                <h3 class="stat-value">₹1,84,200</h3>
+                                <span class="stat-sub positive"><i class="fa-solid fa-arrow-trend-up"></i> +12% this month</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blue"><i class="fa-solid fa-box-archive"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Active Listings</span>
+                                <h3 class="stat-value" id="farmer-active-listings-count">3 Crops</h3>
+                                <span class="stat-sub">420kg total volume</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Pending Orders</span>
+                                <h3 class="stat-value" id="farmer-pending-orders-count">2 Orders</h3>
+                                <span class="stat-sub warning-color">Awaiting logistics booking</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="farmer-grid">
+                        <!-- Left Panel: Upload Crop & Health AI -->
+                        <div class="farmer-left-panel">
+                            
+                            <!-- Add Crop Listing -->
+                            <div class="glass-panel upload-crop-panel">
+                                <h3><i class="fa-solid fa-circle-plus"></i> List Your Crop</h3>
+                                <form id="add-crop-form" class="standard-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="crop-name">Crop Name</label>
+                                            <input type="text" id="crop-name" placeholder="e.g. Premium Sona Masuri Rice" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="crop-category">Category</label>
+                                            <select id="crop-category" required>
+                                                <option value="grains">Grains</option>
+                                                <option value="vegetables">Vegetables</option>
+                                                <option value="fruits">Fruits</option>
+                                                <option value="spices">Spices</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="crop-price">Price (per kg)</label>
+                                            <input type="number" id="crop-price" placeholder="₹ per kg" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="crop-quantity">Quantity (kg)</label>
+                                            <input type="number" id="crop-quantity" placeholder="Available Quantity" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="crop-harvest-date">Harvest Date</label>
+                                            <input type="date" id="crop-harvest-date" required>
+                                        </div>
+                                        <div class="form-group checkbox-group">
+                                            <label class="checkbox-container">
+                                                <input type="checkbox" id="crop-organic">
+                                                <span class="checkmark"></span>
+                                                Organic Certified Crop
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="crop-image">Upload Crop Image (Simulated QC Analysis)</label>
+                                        <input type="file" id="crop-image" accept="image/*">
+                                    </div>
+
+                                    <button type="submit" class="primary-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Publish Listing</button>
+                                </form>
+                            </div>
+
+                            <!-- AI Disease Scanner -->
+                            <div class="glass-panel disease-detector-panel">
+                                <div class="panel-header">
+                                    <h3><i class="fa-solid fa-virus-covid"></i> AI Crop Disease & Quality Detector</h3>
+                                    <span class="premium-badge">TensorFlow Lite</span>
+                                </div>
+                                <p class="sec-desc">Upload a picture of an unhealthy crop leaf or fruit. The AI will scan it, detect any infection, and recommend solutions.</p>
+                                
+                                <div class="disease-scanner-box">
+                                    <div class="scanner-dropzone" id="disease-dropzone">
+                                        <i class="fa-solid fa-camera scanner-icon"></i>
+                                        <p>Drag crop image or click to capture</p>
+                                        <input type="file" id="disease-file-input" accept="image/*" class="hidden">
+                                        
+                                        <!-- Simulated Scanning Laser overlay -->
+                                        <div class="scan-laser-line hidden" id="scanner-laser"></div>
+                                        <canvas class="hidden" id="scanner-canvas"></canvas>
+                                    </div>
+
+                                    <div class="disease-results hidden" id="disease-results-box">
+                                        <div class="result-header">
+                                            <h4 id="disease-name">Detecting...</h4>
+                                            <span class="conf-badge" id="disease-confidence">92% Match</span>
+                                        </div>
+                                        <div class="result-body">
+                                            <p class="diagnosis-desc" id="disease-description"></p>
+                                            <div class="solution-card">
+                                                <h5><i class="fa-solid fa-hand-holding-medical"></i> Suggested Solution:</h5>
+                                                <p id="disease-treatment"></p>
+                                            </div>
+                                            <button class="text-btn" id="reset-scanner-btn"><i class="fa-solid fa-rotate-left"></i> Scan Another Leaf</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: AI Predictions & Active Orders -->
+                        <div class="farmer-right-panel">
+                            
+                            <!-- AI Price Trends -->
+                            <div class="glass-panel price-predictions-panel">
+                                <div class="panel-header">
+                                    <h3><i class="fa-solid fa-chart-line"></i> AI Price Trend Predictor</h3>
+                                    <span class="premium-badge">Demand Forecasting Model</span>
+                                </div>
+                                <p class="sec-desc">Understand tomorrow's, weekly, and monthly price directions based on historical data.</p>
+                                
+                                <div class="predictor-selector">
+                                    <label for="predict-crop-select">Select Crop:</label>
+                                    <select id="predict-crop-select">
+                                        <option value="rice">Sona Masuri Rice</option>
+                                        <option value="tomato">Organic Tomatoes</option>
+                                        <option value="onion">Nashik Red Onions</option>
+                                        <option value="turmeric">Salem Turmeric</option>
+                                    </select>
+                                </div>
+
+                                <div class="prediction-cards">
+                                    <div class="predict-card">
+                                        <span class="lbl">Tomorrow</span>
+                                        <h4 id="predict-tomorrow">₹54.50 <i class="fa-solid fa-caret-up text-success"></i></h4>
+                                        <span class="change text-success">+1.5%</span>
+                                    </div>
+                                    <div class="predict-card">
+                                        <span class="lbl">Weekly Avg</span>
+                                        <h4 id="predict-weekly">₹56.00 <i class="fa-solid fa-caret-up text-success"></i></h4>
+                                        <span class="change text-success">+3.2%</span>
+                                    </div>
+                                    <div class="predict-card">
+                                        <span class="lbl">Monthly Trend</span>
+                                        <h4 id="predict-monthly">High Demand <i class="fa-solid fa-circle-exclamation text-warning"></i></h4>
+                                        <span class="change text-warning">Best selling time</span>
+                                    </div>
+                                </div>
+
+                                <div class="prediction-chart-container">
+                                    <!-- Dynamic SVG chart drawn here -->
+                                    <div class="chart-tooltip hidden" id="chart-tooltip"></div>
+                                    <svg viewBox="0 0 500 200" class="svg-chart" id="prediction-svg-chart"></svg>
+                                </div>
+                            </div>
+
+                            <!-- Farmer Order Management -->
+                            <div class="glass-panel orders-panel">
+                                <h3><i class="fa-solid fa-receipt"></i> Incoming Orders</h3>
+                                <div class="orders-table-wrapper">
+                                    <table class="dashboard-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Buyer</th>
+                                                <th>Crop</th>
+                                                <th>Total Price</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="farmer-orders-list">
+                                            <!-- Dynamic orders list -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. BUYER PORTAL MODULE -->
+                <section id="buyer" class="tab-content">
+                    <div class="module-header">
+                        <div>
+                            <h2>Buyer Dashboard</h2>
+                            <p>Track your orders, search with filters, and haggle prices in real time.</p>
+                        </div>
+                    </div>
+
+                    <div class="buyer-grid">
+                        
+                        <!-- Left Panel: GPS Location & Matching Map -->
+                        <div class="buyer-left-panel">
+                            <div class="glass-panel mapping-panel">
+                                <div class="panel-header">
+                                    <h3><i class="fa-solid fa-map-location-dot"></i> Nearby Farm & Logistics Matching</h3>
+                                    <span class="gps-badge"><i class="fa-solid fa-location-crosshairs"></i> GPS Active</span>
+                                </div>
+                                <p class="sec-desc">Live coordinate tracking showing nearby crop availability and current delivery trucks.</p>
+                                
+                                <div class="gps-map-container">
+                                    <canvas id="gps-map-canvas" width="600" height="350"></canvas>
+                                    
+                                    <div class="map-overlay-controls">
+                                        <button class="map-btn active" id="btn-toggle-farms"><i class="fa-solid fa-house-chimney-window"></i> Farms</button>
+                                        <button class="map-btn active" id="btn-toggle-trucks"><i class="fa-solid fa-truck"></i> Trucks</button>
+                                        <button class="map-btn" id="btn-recenter"><i class="fa-solid fa-crosshairs"></i> Recenter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Cart, E-Negotiation & Order Tracking -->
+                        <div class="buyer-right-panel">
+                            
+                            <!-- E-Negotiation Portal -->
+                            <div class="glass-panel negotiation-panel">
+                                <div class="panel-header">
+                                    <h3><i class="fa-solid fa-comments-dollar"></i> Live E-Negotiation Chat</h3>
+                                    <span class="negotiation-badge"><i class="fa-solid fa-bolt"></i> AI Enabled</span>
+                                </div>
+                                <p class="sec-desc">Bargain directly with farmers' AI-driven agents to settle on mutually beneficial deals.</p>
+                                
+                                <div class="negotiation-box">
+                                    <div class="negotiation-target-crop">
+                                        <label for="negotiation-crop-select">Haggle Crop:</label>
+                                        <select id="negotiation-crop-select">
+                                            <!-- Populate with items in cart or catalog -->
+                                            <option value="rice">Sona Masuri Rice (₹52.00/kg)</option>
+                                            <option value="tomato">Organic Tomatoes (₹45.00/kg)</option>
+                                            <option value="onion">Nashik Red Onions (₹32.00/kg)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="chat-display" id="negotiation-chat-display">
+                                        <div class="chat-bubble farmer-msg">
+                                            <p>Hello! Welcome to our negotiation desk. I am Rajesh Kumar's trading assistant. We offer our Organic Tomatoes for ₹45.00 per kg. What price are you offering?</p>
+                                            <span class="chat-time">22:52 PM</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="chat-input-bar">
+                                        <input type="number" id="negotiate-price-input" placeholder="Offer price per kg...">
+                                        <button class="primary-btn" id="send-negotiation-btn"><i class="fa-solid fa-paper-plane"></i> Propose</button>
+                                    </div>
+                                    
+                                    <div class="negotiation-quick-actions">
+                                        <button class="quick-btn" id="btn-accept-deal" disabled>Accept Deal</button>
+                                        <button class="quick-btn secondary" id="btn-reset-deal">Reset Bargaining</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cart and Tracking -->
+                            <div class="glass-panel cart-tracking-panel">
+                                <h3><i class="fa-solid fa-cart-shopping"></i> Shopping Cart & Checkout</h3>
+                                <div class="cart-items-container" id="cart-items-list">
+                                    <p class="empty-msg">Your shopping cart is empty.</p>
+                                </div>
+
+                                <div class="cart-total-footer hidden" id="cart-total-section">
+                                    <div class="total-row">
+                                        <span>Subtotal:</span>
+                                        <strong id="cart-subtotal-val">₹0.00</strong>
+                                    </div>
+                                    <button class="primary-btn btn-block" id="btn-checkout"><i class="fa-solid fa-money-bill-wave"></i> Confirm & Pay (UPI/Wallet)</button>
+                                </div>
+                            </div>
+
+                            <!-- Buyer Active Order Tracking -->
+                            <div class="glass-panel order-tracking-panel">
+                                <h3><i class="fa-solid fa-map-pin"></i> Active Delivery Tracking</h3>
+                                <div id="buyer-tracking-container">
+                                    <p class="empty-msg">No active deliveries to track right now.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. ADMIN PANEL MODULE -->
+                <section id="admin" class="tab-content">
+                    <div class="module-header">
+                        <div>
+                            <h2>Admin Control Panel</h2>
+                            <p>Global metrics, farmer certifications, complaints, and platform audits.</p>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Charts Grid -->
+                    <div class="admin-charts-grid">
+                        <div class="glass-panel chart-panel">
+                            <h3><i class="fa-solid fa-chart-bar"></i> Daily Crop Sales volume (kg)</h3>
+                            <div class="admin-chart-box">
+                                <canvas id="admin-bar-chart" width="450" height="220"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel chart-panel">
+                            <h3><i class="fa-solid fa-chart-pie"></i> Category Distribution</h3>
+                            <div class="admin-chart-box flex-center">
+                                <canvas id="admin-pie-chart" width="200" height="200"></canvas>
+                                <div class="pie-legend" id="pie-legend-box"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel chart-panel">
+                            <h3><i class="fa-solid fa-chart-area"></i> Revenue Growth Trend</h3>
+                            <div class="admin-chart-box">
+                                <canvas id="admin-area-chart" width="450" height="220"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-grid">
+                        <!-- Verification Center -->
+                        <div class="glass-panel verification-panel">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-id-card"></i> Profile Verification Center</h3>
+                                <span class="badge warning-bg" id="verification-count-badge"><i class="fa-solid fa-shield-halved"></i> 2 Pending</span>
+                            </div>
+                            <p class="sec-desc">Verify Farmer identities and Organic agricultural documentation.</p>
+
+                            <div class="verification-list" id="admin-verifications-list">
+                                <!-- Dynamic profile verifications -->
+                            </div>
+                        </div>
+
+                        <!-- Complaints Panel -->
+                        <div class="glass-panel admin-complaints-panel">
+                            <h3><i class="fa-solid fa-triangle-exclamation"></i> Open Complaints</h3>
+                            <div class="complaints-list" id="admin-complaints-list">
+                                <!-- Dynamic complaints list -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Chatbot Floating Button & Interface -->
+    <div class="chatbot-container" id="chatbot-container">
+        <!-- Floating chat trigger button -->
+        <button class="chatbot-trigger" id="chatbot-trigger-btn">
+            <i class="fa-solid fa-robot"></i>
+            <span class="tooltip">Ask AI Assistant</span>
+        </button>
+
+        <!-- Chat window layout -->
+        <div class="chatbot-window hidden" id="chatbot-window">
+            <div class="chatbot-header">
+                <div class="bot-info">
+                    <i class="fa-solid fa-robot"></i>
+                    <div>
+                        <h4>Agri AI Assistant</h4>
+                        <span class="status">Online | Tamil • Hindi • English</span>
+                    </div>
+                </div>
+                <button class="close-chat-btn" id="chatbot-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="chatbot-lang-selector">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ta">தமிழ் (TA)</button>
+                <button class="lang-btn" data-lang="hi">हिंदी (HI)</button>
+            </div>
+
+            <div class="chatbot-messages" id="chatbot-messages-display">
+                <div class="bot-bubble">
+                    <p>Hello! I am your Agri AI Assistant. Ask me anything about crop cultivation, fertilizers, government schemes, or current marketplace prices!</p>
+                </div>
+            </div>
+
+            <div class="chatbot-quick-prompts" id="chatbot-quick-prompts">
+                <!-- Dynamically populated relative to language -->
+            </div>
+
+            <div class="chatbot-input-bar">
+                <input type="text" id="chatbot-text-input" placeholder="Type your farming question...">
+                <button id="chatbot-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: BLOCKCHAIN PRODUCT TRACEABILITY TIMELINE -->
+    <div class="modal-overlay hidden" id="blockchain-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-cubes"></i> Blockchain Verification & Traceability</h3>
+                <button class="modal-close" id="btn-close-blockchain-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="blockchain-summary-card">
+                    <div class="summary-details">
+                        <p><strong>Product:</strong> <span id="bc-crop-name">Organic Sona Masuri Rice</span></p>
+                        <p><strong>Traceability Code:</strong> <span id="bc-trace-code">AGRI-TX-849A1</span></p>
+                        <p><strong>Ledger Status:</strong> <span class="badge badge-success"><i class="fa-solid fa-circle-check"></i> Verified Ledger</span></p>
+                    </div>
+                    <!-- Virtual QR farm verification -->
+                    <div class="qr-container">
+                        <div id="bc-qr-code">
+                            <!-- SVG QR simulation -->
+                            <svg viewBox="0 0 100 100" class="svg-qr">
+                                <rect x="5" y="5" width="25" height="25" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                                <rect x="10" y="10" width="15" height="15" fill="#10b981"/>
+                                <rect x="70" y="5" width="25" height="25" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                                <rect x="75" y="10" width="15" height="15" fill="#10b981"/>
+                                <rect x="5" y="70" width="25" height="25" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                                <rect x="10" y="75" width="15" height="15" fill="#10b981"/>
+                                <!-- random QR dots -->
+                                <rect x="40" y="20" width="8" height="8" fill="#10b981"/>
+                                <rect x="50" y="10" width="8" height="8" fill="#10b981"/>
+                                <rect x="45" y="45" width="12" height="12" fill="#10b981"/>
+                                <rect x="75" y="40" width="8" height="8" fill="#10b981"/>
+                                <rect x="40" y="70" width="16" height="8" fill="#10b981"/>
+                                <rect x="70" y="80" width="8" height="16" fill="#10b981"/>
+                            </svg>
+                        </div>
+                        <span>Farm QR Verified</span>
+                    </div>
+                </div>
+
+                <div class="blockchain-timeline" id="blockchain-timeline-list">
+                    <!-- Timeline blocks generated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: LOGISTICS BOOKING & ROUTE OPTIMIZATION -->
+    <div class="modal-overlay hidden" id="logistics-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-truck-fast"></i> Smart Logistics Coordinator</h3>
+                <button class="modal-close" id="btn-close-logistics-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="logistics-booking-form" class="standard-form">
+                    <input type="hidden" id="logistics-order-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>From (Farmer Location)</label>
+                            <input type="text" id="logistics-from" class="disabled-input" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>To (Buyer Location)</label>
+                            <input type="text" id="logistics-to" class="disabled-input" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="truck-type">Select Truck Class</label>
+                            <select id="truck-type" required>
+                                <option value="mini">Tata Ace Mini (Up to 800kg) - ₹15/km</option>
+                                <option value="medium">Mahindra Bolero Pickup (Up to 1.5 Tons) - ₹22/km</option>
+                                <option value="heavy">Eicher Pro Truck (Up to 5 Tons) - ₹38/km</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="route-option">Route Preference</label>
+                            <select id="route-option" required>
+                                <option value="fastest">Fastest Route (Clean highway, toll) - ETA 42 min</option>
+                                <option value="cheapest">Eco Route (Lower carbon footprint) - ETA 55 min</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="logistics-calculation-card">
+                        <div class="calc-row">
+                            <span>Distance:</span>
+                            <span id="logistics-calc-distance">24.5 km</span>
+                        </div>
+                        <div class="calc-row">
+                            <span>Estimated Time:</span>
+                            <span id="logistics-calc-eta">42 mins</span>
+                        </div>
+                        <div class="calc-row">
+                            <span>Carbon Footprint:</span>
+                            <span class="carbon-saving-tag" id="logistics-calc-carbon">4.8 kg CO2 (Saved 1.2kg via eco-matching)</span>
+                        </div>
+                        <hr>
+                        <div class="calc-row total">
+                            <span>Transportation Cost:</span>
+                            <strong id="logistics-calc-cost">₹367.50</strong>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn btn-block"><i class="fa-solid fa-circle-check"></i> Book Logistics Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: GATEWAY TRANSACTION PROCESSOR -->
+    <div class="modal-overlay hidden" id="payment-modal">
+        <div class="modal-box small-modal">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-lock"></i> Secure Payment Gateway</h3>
+                <button class="modal-close" id="btn-close-payment-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Transferring to escrow account for Order #<span id="pay-order-id">---</span></p>
+                
+                <div class="upi-qr-box">
+                    <!-- Dynamic UPI QR simulation -->
+                    <div id="payment-qr">
+                        <svg viewBox="0 0 100 100" class="svg-qr">
+                            <rect x="5" y="5" width="25" height="25" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                            <rect x="10" y="10" width="15" height="15" fill="#10b981"/>
+                            <rect x="70" y="5" width="25" height="25" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                            <rect x="75" y="10" width="15" height="15" fill="#10b981"/>
+                            <rect x="5" y="70" width="25" height="25" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                            <rect x="10" y="75" width="15" height="15" fill="#10b981"/>
+                            
+                            <rect x="40" y="40" width="20" height="20" fill="none" stroke="#10b981" stroke-width="2"/>
+                            <path d="M 50 40 L 50 60 M 40 50 L 60 50" stroke="#10b981" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <span class="qr-sub">Scan UPI QR Code</span>
+                </div>
+                
+                <h2 class="pay-amount-lbl" id="pay-amount-val">₹0.00</h2>
+                
+                <div class="payment-methods-picker">
+                    <button class="method-btn active" id="pay-method-wallet">Pay from Wallet (₹<span id="pay-wallet-balance">42,500</span>)</button>
+                    <button class="method-btn" id="pay-method-upi">Simulate UPI NetBanking Success</button>
+                </div>
+
+                <button class="primary-btn btn-block" id="btn-confirm-payment">Simulate Transaction</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script Scripts -->
+    <script src="js/blockchain.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/voice.js"></script>
+    <script src="js/farmer.js"></script>
+    <script src="js/buyer.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/logistics.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
