@@ -3,9 +3,16 @@
 /* 1. MARKETPLACE / CROP CATALOG */
 .marketplace-filters {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-glow) transparent;
 }
+.marketplace-filters::-webkit-scrollbar { height: 4px; }
+.marketplace-filters::-webkit-scrollbar-track { background: transparent; }
+.marketplace-filters::-webkit-scrollbar-thumb { background: var(--primary-glow); border-radius: 4px; }
 
 .filter-btn {
     background-color: var(--bg-surface);

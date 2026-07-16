@@ -145,288 +145,11 @@ window.NotificationManager = {
 window.GlobalState = {
     walletBalance: 42500,
 
-    crops: [
-        {
-            id: "crop-1",
-            name: "Organic Sona Masuri Rice",
-            category: "grains",
-            price: 52.00,
-            quantity: 200,
-            harvestDate: "2026-07-14",
-            organic: true,
-            farmer: "Rajesh Kumar",
-            location: "Salem, Tamil Nadu",
-            distance: "3.2 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-2",
-            name: "Farm-Fresh Organic Tomatoes",
-            category: "vegetables",
-            price: 45.00,
-            quantity: 80,
-            harvestDate: "2026-07-15",
-            organic: true,
-            farmer: "Rajesh Kumar",
-            location: "Salem, Tamil Nadu",
-            distance: "3.2 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-3",
-            name: "Nashik Red Onions (Premium Grade)",
-            category: "vegetables",
-            price: 32.00,
-            quantity: 300,
-            harvestDate: "2026-07-10",
-            organic: false,
-            farmer: "Sundar Raj",
-            location: "Nashik, Maharashtra",
-            distance: "6.5 km",
-            fresh: false,
-            img: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-4",
-            name: "Salem Golden Turmeric Fingers",
-            category: "spices",
-            price: 112.00,
-            quantity: 50,
-            harvestDate: "2026-06-30",
-            organic: true,
-            farmer: "Kavin Agro",
-            location: "Salem, Tamil Nadu",
-            distance: "4.1 km",
-            fresh: false,
-            img: "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-5",
-            name: "Alphonso Mangoes (Export Grade)",
-            category: "fruits",
-            price: 220.00,
-            quantity: 30,
-            harvestDate: "2026-07-13",
-            organic: false,
-            farmer: "Mango Farms Co.",
-            location: "Ratnagiri, Maharashtra",
-            distance: "9.2 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-6",
-            name: "Green Chilli Peppers (Guntur)",
-            category: "vegetables",
-            price: 68.00,
-            quantity: 60,
-            harvestDate: "2026-07-12",
-            organic: true,
-            farmer: "Guntur Spice Farms",
-            location: "Guntur, Andhra Pradesh",
-            distance: "8.1 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1571680322279-a226e6a4cc2a?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-7",
-            name: "Ooty Farm-Fresh Carrots",
-            category: "vegetables",
-            price: 40.00,
-            quantity: 150,
-            harvestDate: "2026-07-16",
-            organic: true,
-            farmer: "Nilgiris Organics",
-            location: "Ooty, Tamil Nadu",
-            distance: "12.4 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-8",
-            name: "Hassan Potatoes (Grade A)",
-            category: "vegetables",
-            price: 24.00,
-            quantity: 500,
-            harvestDate: "2026-07-14",
-            organic: false,
-            farmer: "Hassan Agro",
-            location: "Hassan, Karnataka",
-            distance: "45.0 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-9",
-            name: "Kashmiri Apples (Premium)",
-            category: "fruits",
-            price: 150.00,
-            quantity: 80,
-            harvestDate: "2026-07-10",
-            organic: true,
-            farmer: "Valley Orchards",
-            location: "Srinagar, J&K",
-            distance: "1500 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6fd6c?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-10",
-            name: "Punjab Sharbati Wheat",
-            category: "grains",
-            price: 32.00,
-            quantity: 1000,
-            harvestDate: "2026-06-15",
-            organic: false,
-            farmer: "Singh Farms",
-            location: "Ludhiana, Punjab",
-            distance: "1200 km",
-            fresh: false,
-            img: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-11",
-            name: "Kerala Black Pepper (Whole)",
-            category: "spices",
-            price: 450.00,
-            quantity: 20,
-            harvestDate: "2026-07-01",
-            organic: true,
-            farmer: "Malabar Spices",
-            location: "Wayanad, Kerala",
-            distance: "210 km",
-            fresh: false,
-            img: "https://images.unsplash.com/photo-1596700854448-6d2c4767223e?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-12",
-            name: "Pollachi Fresh Coconuts",
-            category: "fruits",
-            price: 25.00, // per piece
-            quantity: 1000,
-            harvestDate: "2026-07-15",
-            organic: true,
-            farmer: "Coconut Grove",
-            location: "Pollachi, Tamil Nadu",
-            distance: "40.5 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1526424360340-9a3d76e4c7cb?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-13",
-            name: "Hosur Cabbage",
-            category: "vegetables",
-            price: 18.00,
-            quantity: 200,
-            harvestDate: "2026-07-16",
-            organic: false,
-            farmer: "Green Leaf Farms",
-            location: "Hosur, Tamil Nadu",
-            distance: "65.2 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1592424005995-5db99754ae25?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-14",
-            name: "Nagpur Oranges",
-            category: "fruits",
-            price: 60.00,
-            quantity: 300,
-            harvestDate: "2026-07-14",
-            organic: true,
-            farmer: "Citrus Valley",
-            location: "Nagpur, Maharashtra",
-            distance: "850 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1611080668850-2445cff492a5?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-15",
-            name: "Guntur Red Chillies (Dried)",
-            category: "spices",
-            price: 180.00,
-            quantity: 150,
-            harvestDate: "2026-05-20",
-            organic: false,
-            farmer: "Andhra Spices",
-            location: "Guntur, Andhra Pradesh",
-            distance: "450 km",
-            fresh: false,
-            img: "https://images.unsplash.com/photo-1574516315265-22d7de1f8dcb?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-16",
-            name: "Mysore Robusta Coffee Beans",
-            category: "grains",
-            price: 320.00,
-            quantity: 50,
-            harvestDate: "2026-06-01",
-            organic: true,
-            farmer: "Coorg Plantations",
-            location: "Coorg, Karnataka",
-            distance: "230 km",
-            fresh: false,
-            img: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-17",
-            name: "Kanyakumari Nendran Bananas",
-            category: "fruits",
-            price: 45.00,
-            quantity: 120,
-            harvestDate: "2026-07-15",
-            organic: true,
-            farmer: "Kumari Farms",
-            location: "Kanyakumari, Tamil Nadu",
-            distance: "350 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-18",
-            name: "MP Yellow Soyabean",
-            category: "grains",
-            price: 48.00,
-            quantity: 800,
-            harvestDate: "2026-06-25",
-            organic: false,
-            farmer: "Malwa Farmers Group",
-            location: "Indore, MP",
-            distance: "1100 km",
-            fresh: false,
-            img: "https://images.unsplash.com/photo-1593452670390-e51c8a143f66?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-19",
-            name: "Erode Ginger",
-            category: "spices",
-            price: 85.00,
-            quantity: 250,
-            harvestDate: "2026-07-10",
-            organic: true,
-            farmer: "Erode Roots",
-            location: "Erode, Tamil Nadu",
-            distance: "35.0 km",
-            fresh: true,
-            img: "https://images.unsplash.com/photo-1615486171434-60195e347895?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-            id: "crop-20",
-            name: "Gujarat Groundnuts (Peanuts)",
-            category: "grains",
-            price: 65.00,
-            quantity: 400,
-            harvestDate: "2026-06-30",
-            organic: false,
-            farmer: "Saurashtra Agro",
-            location: "Rajkot, Gujarat",
-            distance: "1400 km",
-            fresh: false,
-            img: "https://images.unsplash.com/photo-1563212042-4fdbbd271f2a?auto=format&fit=crop&q=80&w=400"
-        }
-    ],
+    // Crops are loaded dynamically from MarketData
+    get crops() {
+        return window.MarketData ? window.MarketData.getAllCrops() : [];
+    },
+
 
     orders: [
         {
@@ -496,8 +219,9 @@ window.GlobalState = {
         if (!grid) return;
 
         const searchQuery = searchInput ? searchInput.value.toLowerCase() : "";
+        const allCrops = this.crops;
 
-        let filtered = this.crops.filter(crop => {
+        let filtered = allCrops.filter(crop => {
             const matchSearch = !searchQuery ||
                 crop.name.toLowerCase().includes(searchQuery) ||
                 crop.farmer.toLowerCase().includes(searchQuery) ||
@@ -506,10 +230,9 @@ window.GlobalState = {
 
             const matchFilter =
                 filter === "all" ||
-                (filter === "organic" && crop.organic) ||
+                filter === crop.category ||
                 (filter === "fresh" && crop.fresh) ||
-                (filter === "nearby" && parseFloat(crop.distance) < 10) ||
-                filter === crop.category;
+                (filter === "organic-tag" && crop.organic);
 
             return matchSearch && matchFilter;
         });
@@ -570,7 +293,7 @@ window.GlobalState = {
             btn.addEventListener("click", (e) => {
                 e.stopPropagation();
                 const cropId = btn.dataset.id;
-                const crop = this.crops.find(c => c.id === cropId);
+                const crop = allCrops.find(c => c.id === cropId);
                 if (crop) {
                     window.BuyerPortal.addToCart(crop.id, crop.name, crop.price, 10, crop.img);
                 }
