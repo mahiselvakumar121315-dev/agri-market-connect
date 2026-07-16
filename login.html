@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri Market Connect — Login</title>
+    <meta name="description" content="Login to Agri Market Connect — India's smartest digital agri-marketplace connecting farmers directly with buyers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<!-- Animated Particle Background -->
+<canvas id="auth-bg-canvas"></canvas>
+
+<!-- Ambient glow orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Main Layout -->
+<div class="auth-wrapper">
+
+    <!-- ═══ LEFT PANEL — Hero Brand ═══════════════ -->
+    <div class="auth-hero">
+        <div class="hero-content">
+
+            <!-- Brand Logo -->
+            <div class="hero-brand">
+                <div class="hero-logo"><i class="fa-solid fa-leaf"></i></div>
+                <div class="hero-logo-text">
+                    <h1>AgriMarket</h1>
+                    <span>Connect Platform</span>
+                </div>
+            </div>
+
+            <!-- Headline -->
+            <h2 class="hero-headline">
+                Direct Farm<br>
+                <span class="gradient-text">to Your Table</span><br>
+                Zero Middlemen.
+            </h2>
+
+            <p class="hero-desc">
+                India's most intelligent digital marketplace connecting 50,000+ farmers directly with buyers. Powered by AI, Blockchain & IoT.
+            </p>
+
+            <!-- Feature Pills -->
+            <div class="hero-features">
+                <div class="feature-pill">
+                    <div class="pill-icon">🤖</div>
+                    <span>AI-powered price prediction & demand forecasting</span>
+                </div>
+                <div class="feature-pill">
+                    <div class="pill-icon">🔗</div>
+                    <span>Blockchain traceability from seed to shelf</span>
+                </div>
+                <div class="feature-pill">
+                    <div class="pill-icon">🛰️</div>
+                    <span>Satellite crop monitoring & digital twin farm</span>
+                </div>
+                <div class="feature-pill">
+                    <div class="pill-icon">🎤</div>
+                    <span>Tamil voice assistant for every farmer</span>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <strong>50K+</strong>
+                    <span>Verified Farmers</span>
+                </div>
+                <div class="stat-item">
+                    <strong>₹184Cr</strong>
+                    <span>Revenue Generated</span>
+                </div>
+                <div class="stat-item">
+                    <strong>18 States</strong>
+                    <span>Pan-India Coverage</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating crop price cards -->
+        <div class="floating-cards">
+            <div class="float-card">
+                <div class="float-dot" style="background:#10b981"></div>
+                <span style="color:#f0fdf4;">🌾 Rice ↑ ₹54.50/kg</span>
+            </div>
+            <div class="float-card">
+                <div class="float-dot" style="background:#6366f1"></div>
+                <span style="color:#f0fdf4;">🍅 Tomato ₹42.00/kg</span>
+            </div>
+            <div class="float-card">
+                <div class="float-dot" style="background:#f59e0b"></div>
+                <span style="color:#f0fdf4;">🌶 Chilli ↑ ₹68.00/kg</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ RIGHT PANEL — Auth Forms ══════════════ -->
+    <div class="auth-panel">
+        <div class="auth-card">
+
+            <!-- ── LOGIN FORM ───────────────────── -->
+            <div class="auth-form active" id="form-login">
+                <div class="form-header">
+                    <div class="form-badge"><i class="fa-solid fa-shield-halved"></i> Secure Login</div>
+                    <h2 class="form-title">Welcome Back 👋</h2>
+                    <p class="form-subtitle">Sign in to your Agri Market account</p>
+                </div>
+
+                <!-- Role Tabs -->
+                <div class="role-tabs" id="login-role-tabs">
+                    <button class="role-tab active" data-role="farmer">
+                        <i class="fa-solid fa-wheat-awn"></i> Farmer
+                    </button>
+                    <button class="role-tab" data-role="buyer">
+                        <i class="fa-solid fa-basket-shopping"></i> Buyer
+                    </button>
+                    <button class="role-tab" data-role="admin">
+                        <i class="fa-solid fa-user-shield"></i> Admin
+                    </button>
+                </div>
+
+                <!-- Alert Box -->
+                <div class="auth-alert" id="login-alert"></div>
+
+                <form id="login-form" novalidate>
+                    <div class="input-group">
+                        <label class="input-label" for="login-email">Email / Mobile Number</label>
+                        <div class="input-wrap">
+                            <input class="auth-input" type="text" id="login-email" placeholder="Enter email or mobile" autocomplete="username" required>
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="login-password">Password</label>
+                        <div class="input-wrap">
+                            <input class="auth-input" type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password" required>
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <button type="button" class="pass-toggle" id="login-pass-toggle">
+                                <i class="fa-solid fa-eye-slash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="forgot-link">
+                        <a href="#" onclick="showForm('form-forgot'); return false;">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn" id="login-submit-btn">
+                        <span class="btn-text"><i class="fa-solid fa-right-to-bracket"></i> Sign In</span>
+                        <div class="btn-spinner" id="login-spinner"></div>
+                    </button>
+                </form>
+
+                <div class="auth-divider">or continue with</div>
+                <div class="social-row">
+                    <a class="social-btn" href="#" onclick="socialLogin('google'); return false;">
+                        <img src="https://www.google.com/favicon.ico" width="16" alt="Google"> Google
+                    </a>
+                    <a class="social-btn" href="#" onclick="socialLogin('aadhaar'); return false;">
+                        <i class="fa-solid fa-id-card" style="color:#f97316"></i> Aadhaar
+                    </a>
+                </div>
+
+                <div class="form-switch">
+                    Don't have an account? <a onclick="showForm('form-register')">Create Account</a>
+                </div>
+            </div>
+
+            <!-- ── REGISTER FORM ─────────────────── -->
+            <div class="auth-form" id="form-register">
+                <div class="form-header">
+                    <div class="form-badge" style="background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.25);color:var(--secondary);">
+                        <i class="fa-solid fa-user-plus"></i> New Account
+                    </div>
+                    <h2 class="form-title">Join AgriMarket 🌾</h2>
+                    <p class="form-subtitle">Start selling or buying directly — zero commission</p>
+                </div>
+
+                <!-- Role Tabs -->
+                <div class="role-tabs" id="register-role-tabs">
+                    <button class="role-tab active" data-role="farmer">
+                        <i class="fa-solid fa-wheat-awn"></i> Farmer
+                    </button>
+                    <button class="role-tab" data-role="buyer">
+                        <i class="fa-solid fa-basket-shopping"></i> Buyer
+                    </button>
+                </div>
+
+                <div class="auth-alert" id="register-alert"></div>
+
+                <form id="register-form" novalidate>
+                    <div class="input-group">
+                        <label class="input-label" for="reg-name">Full Name</label>
+                        <div class="input-wrap">
+                            <input class="auth-input" type="text" id="reg-name" placeholder="e.g. Rajesh Kumar" required>
+                            <i class="fa-solid fa-user input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                        <div class="input-group" style="margin-bottom:0">
+                            <label class="input-label" for="reg-mobile">Mobile</label>
+                            <div class="input-wrap">
+                                <input class="auth-input" type="tel" id="reg-mobile" placeholder="+91 XXXXX XXXXX" required>
+                                <i class="fa-solid fa-mobile input-icon"></i>
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-bottom:0">
+                            <label class="input-label" for="reg-state">State</label>
+                            <div class="input-wrap">
+                                <select class="auth-input" id="reg-state" style="padding-left:36px;">
+                                    <option value="">Select State</option>
+                                    <option>Tamil Nadu</option>
+                                    <option>Maharashtra</option>
+                                    <option>Punjab</option>
+                                    <option>Karnataka</option>
+                                    <option>Andhra Pradesh</option>
+                                    <option>Uttar Pradesh</option>
+                                    <option>Gujarat</option>
+                                    <option>Rajasthan</option>
+                                </select>
+                                <i class="fa-solid fa-location-dot input-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group" style="margin-top:18px;">
+                        <label class="input-label" for="reg-email">Email Address</label>
+                        <div class="input-wrap">
+                            <input class="auth-input" type="email" id="reg-email" placeholder="you@email.com" required>
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="reg-password">Set Password</label>
+                        <div class="input-wrap">
+                            <input class="auth-input" type="password" id="reg-password" placeholder="Min. 8 characters" id="reg-password" required>
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <button type="button" class="pass-toggle" id="reg-pass-toggle">
+                                <i class="fa-solid fa-eye-slash"></i>
+                            </button>
+                        </div>
+                        <div class="strength-bar-wrap" id="strength-bars">
+                            <div class="strength-segment" id="s1"></div>
+                            <div class="strength-segment" id="s2"></div>
+                            <div class="strength-segment" id="s3"></div>
+                            <div class="strength-segment" id="s4"></div>
+                            <span class="strength-label" id="strength-label">Weak</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn" id="register-submit-btn" style="background:linear-gradient(135deg,#6366f1,#4f46e5);box-shadow:0 6px 20px var(--secondary-glow);">
+                        <span class="btn-text"><i class="fa-solid fa-user-plus"></i> Create Account</span>
+                        <div class="btn-spinner" id="register-spinner"></div>
+                    </button>
+                </form>
+
+                <div class="form-switch">
+                    Already have an account? <a onclick="showForm('form-login')">Sign In</a>
+                </div>
+            </div>
+
+            <!-- ── FORGOT PASSWORD FORM ──────────── -->
+            <div class="auth-form" id="form-forgot">
+                <div class="form-header">
+                    <div class="form-badge" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.25);color:var(--warning);">
+                        <i class="fa-solid fa-key"></i> Password Reset
+                    </div>
+                    <h2 class="form-title">Reset Password 🔐</h2>
+                    <p class="form-subtitle">We'll send a secure OTP to your registered mobile</p>
+                </div>
+
+                <!-- Step Progress -->
+                <div class="step-progress">
+                    <div class="step-dot active" id="fp-step-1"></div>
+                    <div class="step-dot" id="fp-step-2"></div>
+                    <div class="step-dot" id="fp-step-3"></div>
+                </div>
+
+                <div class="auth-alert" id="forgot-alert"></div>
+
+                <!-- Step 1: Enter Mobile -->
+                <div id="forgot-step-1">
+                    <div class="input-group">
+                        <label class="input-label" for="forgot-mobile">Registered Mobile / Email</label>
+                        <div class="input-wrap">
+                            <input class="auth-input" type="text" id="forgot-mobile" placeholder="Enter your mobile or email" required>
+                            <i class="fa-solid fa-mobile input-icon"></i>
+                        </div>
+                    </div>
+                    <button type="button" class="auth-submit-btn" id="btn-send-otp" style="background:linear-gradient(135deg,var(--warning),#d97706);box-shadow:0 6px 20px rgba(245,158,11,0.3);" onclick="sendOTP()">
+                        <i class="fa-solid fa-paper-plane"></i> Send OTP
+                    </button>
+                </div>
+
+                <!-- Step 2: Enter OTP -->
+                <div id="forgot-step-2" style="display:none;">
+                    <p style="font-size:0.8rem;text-align:center;margin-bottom:16px;color:var(--text-muted);">
+                        OTP sent to <strong id="otp-sent-to" style="color:var(--text-primary)"></strong>
+                    </p>
+                    <div class="otp-row" id="otp-inputs">
+                        <input class="otp-input" type="text" maxlength="1" id="otp-1">
+                        <input class="otp-input" type="text" maxlength="1" id="otp-2">
+                        <input class="otp-input" type="text" maxlength="1" id="otp-3">
+                        <input class="otp-input" type="text" maxlength="1" id="otp-4">
+                        <input class="otp-input" type="text" maxlength="1" id="otp-5">
+                        <input class="otp-input" type="text" maxlength="1" id="otp-6">
+                    </div>
+                    <div style="text-align:center;margin-bottom:18px;">
+                        <span style="font-size:0.75rem;color:var(--text-muted);">Expires in </span>
+                        <span id="otp-timer" style="color:var(--warning);font-weight:700;font-size:0.8rem;">02:00</span>
+                        &nbsp;·&nbsp;
+                        <a href="#" style="color:var(--primary);font-size:0.75rem;" onclick="sendOTP(); return false;">Resend</a>
+                    </div>
+                    <button type="button" class="auth-submit-btn" style="background:linear-gradient(135deg,var(--warning),#d97706);box-shadow:0 6px 20px rgba(245,158,11,0.3);" onclick="verifyOTP()">
+                        <i class="fa-solid fa-check"></i> Verify OTP
+                    </button>
+                </div>
+
+                <!-- Step 3: New Password -->
+                <div id="forgot-step-3" style="display:none;">
+                    <div class="input-group">
+                        <label class="input-label" for="new-pass">New Password</label>
+                        <div class="input-wrap">
+                            <input class="auth-input" type="password" id="new-pass" placeholder="Enter new password">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <button type="button" class="pass-toggle" onclick="togglePass('new-pass', this)"><i class="fa-solid fa-eye-slash"></i></button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label" for="confirm-pass">Confirm New Password</label>
+                        <div class="input-wrap">
+                            <input class="auth-input" type="password" id="confirm-pass" placeholder="Re-enter new password">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                        </div>
+                    </div>
+                    <button type="button" class="auth-submit-btn" onclick="resetPassword()">
+                        <i class="fa-solid fa-shield-check"></i> Set New Password
+                    </button>
+                </div>
+
+                <div class="form-switch" style="margin-top:18px;">
+                    Remember it? <a onclick="showForm('form-login')">Back to Sign In</a>
+                </div>
+            </div>
+
+        </div><!-- end auth-card -->
+    </div><!-- end auth-panel -->
+
+</div><!-- end auth-wrapper -->
+
+<!-- Developer Credit -->
+<div class="developer-credit">
+    <span class="dev-heart">♥</span>
+    Developed by <strong>S. Mahendran</strong> &nbsp;·&nbsp; Agri Market Connect &nbsp;·&nbsp; SIH 2026
+</div>
+
+<script src="js/auth.js"></script>
+</body>
+</html>
