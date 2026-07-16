@@ -138,6 +138,11 @@ window.AdvancedFeatures = {
             this.renderOfflineSync.bind(this),
             this.renderTamilVoice.bind(this),
             this.renderRouteOptimization.bind(this),
+            this.renderMandiBenchmark.bind(this),
+            this.renderMicroLoans.bind(this),
+            this.renderColdStorage.bind(this),
+            this.renderAutoGST.bind(this),
+            this.renderDisputeEscrow.bind(this),
         ];
 
         panels.forEach(fn => {
@@ -1186,6 +1191,169 @@ window.AdvancedFeatures = {
         if (window.NotificationManager) {
             window.NotificationManager.createNotification('Route Shared', 'Optimized delivery route sent to driver Ramu via SMS & WhatsApp.', 'success');
         }
+    },
+
+    /* ── 16. Mandi Benchmark Pricing ─── */
+    renderMandiBenchmark: function() {
+        return `<div class="adv-panel">
+            <div class="adv-panel-header">
+                <div class="adv-panel-title">
+                    <div class="adv-icon amber">⚖️</div>
+                    <div><div class="adv-title">Mandi Benchmark Check</div><div style="font-size:0.72rem;color:#64748b;">Live APMC price vs Your Price</div></div>
+                </div>
+                <span class="adv-badge">Real-Time</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px;margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-size:0.85rem;color:#f0fdf4;">Organic Tomatoes</span>
+                    <span style="font-size:0.75rem;color:#10b981;">Salem Mandi</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <div style="font-size:0.65rem;color:#64748b;">Your Listed Price</div>
+                        <div style="font-size:1.2rem;font-weight:700;color:#ef4444;">₹40/kg</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.65rem;color:#64748b;">Mandi Average</div>
+                        <div style="font-size:1.2rem;font-weight:700;color:#10b981;">₹18/kg</div>
+                    </div>
+                </div>
+                <div style="margin-top:10px;padding:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;font-size:0.72rem;color:#ef4444;display:flex;gap:6px;">
+                    <i class="fa-solid fa-triangle-exclamation" style="margin-top:2px;"></i>
+                    <span>Warning: Your price is 122% above the mandi average. Buyers are likely to reject. Consider lowering to ₹22/kg.</span>
+                </div>
+            </div>
+            <button class="adv-btn amber" style="width:100%;justify-content:center;" onclick="AdvancedFeatures.adjustPrice()">
+                <i class="fa-solid fa-arrow-down-up-across-line"></i> Auto-Adjust to ₹22/kg
+            </button>
+        </div>`;
+    },
+    
+    adjustPrice: function() {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Price Adjusted', 'Tomato listing updated to competitive price of ₹22/kg.', 'success');
+    },
+
+    /* ── 17. Micro-Loans & Credit ─── */
+    renderMicroLoans: function() {
+        return `<div class="adv-panel">
+            <div class="adv-panel-header">
+                <div class="adv-panel-title">
+                    <div class="adv-icon sky">💸</div>
+                    <div><div class="adv-title">Micro-Loans & Credit</div><div style="font-size:0.72rem;color:#64748b;">Pre-harvest input financing</div></div>
+                </div>
+                <span class="adv-badge">FinTech</span>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:12px;">
+                <div style="flex:1;background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2);border-radius:10px;padding:12px;text-align:center;">
+                    <div style="font-size:0.65rem;color:#64748b;margin-bottom:4px;">Eligible Credit</div>
+                    <div style="font-size:1.2rem;font-weight:700;color:#0ea5e9;">₹25,000</div>
+                </div>
+                <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center;">
+                    <div style="font-size:0.65rem;color:#64748b;margin-bottom:4px;">Interest Rate</div>
+                    <div style="font-size:1.2rem;font-weight:700;color:#f0fdf4;">4.5% <span style="font-size:0.7rem;">p.a.</span></div>
+                </div>
+            </div>
+            <p style="font-size:0.72rem;color:#94a3b8;margin-bottom:12px;line-height:1.4;">Based on your <strong>Digital Twin crop health</strong> and past successful deliveries, you are pre-approved for an input loan. No collateral required.</p>
+            <button class="adv-btn" style="width:100%;justify-content:center;" onclick="AdvancedFeatures.applyLoan()">
+                <i class="fa-solid fa-hand-holding-dollar"></i> Request ₹25,000 Loan
+            </button>
+        </div>`;
+    },
+
+    applyLoan: function() {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Loan Requested', '₹25,000 Micro-loan requested. NBFC partner will disburse in 2 hours.', 'success');
+    },
+
+    /* ── 18. Cold Storage Booking ─── */
+    renderColdStorage: function() {
+        return `<div class="adv-panel">
+            <div class="adv-panel-header">
+                <div class="adv-panel-title">
+                    <div class="adv-icon sky">❄️</div>
+                    <div><div class="adv-title">Cold Storage Booking</div><div style="font-size:0.72rem;color:#64748b;">Prevent post-harvest wastage</div></div>
+                </div>
+                <span class="adv-badge">Logistics</span>
+            </div>
+            <div class="equip-card">
+                <div class="equip-icon" style="background:rgba(14,165,233,0.1);border-color:rgba(14,165,233,0.2);color:#0ea5e9;">❄️</div>
+                <div style="flex:1;">
+                    <div style="font-weight:600;color:#f0fdf4;font-size:0.85rem;">Salem Cold Chain Co.</div>
+                    <div style="font-size:0.7rem;color:#64748b;">4.2 km away · Temp: 2°C to 8°C</div>
+                    <div style="font-size:0.7rem;color:#10b981;margin-top:2px;">12 Pallets Available</div>
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;">
+                <input type="number" class="adv-input" placeholder="Pallets (e.g. 2)" style="margin-bottom:0;width:40%;">
+                <button class="adv-btn" style="flex:1;justify-content:center;" onclick="AdvancedFeatures.bookStorage()">
+                    <i class="fa-solid fa-snowflake"></i> Book Slot
+                </button>
+            </div>
+        </div>`;
+    },
+
+    bookStorage: function() {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Storage Booked', '2 Pallets booked at Salem Cold Chain. Drop off before 6 PM.', 'success');
+    },
+
+    /* ── 19. Auto GST & E-Invoice ─── */
+    renderAutoGST: function() {
+        return `<div class="adv-panel">
+            <div class="adv-panel-header">
+                <div class="adv-panel-title">
+                    <div class="adv-icon purple">📑</div>
+                    <div><div class="adv-title">Auto GST & E-Invoice</div><div style="font-size:0.72rem;color:#64748b;">Compliance & inter-state e-way bills</div></div>
+                </div>
+                <span class="adv-badge">Regulatory</span>
+            </div>
+            <div class="contract-preview" style="background:rgba(99,102,241,0.05);border-color:rgba(99,102,241,0.2);margin:0 0 12px 0;">
+                <strong style="color:#6366f1;">PENDING INVOICE: ORDER #4821</strong><br>
+                Buyer: Hotel Fresh & Co (TN)<br>
+                Value: ₹12,500.00 (Excl. Tax)<br>
+                CGST (2.5%): ₹312.50<br>
+                SGST (2.5%): ₹312.50<br>
+                <strong>Total: ₹13,125.00</strong>
+            </div>
+            <div style="display:flex;gap:10px;">
+                <button class="adv-btn purple" style="flex:1;justify-content:center;" onclick="AdvancedFeatures.generateInvoice()">
+                    <i class="fa-solid fa-file-invoice"></i> Gen GST Bill
+                </button>
+                <button class="adv-btn" style="flex:1;justify-content:center;background:rgba(255,255,255,0.05);color:#f0fdf4;box-shadow:none;" onclick="AdvancedFeatures.generateInvoice()">
+                    <i class="fa-solid fa-truck-fast"></i> E-Way Bill
+                </button>
+            </div>
+        </div>`;
+    },
+
+    generateInvoice: function() {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Invoice Generated', 'GST Invoice & E-Way bill generated successfully. Sent to buyer.', 'success');
+    },
+
+    /* ── 20. Dispute Escrow Resolution ─── */
+    renderDisputeEscrow: function() {
+        return `<div class="adv-panel">
+            <div class="adv-panel-header">
+                <div class="adv-panel-title">
+                    <div class="adv-icon rose">⚖️</div>
+                    <div><div class="adv-title">Smart Escrow & Disputes</div><div style="font-size:0.72rem;color:#64748b;">Neutral QC verification hold</div></div>
+                </div>
+                <span class="adv-badge" style="background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.3);color:#ef4444;">1 Action Req</span>
+            </div>
+            <div class="pest-card" style="margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                    <strong style="color:#ef4444;font-size:0.82rem;">Dispute: Order #3319</strong>
+                    <span style="font-size:0.7rem;color:#ef4444;">₹18,000 HELD</span>
+                </div>
+                <p style="font-size:0.72rem;color:#94a3b8;margin-bottom:8px;">Buyer claimed moisture >14% in wheat load. Funds locked in smart contract.</p>
+                <div style="display:flex;gap:8px;">
+                    <button class="adv-btn" style="padding:4px 8px;font-size:0.65rem;" onclick="AdvancedFeatures.resolveDispute('AI')">Request AI Re-Scan</button>
+                    <button class="adv-btn rose" style="padding:4px 8px;font-size:0.65rem;" onclick="AdvancedFeatures.resolveDispute('Agent')">Call Neutral Agent</button>
+                </div>
+            </div>
+        </div>`;
+    },
+
+    resolveDispute: function(type) {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Dispute Action', `${type} intervention requested. Escrow remains locked until resolved.`, 'warning');
     }
 };
 

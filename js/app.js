@@ -745,6 +745,19 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Voice captured: ", query);
     });
 
+    // Live Clock Logic
+    function updateClock() {
+        const now = new Date();
+        const timeEl = document.getElementById("live-time");
+        const dateEl = document.getElementById("live-date");
+        if (timeEl && dateEl) {
+            timeEl.textContent = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            dateEl.textContent = now.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+        }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
     console.log("✅ Agri Market Connect is live and ready.");
 
     // Welcome toast
