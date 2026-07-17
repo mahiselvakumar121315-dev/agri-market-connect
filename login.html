@@ -46,24 +46,24 @@
         }
         .bg-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
-            backdrop-filter: brightness(0.9) contrast(1.05);
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            backdrop-filter: brightness(0.98);
         }
 
         /* Sparkles & Leaf overlay effects */
         .sparkle-overlay {
             position: absolute; inset: 0; pointer-events: none;
-            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 1px, transparent 1px),
-                              radial-gradient(circle at 75% 15%, rgba(255,255,255,0.4) 1.5px, transparent 1.5px),
-                              radial-gradient(circle at 50% 60%, rgba(255,255,255,0.2) 2px, transparent 2px);
-            background-size: 120px 120px;
-            opacity: 0.85;
+            background-image: radial-gradient(circle at 15% 25%, rgba(255,255,255,0.25) 1px, transparent 1px),
+                              radial-gradient(circle at 80% 20%, rgba(255,255,255,0.3) 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 45% 70%, rgba(255,255,255,0.15) 2px, transparent 2px);
+            background-size: 100px 100px;
+            opacity: 0.75;
         }
 
         /* ── Main Form Wrap ── */
         .page-wrap {
             position: relative; z-index: 10;
-            width: 100%; max-width: 480px;
+            width: 100%; max-width: 440px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -83,7 +83,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 25px rgba(21,128,61,0.2), inset 0 -4px 10px rgba(0,0,0,0.05);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             border: 2px solid rgba(255,255,255,0.8);
         }
         .brand-logo-img {
@@ -111,7 +111,7 @@
         .leaf-divider {
             color: #22c55e;
             font-size: 0.9rem;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             text-align: center;
             display: flex;
             justify-content: center;
@@ -120,39 +120,39 @@
         .developer-badge {
             font-size: 0.75rem;
             color: #1f2937;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.85);
             padding: 4px 16px;
             border-radius: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             backdrop-filter: blur(4px);
-            font-weight: 500;
+            font-weight: 600;
         }
         .developer-badge strong {
             color: #166534;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         /* ── Glass Login Card ── */
         .login-card {
             width: 100%;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 36px;
-            padding: 32px 28px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 20px 45px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+            padding: 30px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.95);
         }
 
         /* Welcome text */
         .welcome-section {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         .welcome-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: #15803d;
             margin-bottom: 2px;
@@ -162,30 +162,30 @@
             gap: 6px;
         }
         .welcome-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: #4b5563;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* Role Selector grid */
         .roles-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 18px;
         }
         .role-btn {
             background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 18px;
-            padding: 14px 6px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 12px 4px;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             position: relative;
             outline: none;
         }
@@ -197,7 +197,7 @@
             justify-content: center;
         }
         .role-name {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #4b5563;
         }
@@ -211,7 +211,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 2px;
+            margin-top: 1px;
             transition: all 0.2s;
         }
         .radio-indicator::after {
@@ -227,7 +227,7 @@
         .role-btn[data-role="farmer"].active {
             border-color: #22c55e;
             background: #f0fdf4;
-            box-shadow: 0 4px 12px rgba(34,197,94,0.12);
+            box-shadow: 0 4px 12px rgba(34,197,94,0.1);
         }
         .role-btn[data-role="farmer"].active .role-name {
             color: #15803d;
@@ -243,7 +243,7 @@
         .role-btn[data-role="buyer"].active {
             border-color: #0ea5e9;
             background: #f0f9ff;
-            box-shadow: 0 4px 12px rgba(14,165,233,0.12);
+            box-shadow: 0 4px 12px rgba(14,165,233,0.1);
         }
         .role-btn[data-role="buyer"].active .role-name {
             color: #0369a1;
@@ -259,7 +259,7 @@
         .role-btn[data-role="admin"].active {
             border-color: #7c3aed;
             background: #faf5ff;
-            box-shadow: 0 4px 12px rgba(124,58,237,0.12);
+            box-shadow: 0 4px 12px rgba(124,58,237,0.1);
         }
         .role-btn[data-role="admin"].active .role-name {
             color: #6d28d9;
@@ -273,7 +273,7 @@
 
         /* ── Input Fields ── */
         .field-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
         .input-wrap {
             position: relative;
@@ -282,14 +282,13 @@
             width: 100%;
             background: #ffffff;
             border: 1px solid #d1d5db;
-            border-radius: 16px;
-            padding: 14px 14px 14px 44px;
+            border-radius: 14px;
+            padding: 12px 14px 12px 42px;
             font-size: 0.88rem;
             color: var(--text-main);
             outline: none;
             transition: all 0.2s ease;
             font-family: 'Inter', sans-serif;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
         }
         .field-input::placeholder {
             color: var(--text-muted);
@@ -302,27 +301,24 @@
         /* Icons inside Inputs */
         .input-icon {
             position: absolute;
-            left: 16px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
             color: #15803d;
-            font-size: 1.05rem;
+            font-size: 1rem;
             pointer-events: none;
-        }
-        .input-icon.password-icon {
-            color: #15803d;
         }
 
         .password-toggle {
             position: absolute;
-            right: 16px;
+            right: 14px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             color: var(--text-sec);
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             padding: 0;
             outline: none;
         }
@@ -331,8 +327,8 @@
         .forgot-row {
             display: flex;
             justify-content: flex-end;
-            margin-top: 8px;
-            margin-bottom: 20px;
+            margin-top: 6px;
+            margin-bottom: 16px;
         }
         .forgot-link {
             font-size: 0.78rem;
@@ -348,10 +344,10 @@
         /* ── Submit Button ── */
         .login-btn {
             width: 100%;
-            padding: 14px;
+            padding: 13px;
             background: linear-gradient(135deg, #15803d, #16a34a);
             border: none;
-            border-radius: 20px;
+            border-radius: 18px;
             font-size: 0.95rem;
             font-weight: 700;
             color: white;
@@ -362,20 +358,20 @@
             justify-content: center;
             gap: 8px;
             transition: all 0.25s;
-            box-shadow: 0 4px 15px rgba(21,128,61,0.25);
+            box-shadow: 0 4px 15px rgba(21,128,61,0.22);
             letter-spacing: 0.2px;
             position: relative;
         }
         .login-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(21,128,61,0.35);
+            box-shadow: 0 6px 20px rgba(21,128,61,0.3);
             background: linear-gradient(135deg, #166534, #15803d);
         }
         .login-btn:active {
             transform: translateY(0);
         }
 
-        /* Button Sparkles and pulse effects */
+        /* Sparkle Icon */
         .sparkle-icon {
             font-size: 0.75rem;
             color: rgba(255,255,255,0.7);
@@ -386,7 +382,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 22px 0;
+            margin: 18px 0;
         }
         .or-line {
             flex: 1;
@@ -394,8 +390,8 @@
             background: #e5e7eb;
         }
         .or-text {
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 0.72rem;
+            font-weight: 700;
             color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -405,15 +401,15 @@
         .social-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 24px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         .social-btn {
             background: #ffffff;
             border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 12px 10px;
-            font-size: 0.8rem;
+            border-radius: 14px;
+            padding: 11px 8px;
+            font-size: 0.78rem;
             font-weight: 700;
             color: #374151;
             cursor: pointer;
@@ -421,7 +417,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.2s;
         }
         .social-btn:hover {
@@ -429,12 +425,12 @@
             border-color: #d1d5db;
         }
         .google-icon {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
         }
         .aadhaar-fingerprint {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             background-image: url('https://img.icons8.com/color/48/fingerprint.png');
             background-size: contain;
             background-repeat: no-repeat;
@@ -443,9 +439,9 @@
         /* ── Bottom Register row ── */
         .register-row {
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: #374151;
-            font-weight: 500;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -469,19 +465,19 @@
         }
         .modal-backdrop.open { display: flex; }
         .modal-card {
-            background: white; border-radius: 28px; padding: 24px;
-            width: 100%; max-width: 360px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            background: white; border-radius: 24px; padding: 22px;
+            width: 100%; max-width: 340px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             animation: popup 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes popup { from{transform:scale(0.9);opacity:0;} to{transform:scale(1);opacity:1;} }
-        .modal-title { font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: #15803d; margin-bottom: 6px; text-align: center; }
-        .modal-subtitle { font-size: 0.78rem; color: #6b7280; text-align: center; margin-bottom: 20px; line-height: 1.4; }
+        .modal-title { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; color: #15803d; margin-bottom: 6px; text-align: center; }
+        .modal-subtitle { font-size: 0.75rem; color: #6b7280; text-align: center; margin-bottom: 18px; line-height: 1.4; }
         
-        .otp-inputs { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+        .otp-inputs { display: flex; gap: 8px; justify-content: center; margin-bottom: 18px; }
         .otp-box {
-            width: 46px; height: 46px; border: 1px solid #d1d5db; border-radius: 12px;
-            text-align: center; font-size: 1.25rem; font-weight: 700; color: #111827;
+            width: 42px; height: 42px; border: 1px solid #d1d5db; border-radius: 10px;
+            text-align: center; font-size: 1.2rem; font-weight: 700; color: #111827;
             outline: none; transition: border-color 0.2s;
         }
         .otp-box:focus { border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
@@ -546,21 +542,24 @@
             <!-- Farmer -->
             <button class="role-btn active" data-role="farmer" onclick="selectRole(this)">
                 <div class="role-avatar">
-                    <svg viewBox="0 0 64 64" width="44" height="44">
+                    <svg viewBox="0 0 64 64" width="48" height="48">
                         <circle cx="32" cy="32" r="30" fill="#e8f5e9"/>
                         <!-- Head -->
-                        <circle cx="32" cy="24" r="8" fill="#fdd835"/>
+                        <circle cx="32" cy="26" r="8.5" fill="#ffb74d"/>
+                        <circle cx="29.5" cy="25" r="1" fill="#212121"/>
+                        <circle cx="34.5" cy="25" r="1" fill="#212121"/>
                         <!-- Turban -->
-                        <path d="M24,20 Q32,10 40,20 Q32,15 24,20" fill="#1b5e20"/>
-                        <path d="M22,23 C22,17 42,17 42,23" fill="#2e7d32"/>
+                        <path d="M22,22 Q32,13 42,22" fill="#2e7d32"/>
+                        <path d="M21,24 Q32,16 43,24" fill="#1b5e20"/>
+                        <circle cx="32" cy="18" r="3.5" fill="#f57c00"/>
                         <!-- Mustache -->
-                        <path d="M29,26 Q32,28 35,26" stroke="#212121" stroke-width="2" fill="none"/>
+                        <path d="M27.5,29.5 Q32,32 36.5,29.5" stroke="#212121" stroke-width="2.5" fill="none" stroke-linecap="round"/>
                         <!-- Shirt -->
-                        <path d="M20,44 Q32,34 44,44 Z" fill="#2e7d32"/>
-                        <!-- Sprout in hand -->
-                        <path d="M22,42 L22,34" stroke="#1b5e20" stroke-width="2"/>
-                        <path d="M22,37 Q18,34 22,34 Z" fill="#4caf50"/>
-                        <path d="M22,39 Q26,36 22,36 Z" fill="#4caf50"/>
+                        <path d="M16,48 Q32,38 48,48 Z" fill="#1b5e20"/>
+                        <path d="M28,38 L36,38 L32,43 Z" fill="#ffb74d"/>
+                        <!-- Plant -->
+                        <path d="M20,46 L20,38" stroke="#f57c00" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M20,38 Q15,35 20,35 Q25,35 20,38" fill="#4caf50"/>
                     </svg>
                 </div>
                 <span class="role-name">Farmer</span>
@@ -570,15 +569,16 @@
             <!-- Buyer -->
             <button class="role-btn" data-role="buyer" onclick="selectRole(this)">
                 <div class="role-avatar">
-                    <svg viewBox="0 0 64 64" width="44" height="44">
-                        <circle cx="32" cy="32" r="30" fill="#e1f5fe"/>
-                        <!-- Cart -->
-                        <path d="M18,22 L22,22 L26,36 L44,36 L48,26 L22,26" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="28" cy="44" r="3" fill="#0284c7"/>
-                        <circle cx="42" cy="44" r="3" fill="#0284c7"/>
-                        <!-- Sprout inside -->
-                        <path d="M34,26 L34,20" stroke="#10b981" stroke-width="2"/>
-                        <path d="M34,23 Q30,20 34,20 Z" fill="#10b981"/>
+                    <svg viewBox="0 0 64 64" width="48" height="48">
+                        <circle cx="32" cy="32" r="30" fill="#e0f2fe"/>
+                        <!-- Wheels -->
+                        <circle cx="27" cy="45" r="3.5" fill="#0284c7"/>
+                        <circle cx="41" cy="45" r="3.5" fill="#0284c7"/>
+                        <!-- Cart Body -->
+                        <path d="M18,22 H23 L27,38 H43 L47,26 H24" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Sprout -->
+                        <path d="M35,26 V18" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M35,21 Q30,19 35,19 Q40,19 35,21" fill="#22c55e"/>
                     </svg>
                 </div>
                 <span class="role-name">Buyer</span>
@@ -588,13 +588,13 @@
             <!-- Admin -->
             <button class="role-btn" data-role="admin" onclick="selectRole(this)">
                 <div class="role-avatar">
-                    <svg viewBox="0 0 64 64" width="44" height="44">
-                        <circle cx="32" cy="32" r="30" fill="#f3e5f5"/>
+                    <svg viewBox="0 0 64 64" width="48" height="48">
+                        <circle cx="32" cy="32" r="30" fill="#faf5ff"/>
                         <!-- Shield -->
-                        <path d="M22,20 L32,15 L42,20 L42,34 Q42,44 32,48 Q22,44 22,34 Z" fill="#e040fb" stroke="#7b1fa2" stroke-width="2" stroke-linejoin="round"/>
-                        <!-- User inside -->
-                        <circle cx="32" cy="27" r="4" fill="#ffffff"/>
-                        <path d="M26,37 Q32,32 38,37 Z" fill="#ffffff"/>
+                        <path d="M21,21 L32,15 L43,21 V35 C43,45 32,49 32,49 C32,49 21,45 21,35 Z" fill="#818cf8" stroke="#4f46e5" stroke-width="2.5" stroke-linejoin="round"/>
+                        <!-- User icon -->
+                        <circle cx="32" cy="27" r="4.5" fill="#ffffff"/>
+                        <path d="M26,38 Q32,32 38,38 Z" fill="#ffffff"/>
                     </svg>
                 </div>
                 <span class="role-name">Admin</span>
@@ -615,8 +615,8 @@
 
             <div class="field-group">
                 <div class="input-wrap">
-                    <i class="fa-solid fa-lock input-icon password-icon"></i>
-                    <input id="password-input" type="password" class="field-input" placeholder="Password" autocomplete="current-password" required style="padding-right:48px;">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input id="password-input" type="password" class="field-input" placeholder="Password" autocomplete="current-password" required style="padding-right:44px;">
                     <button type="button" class="password-toggle" onclick="togglePassword()">
                         <i class="fa-regular fa-eye" id="eye-icon"></i>
                     </button>
