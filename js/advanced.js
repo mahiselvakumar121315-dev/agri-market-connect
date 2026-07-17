@@ -143,6 +143,8 @@ window.AdvancedFeatures = {
             this.renderColdStorage.bind(this),
             this.renderAutoGST.bind(this),
             this.renderDisputeEscrow.bind(this),
+            this.renderWorkforce.bind(this),
+            this.renderInputsMarket.bind(this),
         ];
 
         panels.forEach(fn => {
@@ -1354,6 +1356,314 @@ window.AdvancedFeatures = {
 
     resolveDispute: function(type) {
         if (window.NotificationManager) window.NotificationManager.createNotification('Dispute Action', `${type} intervention requested. Escrow remains locked until resolved.`, 'warning');
+    },
+
+    /* ══ MODULE 1: Smart Agricultural Workforce Management ══ */
+    renderWorkforce: function() {
+        return `<div class="adv-panel" style="grid-column: span 2;">
+            <div class="adv-panel-header">
+                <div class="adv-panel-title">
+                    <div class="adv-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(239,68,68,0.15));border-color:rgba(245,158,11,0.3);font-size:1.2rem;">👷</div>
+                    <div>
+                        <div class="adv-title">Smart Workforce Management</div>
+                        <div style="font-size:0.72rem;color:#64748b;">Connect farmers with skilled agricultural labourers — AI matched, GPS verified</div>
+                    </div>
+                </div>
+                <span class="adv-badge" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);color:#f59e0b;">AI-Powered</span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+                <!-- LEFT: Post a Labour Request -->
+                <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:16px;">
+                    <div style="font-size:0.82rem;font-weight:700;color:#f0fdf4;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                        <i class="fa-solid fa-tractor" style="color:#f59e0b;"></i> Post Labour Request
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <div>
+                            <label style="font-size:0.65rem;color:#64748b;display:block;margin-bottom:3px;">Work Type</label>
+                            <select class="adv-input" id="wf-work-type" style="margin-bottom:0;padding:7px 10px;font-size:0.75rem;">
+                                <option>Harvesting</option>
+                                <option>Seed Sowing</option>
+                                <option>Weeding</option>
+                                <option>Fertilizer Application</option>
+                                <option>Pesticide Spraying</option>
+                                <option>Transplanting</option>
+                                <option>Loading &amp; Unloading</option>
+                                <option>Packaging</option>
+                                <option>Land Preparation</option>
+                                <option>Irrigation</option>
+                                <option>Transportation</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-size:0.65rem;color:#64748b;display:block;margin-bottom:3px;">Crop Name</label>
+                            <input class="adv-input" id="wf-crop" placeholder="e.g. Tomato" style="margin-bottom:0;padding:7px 10px;font-size:0.75rem;">
+                        </div>
+                        <div>
+                            <label style="font-size:0.65rem;color:#64748b;display:block;margin-bottom:3px;">Workers Required</label>
+                            <select class="adv-input" id="wf-workers" style="margin-bottom:0;padding:7px 10px;font-size:0.75rem;">
+                                ${[1,2,3,4,5,6,8,10,15,20,25,30,40,'50+'].map(n=>`<option>${n}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-size:0.65rem;color:#64748b;display:block;margin-bottom:3px;">Area (Acres)</label>
+                            <input class="adv-input" id="wf-area" type="number" placeholder="e.g. 5" style="margin-bottom:0;padding:7px 10px;font-size:0.75rem;">
+                        </div>
+                        <div>
+                            <label style="font-size:0.65rem;color:#64748b;display:block;margin-bottom:3px;">Wage per Worker</label>
+                            <input class="adv-input" id="wf-wage" type="number" placeholder="₹ Daily" style="margin-bottom:0;padding:7px 10px;font-size:0.75rem;">
+                        </div>
+                        <div>
+                            <label style="font-size:0.65rem;color:#64748b;display:block;margin-bottom:3px;">Urgency Level</label>
+                            <select class="adv-input" id="wf-urgency" style="margin-bottom:0;padding:7px 10px;font-size:0.75rem;">
+                                <option value="low">🟢 Low</option>
+                                <option value="medium" selected>🟡 Medium</option>
+                                <option value="high">🔴 High</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-size:0.65rem;color:#64748b;display:block;margin-bottom:3px;">Start Date</label>
+                            <input class="adv-input" id="wf-date" type="date" style="margin-bottom:0;padding:7px 10px;font-size:0.75rem;">
+                        </div>
+                        <div>
+                            <label style="font-size:0.65rem;color:#64748b;display:block;margin-bottom:3px;">Duration</label>
+                            <select class="adv-input" id="wf-duration" style="margin-bottom:0;padding:7px 10px;font-size:0.75rem;">
+                                <option>1 Day</option><option>2 Days</option><option>3 Days</option>
+                                <option>1 Week</option><option>2 Weeks</option><option>1 Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:10px;">
+                        <label style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:#94a3b8;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;cursor:pointer;">
+                            <input type="checkbox" id="wf-food" style="accent-color:#10b981;"> 🍱 Food
+                        </label>
+                        <label style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:#94a3b8;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;cursor:pointer;">
+                            <input type="checkbox" id="wf-accom" style="accent-color:#10b981;"> 🏠 Stay
+                        </label>
+                        <label style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:#94a3b8;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;cursor:pointer;">
+                            <input type="checkbox" id="wf-tools" style="accent-color:#10b981;"> 🛠️ Tools
+                        </label>
+                    </div>
+                    <button class="adv-btn amber" style="width:100%;justify-content:center;margin-top:12px;" onclick="AdvancedFeatures.postLabourJob()">
+                        <i class="fa-solid fa-bolt"></i> Post Job & AI-Match Workers
+                    </button>
+                </div>
+
+                <!-- RIGHT: AI Matched Workers + Stats -->
+                <div style="display:flex;flex-direction:column;gap:12px;">
+
+                    <!-- AI Cost Estimator -->
+                    <div style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(239,68,68,0.05));border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:12px;">
+                        <div style="font-size:0.72rem;color:#f59e0b;font-weight:600;margin-bottom:8px;"><i class="fa-solid fa-robot"></i> AI Labour Cost Estimator</div>
+                        <div style="display:flex;justify-content:space-between;">
+                            <div style="text-align:center;">
+                                <div style="font-size:0.65rem;color:#64748b;">Estimated Cost</div>
+                                <div style="font-size:1.1rem;font-weight:700;color:#f59e0b;">₹4,800</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-size:0.65rem;color:#64748b;">Workers Needed</div>
+                                <div style="font-size:1.1rem;font-weight:700;color:#f0fdf4;">8</div>
+                            </div>
+                            <div style="text-align:center;">
+                                <div style="font-size:0.65rem;color:#64748b;">Completion</div>
+                                <div style="font-size:1.1rem;font-weight:700;color:#10b981;">2 Days</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nearby Matched Workers -->
+                    <div style="font-size:0.75rem;font-weight:600;color:#f0fdf4;"><i class="fa-solid fa-users" style="color:#10b981;margin-right:6px;"></i>AI-Matched Workers Nearby</div>
+                    ${[
+                        { name:'Murugan S.', skills:'Harvesting, Weeding', dist:'1.2 km', wage:600, rating:4.8, available:true, jobs:42 },
+                        { name:'Ravi Kumar', skills:'Land Prep, Spraying', dist:'2.5 km', wage:550, rating:4.6, available:true, jobs:28 },
+                        { name:'Lakshmi Devi', skills:'Packaging, Sorting', dist:'3.1 km', wage:450, rating:4.9, available:false, jobs:61 },
+                    ].map(w => `
+                    <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px;display:flex;align-items:center;gap:10px;">
+                        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#10b981,#0ea5e9);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:0.8rem;flex-shrink:0;">${w.name.charAt(0)}</div>
+                        <div style="flex:1;">
+                            <div style="font-size:0.8rem;font-weight:600;color:#f0fdf4;">${w.name}</div>
+                            <div style="font-size:0.65rem;color:#64748b;">${w.skills}</div>
+                            <div style="display:flex;gap:8px;font-size:0.65rem;margin-top:3px;">
+                                <span style="color:#10b981;">⭐${w.rating}</span>
+                                <span style="color:#64748b;"><i class="fa-solid fa-location-dot"></i> ${w.dist}</span>
+                                <span style="color:#f59e0b;">₹${w.wage}/day</span>
+                                <span style="color:#64748b;">${w.jobs} jobs</span>
+                            </div>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:4px;">
+                            <span style="font-size:0.6rem;padding:2px 6px;border-radius:6px;${w.available ? 'background:rgba(16,185,129,0.15);color:#10b981;' : 'background:rgba(239,68,68,0.15);color:#ef4444;'}">${w.available ? 'Available' : 'Busy'}</span>
+                            <button style="font-size:0.6rem;padding:3px 8px;border-radius:6px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:#10b981;cursor:pointer;" onclick="AdvancedFeatures.hireWorker('${w.name}')">Hire</button>
+                        </div>
+                    </div>`).join('')}
+
+                    <button class="adv-btn" style="justify-content:center;font-size:0.72rem;" onclick="AdvancedFeatures.viewAllWorkers()">
+                        <i class="fa-solid fa-users-viewfinder"></i> View All 28 Nearby Workers
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    },
+
+    postLabourJob: function() {
+        const wt = document.getElementById('wf-work-type')?.value || 'Harvesting';
+        const workers = document.getElementById('wf-workers')?.value || '5';
+        if (window.NotificationManager) {
+            window.NotificationManager.createNotification('Job Posted! 🎉', `Labour request for ${wt} sent to ${workers} nearby workers. Responses expected within 30 mins.`, 'success');
+        }
+    },
+
+    hireWorker: function(name) {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Worker Hired', `${name} has been notified and confirmed. ETA: 45 min.`, 'success');
+    },
+
+    viewAllWorkers: function() {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Workers Map', '28 nearby workers loaded. GPS tracking enabled.', 'info');
+    },
+
+    /* ══ MODULE 2: Agricultural Inputs Marketplace ══ */
+    renderInputsMarket: function() {
+        const products = [
+            { name:'Urea (46-0-0)', brand:'IFFCO', type:'fertilizers', price:350, low:320, high:390, subsidy:'25%', rating:4.6, stock:'High', crops:'All crops', emoji:'🌿' },
+            { name:'DAP Fertilizer', brand:'Coromandel', type:'fertilizers', price:1350, low:1300, high:1450, subsidy:'20%', rating:4.8, stock:'Medium', crops:'Paddy, Wheat', emoji:'🌿' },
+            { name:'Hybrid Tomato Seeds', brand:'Syngenta', type:'seeds', price:680, low:650, high:750, subsidy:'0%', rating:4.7, stock:'High', crops:'Tomato', emoji:'🍅' },
+            { name:'Chlorpyrifos 20EC', brand:'Bayer', type:'pesticides', price:420, low:400, high:470, subsidy:'10%', rating:4.3, stock:'Low', crops:'Cotton, Paddy', emoji:'🧪' },
+            { name:'Glyphosate 41%', brand:'Excel Crop', type:'herbicides', price:280, low:260, high:320, subsidy:'0%', rating:4.1, stock:'High', crops:'All crops', emoji:'🌾' },
+            { name:'Bio Neem Oil', brand:'Organic India', type:'bio', price:190, low:175, high:220, subsidy:'15%', rating:4.9, stock:'Medium', crops:'Vegetables', emoji:'🌱' },
+            { name:'Micronutrient Mix', brand:'Multiplex', type:'micronutrients', price:450, low:420, high:490, subsidy:'5%', rating:4.5, stock:'High', crops:'All crops', emoji:'⚗️' },
+            { name:'Power Tiller Rental', brand:'Mahindra', type:'equipment', price:800, low:700, high:950, subsidy:'0%', rating:4.4, stock:'High', crops:'All', emoji:'🚜' },
+        ];
+
+        return `<div class="adv-panel" style="grid-column: span 2;">
+            <div class="adv-panel-header">
+                <div class="adv-panel-title">
+                    <div class="adv-icon purple" style="font-size:1.2rem;">🏪</div>
+                    <div>
+                        <div class="adv-title">Agricultural Inputs Marketplace</div>
+                        <div style="font-size:0.72rem;color:#64748b;">Compare fertilizers, seeds, pesticides, equipment — AI price prediction & subsidy info</div>
+                    </div>
+                </div>
+                <span class="adv-badge">AI Price Forecast</span>
+            </div>
+
+            <!-- Search + Filter Bar -->
+            <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+                <input class="adv-input" id="inp-search" placeholder="🔍 Search fertilizer, seed, pesticide..." style="flex:1;margin-bottom:0;min-width:200px;" oninput="AdvancedFeatures.filterInputs()">
+                <select class="adv-input" id="inp-cat" style="margin-bottom:0;width:160px;" onchange="AdvancedFeatures.filterInputs()">
+                    <option value="all">All Categories</option>
+                    <option value="fertilizers">🌿 Fertilizers</option>
+                    <option value="seeds">🌱 Seeds</option>
+                    <option value="pesticides">🧪 Pesticides</option>
+                    <option value="herbicides">🌾 Herbicides</option>
+                    <option value="bio">🍃 Bio Inputs</option>
+                    <option value="micronutrients">⚗️ Micronutrients</option>
+                    <option value="equipment">🚜 Equipment</option>
+                </select>
+            </div>
+
+            <!-- AI Recommendation Box -->
+            <div style="background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(16,185,129,0.08));border:1px solid rgba(99,102,241,0.2);border-radius:12px;padding:12px;margin-bottom:14px;">
+                <div style="font-size:0.75rem;font-weight:600;color:#6366f1;margin-bottom:8px;"><i class="fa-solid fa-robot"></i> AI Fertilizer Recommendation for Tomato — Sandy Loam — Vegetative Stage</div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                    <div style="display:flex;align-items:center;gap:8px;background:rgba(99,102,241,0.08);border-radius:8px;padding:8px 12px;">
+                        <span style="font-size:1.1rem;">🌿</span>
+                        <div>
+                            <div style="font-size:0.75rem;font-weight:600;color:#f0fdf4;">NPK 17:17:17</div>
+                            <div style="font-size:0.65rem;color:#64748b;">50 kg/acre @ 30 days</div>
+                            <div style="font-size:0.65rem;color:#10b981;">Est. Cost: ₹1,200</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;background:rgba(16,185,129,0.08);border-radius:8px;padding:8px 12px;">
+                        <span style="font-size:1.1rem;">💧</span>
+                        <div>
+                            <div style="font-size:0.75rem;font-weight:600;color:#f0fdf4;">Micronutrient Mix</div>
+                            <div style="font-size:0.65rem;color:#64748b;">Foliar spray — 2 ml/L</div>
+                            <div style="font-size:0.65rem;color:#10b981;">Est. Cost: ₹450</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;background:rgba(14,165,233,0.08);border-radius:8px;padding:8px 12px;">
+                        <span style="font-size:1.1rem;">🍃</span>
+                        <div>
+                            <div style="font-size:0.75rem;font-weight:600;color:#f0fdf4;">Bio Neem Oil</div>
+                            <div style="font-size:0.65rem;color:#64748b;">Pest prevention — weekly</div>
+                            <div style="font-size:0.65rem;color:#10b981;">Est. Cost: ₹190</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="inputs-product-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+                ${products.map(p => `
+                <div class="inp-card" data-type="${p.type}" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(99,102,241,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.07)'">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                        <span style="font-size:1.5rem;">${p.emoji}</span>
+                        <span style="font-size:0.6rem;padding:2px 8px;border-radius:6px;background:rgba(16,185,129,0.1);color:#10b981;border:1px solid rgba(16,185,129,0.2);">${p.type}</span>
+                    </div>
+                    <div style="font-size:0.82rem;font-weight:600;color:#f0fdf4;margin-bottom:2px;">${p.name}</div>
+                    <div style="font-size:0.68rem;color:#64748b;margin-bottom:8px;">${p.brand} · For: ${p.crops}</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                        <div>
+                            <div style="font-size:0.65rem;color:#64748b;">Market Price</div>
+                            <div style="font-size:1rem;font-weight:700;color:#f0fdf4;">₹${p.price}<span style="font-size:0.65rem;color:#64748b;">/bag</span></div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-size:0.6rem;color:#10b981;">Low: ₹${p.low}</div>
+                            <div style="font-size:0.6rem;color:#ef4444;">High: ₹${p.high}</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:0.68rem;">
+                        <span style="color:#f59e0b;">⭐ ${p.rating}</span>
+                        <span style="color:#10b981;">Gov Subsidy: ${p.subsidy}</span>
+                        <span style="color:${p.stock==='High'?'#10b981':p.stock==='Medium'?'#f59e0b':'#ef4444'};">${p.stock} Stock</span>
+                    </div>
+                    <div style="display:flex;gap:6px;">
+                        <button style="flex:1;padding:6px;font-size:0.65rem;border-radius:8px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#6366f1;cursor:pointer;" onclick="AdvancedFeatures.addInputCart('${p.name}',${p.price})">🛒 Buy</button>
+                        <button style="flex:1;padding:6px;font-size:0.65rem;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;cursor:pointer;" onclick="AdvancedFeatures.showNearbyShops('${p.name}')">📍 Nearby</button>
+                    </div>
+                </div>`).join('')}
+            </div>
+
+            <!-- Price Prediction Strip -->
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px;margin-top:14px;">
+                <div style="font-size:0.75rem;font-weight:600;color:#f0fdf4;margin-bottom:8px;"><i class="fa-solid fa-chart-line" style="color:#10b981;"></i> AI Price Trend — Urea (Confidence: 87%)</div>
+                <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;">
+                    ${['Today','Tomorrow','This Week','This Month','Next Season'].map((label,i)=>{
+                        const prices = [350, 345, 338, 360, 310];
+                        const colors = ['#f0fdf4','#10b981','#10b981','#f59e0b','#10b981'];
+                        const arrows = ['→','↓','↓','↑','↓'];
+                        return `<div style="min-width:90px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;text-align:center;">
+                            <div style="font-size:0.6rem;color:#64748b;margin-bottom:4px;">${label}</div>
+                            <div style="font-size:1rem;font-weight:700;color:${colors[i]};">${arrows[i]} ₹${prices[i]}</div>
+                        </div>`;
+                    }).join('')}
+                    <div style="min-width:90px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:10px;text-align:center;">
+                        <div style="font-size:0.6rem;color:#64748b;margin-bottom:4px;">Best Buy</div>
+                        <div style="font-size:0.7rem;font-weight:700;color:#10b981;">Next Season</div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    },
+
+    filterInputs: function() {
+        const search = (document.getElementById('inp-search')?.value || '').toLowerCase();
+        const cat = document.getElementById('inp-cat')?.value || 'all';
+        document.querySelectorAll('.inp-card').forEach(card => {
+            const type = card.dataset.type;
+            const text = card.textContent.toLowerCase();
+            const catMatch = cat === 'all' || type === cat;
+            const searchMatch = !search || text.includes(search);
+            card.style.display = (catMatch && searchMatch) ? 'block' : 'none';
+        });
+    },
+
+    addInputCart: function(name, price) {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Added to Cart 🛒', `${name} — ₹${price} added. Delivery in 2-3 days from nearest dealer.`, 'success');
+    },
+
+    showNearbyShops: function(name) {
+        if (window.NotificationManager) window.NotificationManager.createNotification('Nearby Shops', `3 dealers found for ${name} within 5 km. Closest: AgroBazar — 1.4 km.`, 'info');
     }
 };
 
