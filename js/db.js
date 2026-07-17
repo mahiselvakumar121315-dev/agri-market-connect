@@ -10,33 +10,39 @@ window.AgriDB = {
     serverUrl: 'http://localhost:3000',
     db: null,
 
-    // Initial check and database setup
-    init: async function() {
-        console.log("⚙️ [AgriDB] Checking for backend server...");
-        try {
-            // Quick health check to see if backend server is online
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), 200); // 200ms timeout
-            
-            const response = await fetch(`${this.serverUrl}/api/health`, { signal: controller.signal });
-            clearTimeout(id);
-            if (response.ok) {
-                this.isServer = true;
-                console.log("🚀 [AgriDB] Backend server detected. Running in SERVER Mode.");
-            }
-        } catch (e) {
-            console.log("🔌 [AgriDB] Backend offline. Running in LOCAL (IndexedDB) Mode.");
-        }
+    initPromise: null,
 
-        if (!this.isServer) {
-            await this.initIndexedDB();
-        }
+    // Initial check and database setup
+    init: function() {
+        if (this.initPromise) return this.initPromise;
+        this.initPromise = (async () => {
+            console.log("⚙️ [AgriDB] Checking for backend server...");
+            try {
+                // Quick health check to see if backend server is online
+                const controller = new AbortController();
+                const id = setTimeout(() => controller.abort(), 200); // 200ms timeout
+                
+                const response = await fetch(`${this.serverUrl}/api/health`, { signal: controller.signal });
+                clearTimeout(id);
+                if (response.ok) {
+                    this.isServer = true;
+                    console.log("🚀 [AgriDB] Backend server detected. Running in SERVER Mode.");
+                }
+            } catch (e) {
+                console.log("🔌 [AgriDB] Backend offline. Running in LOCAL (IndexedDB) Mode.");
+            }
+
+            if (!this.isServer) {
+                await this.initIndexedDB();
+            }
+        })();
+        return this.initPromise;
     },
 
     // IndexedDB setup & Seeding
     initIndexedDB: function() {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open('AgriMarketDB', 2);
+            const request = indexedDB.open('AgriMarketDB', 3);
 
             request.onerror = (e) => {
                 console.error("❌ [IndexedDB] Error opening database", e);
@@ -135,7 +141,10 @@ window.AgriDB = {
     },
 
     // Unified helper for transaction queries
-    _dbTransaction: function(storeName, mode, callback) {
+    _dbTransaction: async function(storeName, mode, callback) {
+        if (this.initPromise) {
+            await this.initPromise;
+        }
         return new Promise((resolve, reject) => {
             if (!this.db) {
                 return reject("Database not initialized");

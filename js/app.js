@@ -172,18 +172,18 @@ window.GlobalState = {
         }
     },
 
-    // Load wallet from DB
     loadWalletFromDB: async function() {
         try {
             const username = sessionStorage.getItem('agri_user') || 'buyer@fresh.com';
             if (window.AgriDB) {
-                this.walletBalance = await window.AgriDB.getWalletBalance(username);
+                this.walletBalance = (await window.AgriDB.getWalletBalance(username)) || 0;
             } else {
                 this.walletBalance = 42500;
             }
             this._updateWalletDisplay();
         } catch(e) {
             this.walletBalance = 42500;
+            this._updateWalletDisplay();
         }
     },
 
