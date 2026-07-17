@@ -7,424 +7,646 @@
     <meta name="description" content="Login to Agri Market Connect — India's premier digital agricultural marketplace for Farmers, Buyers and Admins.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --primary: #16a34a;
+            --primary: #15803d;
             --primary-light: #22c55e;
-            --primary-dark: #15803d;
-            --primary-glow: rgba(34,197,94,0.25);
-            --secondary: #0ea5e9;
-            --bg: #060d0a;
-            --bg-card: rgba(255,255,255,0.04);
-            --border: rgba(255,255,255,0.08);
-            --border-active: rgba(34,197,94,0.5);
-            --text: #f0fdf4;
-            --text-muted: #64748b;
-            --text-sec: #94a3b8;
-            --danger: #ef4444;
-            --amber: #f59e0b;
+            --primary-dark: #166534;
+            --primary-glow: rgba(22,163,74,0.15);
+            --bg: #f3f4f6;
+            --text-main: #1f2937;
+            --text-sec: #4b5563;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             position: relative;
+            overflow-x: hidden;
+            padding: 16px;
         }
 
-        /* ── Animated Background ── */
-        .bg-scene {
-            position: fixed; inset: 0; z-index: 0; overflow: hidden;
+        /* ── Real Image Background ── */
+        .bg-container {
+            position: fixed; inset: 0; z-index: 0;
+            background-image: url('https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&q=80&w=1200');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
-        .bg-gradient {
+        .bg-overlay {
             position: absolute; inset: 0;
-            background: radial-gradient(ellipse 80% 60% at 20% 80%, rgba(22,163,74,0.18) 0%, transparent 60%),
-                        radial-gradient(ellipse 60% 50% at 80% 10%, rgba(14,165,233,0.12) 0%, transparent 55%),
-                        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(22,163,74,0.06) 0%, transparent 70%);
+            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: brightness(0.9) contrast(1.05);
         }
-        .bg-grid {
-            position: absolute; inset: 0;
-            background-image: linear-gradient(rgba(34,197,94,0.04) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(34,197,94,0.04) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
+
+        /* Sparkles & Leaf overlay effects */
+        .sparkle-overlay {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 1px, transparent 1px),
+                              radial-gradient(circle at 75% 15%, rgba(255,255,255,0.4) 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 50% 60%, rgba(255,255,255,0.2) 2px, transparent 2px);
+            background-size: 120px 120px;
+            opacity: 0.85;
         }
-        @keyframes gridMove { from { transform: translateY(0); } to { transform: translateY(50px); } }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            animation: orbFloat 8s ease-in-out infinite;
-        }
-        .orb-1 { width: 500px; height: 500px; background: rgba(22,163,74,0.15); left: -150px; bottom: -150px; animation-delay: 0s; }
-        .orb-2 { width: 350px; height: 350px; background: rgba(14,165,233,0.12); right: -100px; top: -100px; animation-delay: -4s; }
-        .orb-3 { width: 200px; height: 200px; background: rgba(34,197,94,0.08); left: 50%; top: 50%; animation-delay: -2s; }
-        @keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
-
-        /* Floating leaf particles */
-        .leaf { position: absolute; font-size: 1.2rem; opacity: 0.15; animation: leafFall linear infinite; }
-        @keyframes leafFall { 0%{transform:translateY(-100px) rotate(0deg);opacity:0;} 20%{opacity:0.15;} 80%{opacity:0.15;} 100%{transform:translateY(110vh) rotate(720deg);opacity:0;} }
-
-        /* ── Main Layout ── */
+        /* ── Main Form Wrap ── */
         .page-wrap {
             position: relative; z-index: 10;
-            width: 100%; max-width: 460px;
-            padding: 16px;
-            animation: pageIn 0.8s cubic-bezier(0.34,1.56,0.64,1);
+            width: 100%; max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: slideUp 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        @keyframes pageIn { from{opacity:0;transform:translateY(40px) scale(0.95)} to{opacity:1;transform:none} }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* ── Brand Header ── */
-        .brand-header { text-align: center; margin-bottom: 24px; }
-        .brand-logo {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: linear-gradient(135deg, rgba(22,163,74,0.15), rgba(14,165,233,0.1));
-            border: 1px solid rgba(34,197,94,0.25);
-            border-radius: 16px; padding: 10px 18px; margin-bottom: 14px;
+        /* ── Logo & Header ── */
+        .brand-logo-container {
+            width: 90px; height: 90px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(21,128,61,0.2), inset 0 -4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
+            border: 2px solid rgba(255,255,255,0.8);
         }
-        .logo-icon {
-            width: 42px; height: 42px; border-radius: 12px;
-            background: linear-gradient(135deg, #16a34a, #22c55e);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.3rem; box-shadow: 0 4px 20px rgba(34,197,94,0.4);
+        .brand-logo-img {
+            width: 80px; height: 80px;
         }
-        .logo-text { text-align: left; }
-        .logo-name {
-            font-size: 1.05rem; font-weight: 800; letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #22c55e, #86efac);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; display: block;
-        }
-        .logo-sub { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
 
+        .app-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #14532d;
+            text-align: center;
+            line-height: 1.1;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+            margin-bottom: 6px;
+        }
         .tagline {
-            font-size: 0.78rem; color: var(--text-sec); line-height: 1.5;
-            font-style: italic; margin-bottom: 6px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #14532d;
+            text-align: center;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
-        .developer-credit {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 20px; padding: 4px 12px;
-            font-size: 0.7rem; color: var(--text-muted);
+        .leaf-divider {
+            color: #22c55e;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
         }
-        .developer-credit strong { color: #22c55e; }
+        .developer-badge {
+            font-size: 0.75rem;
+            color: #1f2937;
+            background: rgba(255,255,255,0.8);
+            padding: 4px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            backdrop-filter: blur(4px);
+            font-weight: 500;
+        }
+        .developer-badge strong {
+            color: #166534;
+            font-weight: 700;
+        }
 
-        /* ── Card ── */
+        /* ── Glass Login Card ── */
         .login-card {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: 0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
-            position: relative; overflow: hidden;
-        }
-        .card-shine {
-            position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(34,197,94,0.5), transparent);
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 36px;
+            padding: 32px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
         }
 
-        /* ── Welcome ── */
+        /* Welcome text */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
         .welcome-title {
-            font-size: 1.4rem; font-weight: 700; color: var(--text);
-            margin-bottom: 4px; text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #15803d;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
-        .welcome-sub { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-bottom: 20px; }
+        .welcome-subtitle {
+            font-size: 0.8rem;
+            color: #4b5563;
+            font-weight: 500;
+        }
 
-        /* ── Role Selector ── */
-        .role-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .roles-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+        /* Role Selector grid */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
         .role-btn {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 14px; padding: 12px 6px;
-            cursor: pointer; transition: all 0.25s;
-            display: flex; flex-direction: column; align-items: center; gap: 5px;
-            position: relative; overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 14px 6px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            outline: none;
         }
-        .role-btn .role-emoji { font-size: 1.5rem; }
-        .role-btn .role-name { font-size: 0.72rem; font-weight: 600; color: var(--text-sec); transition: color 0.25s; }
-        .role-btn:hover { border-color: var(--border-active); background: rgba(34,197,94,0.06); transform: translateY(-2px); }
-        .role-btn.active {
-            border-color: var(--primary-light);
-            background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(22,163,74,0.08));
-            box-shadow: 0 0 20px rgba(34,197,94,0.2);
+        .role-avatar {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .role-btn.active .role-name { color: #22c55e; }
-        .role-btn.active::after {
-            content: '✓'; position: absolute; top: 5px; right: 7px;
-            font-size: 0.6rem; background: #16a34a; color: white;
-            width: 14px; height: 14px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+        .role-name {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #4b5563;
         }
-        /* Admin role — special */
-        .role-btn[data-role="admin"].active { border-color: #6366f1; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.05)); }
-        .role-btn[data-role="admin"].active .role-name { color: #818cf8; }
-        .role-btn[data-role="admin"].active::after { background: #6366f1; }
 
-        /* ── Divider ── */
-        .section-divider {
-            height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent);
-            margin: 18px 0;
+        /* Radio Circle Indicator */
+        .radio-indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            transition: all 0.2s;
+        }
+        .radio-indicator::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: transparent;
+            display: block;
+        }
+
+        /* Active Farmer Role State */
+        .role-btn[data-role="farmer"].active {
+            border-color: #22c55e;
+            background: #f0fdf4;
+            box-shadow: 0 4px 12px rgba(34,197,94,0.12);
+        }
+        .role-btn[data-role="farmer"].active .role-name {
+            color: #15803d;
+        }
+        .role-btn[data-role="farmer"].active .radio-indicator {
+            border-color: #22c55e;
+        }
+        .role-btn[data-role="farmer"].active .radio-indicator::after {
+            background: #22c55e;
+        }
+
+        /* Active Buyer Role State */
+        .role-btn[data-role="buyer"].active {
+            border-color: #0ea5e9;
+            background: #f0f9ff;
+            box-shadow: 0 4px 12px rgba(14,165,233,0.12);
+        }
+        .role-btn[data-role="buyer"].active .role-name {
+            color: #0369a1;
+        }
+        .role-btn[data-role="buyer"].active .radio-indicator {
+            border-color: #0ea5e9;
+        }
+        .role-btn[data-role="buyer"].active .radio-indicator::after {
+            background: #0ea5e9;
+        }
+
+        /* Active Admin Role State */
+        .role-btn[data-role="admin"].active {
+            border-color: #7c3aed;
+            background: #faf5ff;
+            box-shadow: 0 4px 12px rgba(124,58,237,0.12);
+        }
+        .role-btn[data-role="admin"].active .role-name {
+            color: #6d28d9;
+        }
+        .role-btn[data-role="admin"].active .radio-indicator {
+            border-color: #7c3aed;
+        }
+        .role-btn[data-role="admin"].active .radio-indicator::after {
+            background: #7c3aed;
         }
 
         /* ── Input Fields ── */
-        .field-group { margin-bottom: 14px; }
-        .field-label { font-size: 0.72rem; color: var(--text-sec); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
-        .input-wrap { position: relative; }
-        .input-icon {
-            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-            color: var(--text-muted); font-size: 0.9rem; pointer-events: none;
-            transition: color 0.2s;
+        .field-group {
+            margin-bottom: 14px;
+        }
+        .input-wrap {
+            position: relative;
         }
         .field-input {
-            width: 100%; background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 14px; padding: 13px 14px 13px 40px;
-            font-size: 0.9rem; color: var(--text); font-family: 'Outfit', sans-serif;
-            outline: none; transition: all 0.25s;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 16px;
+            padding: 14px 14px 14px 44px;
+            font-size: 0.88rem;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
         }
-        .field-input::placeholder { color: var(--text-muted); }
+        .field-input::placeholder {
+            color: var(--text-muted);
+        }
         .field-input:focus {
             border-color: var(--primary-light);
-            background: rgba(34,197,94,0.06);
-            box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+            box-shadow: 0 0 0 3px var(--primary-glow);
         }
-        .field-input:focus + .input-icon, .input-wrap:focus-within .input-icon { color: var(--primary-light); }
+
+        /* Icons inside Inputs */
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #15803d;
+            font-size: 1.05rem;
+            pointer-events: none;
+        }
+        .input-icon.password-icon {
+            color: #15803d;
+        }
+
         .password-toggle {
-            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-            background: none; border: none; color: var(--text-muted);
-            cursor: pointer; font-size: 0.9rem; transition: color 0.2s; padding: 0;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-sec);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0;
+            outline: none;
         }
-        .password-toggle:hover { color: var(--primary-light); }
 
-        /* ── Forgot Password ── */
-        .forgot-row { display: flex; justify-content: flex-end; margin-top: -6px; margin-bottom: 14px; }
+        /* Forgot Password link */
+        .forgot-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 8px;
+            margin-bottom: 20px;
+        }
         .forgot-link {
-            font-size: 0.75rem; color: var(--primary-light);
-            text-decoration: none; transition: opacity 0.2s;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #15803d;
+            text-decoration: none;
+            transition: color 0.2s;
         }
-        .forgot-link:hover { opacity: 0.7; }
+        .forgot-link:hover {
+            color: var(--primary-light);
+        }
 
-        /* ── Login Button ── */
+        /* ── Submit Button ── */
         .login-btn {
-            width: 100%; padding: 14px;
-            background: linear-gradient(135deg, #16a34a, #22c55e);
-            border: none; border-radius: 14px;
-            font-size: 1rem; font-weight: 700; color: white;
-            cursor: pointer; font-family: 'Outfit', sans-serif;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 24px rgba(34,197,94,0.35);
-            letter-spacing: 0.3px; position: relative; overflow: hidden;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #15803d, #16a34a);
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s;
+            box-shadow: 0 4px 15px rgba(21,128,61,0.25);
+            letter-spacing: 0.2px;
+            position: relative;
         }
-        .login-btn::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-            opacity: 0; transition: opacity 0.3s;
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(21,128,61,0.35);
+            background: linear-gradient(135deg, #166534, #15803d);
         }
-        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(34,197,94,0.5); }
-        .login-btn:hover::before { opacity: 1; }
-        .login-btn:active { transform: translateY(0); }
-        .btn-pulse {
-            width: 8px; height: 8px; border-radius: 50%; background: white;
-            opacity: 0; animation: pulse 2s infinite;
+        .login-btn:active {
+            transform: translateY(0);
         }
-        @keyframes pulse { 0%,100%{opacity:0;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.5)} }
+
+        /* Button Sparkles and pulse effects */
+        .sparkle-icon {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.7);
+        }
 
         /* ── OR Divider ── */
-        .or-divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; }
-        .or-line { flex: 1; height: 1px; background: var(--border); }
-        .or-text { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
-
-        /* ── Social Buttons ── */
-        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 6px; }
-        .social-btn {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 12px; padding: 11px 12px;
-            font-size: 0.8rem; font-weight: 600; color: var(--text-sec);
-            cursor: pointer; font-family: 'Outfit', sans-serif;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: all 0.25s;
+        .or-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 22px 0;
         }
-        .social-btn:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); color: var(--text); transform: translateY(-1px); }
-        .google-icon { width: 18px; height: 18px; }
-        .aadhaar-icon { font-size: 1.1rem; }
+        .or-line {
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+        .or-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-        /* ── Register Link ── */
+        /* ── Social Login ── */
+        .social-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .social-btn {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 12px 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #374151;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .social-btn:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+        .google-icon {
+            width: 18px;
+            height: 18px;
+        }
+        .aadhaar-fingerprint {
+            width: 18px;
+            height: 18px;
+            background-image: url('https://img.icons8.com/color/48/fingerprint.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        /* ── Bottom Register row ── */
         .register-row {
-            text-align: center; margin-top: 20px;
-            font-size: 0.8rem; color: var(--text-muted);
+            text-align: center;
+            font-size: 0.85rem;
+            color: #374151;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         .register-link {
-            color: var(--primary-light); font-weight: 600;
-            text-decoration: none; margin-left: 4px; transition: opacity 0.2s;
+            color: #15803d;
+            font-weight: 700;
+            text-decoration: none;
         }
-        .register-link:hover { opacity: 0.7; text-decoration: underline; }
+        .register-link:hover {
+            text-decoration: underline;
+        }
 
-        /* ── OTP Modal ── */
+        /* ── Custom Modal ── */
         .modal-backdrop {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px); z-index: 100;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px); z-index: 100;
             display: none; align-items: center; justify-content: center;
+            padding: 16px;
         }
         .modal-backdrop.open { display: flex; }
         .modal-card {
-            background: #0a1510; border: 1px solid rgba(34,197,94,0.2);
-            border-radius: 20px; padding: 28px; width: 90%; max-width: 360px;
-            animation: pageIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            background: white; border-radius: 28px; padding: 24px;
+            width: 100%; max-width: 360px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            animation: popup 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .modal-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-        .modal-sub { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 20px; }
-        .otp-row { display: flex; gap: 10px; margin-bottom: 16px; }
-        .otp-input {
-            flex: 1; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            padding: 14px 0; text-align: center; font-size: 1.3rem;
-            font-weight: 700; color: var(--text); font-family: 'Outfit', sans-serif;
-            outline: none; transition: all 0.2s;
+        @keyframes popup { from{transform:scale(0.9);opacity:0;} to{transform:scale(1);opacity:1;} }
+        .modal-title { font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: #15803d; margin-bottom: 6px; text-align: center; }
+        .modal-subtitle { font-size: 0.78rem; color: #6b7280; text-align: center; margin-bottom: 20px; line-height: 1.4; }
+        
+        .otp-inputs { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+        .otp-box {
+            width: 46px; height: 46px; border: 1px solid #d1d5db; border-radius: 12px;
+            text-align: center; font-size: 1.25rem; font-weight: 700; color: #111827;
+            outline: none; transition: border-color 0.2s;
         }
-        .otp-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
-        .resend-link { font-size: 0.75rem; color: var(--primary-light); cursor: pointer; text-align: center; margin-bottom: 16px; }
-
-        /* ── Toast ── */
-        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 200; display: flex; flex-direction: column; gap: 8px; }
+        .otp-box:focus { border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
+        
+        /* ── Toasts ── */
+        .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 8px; }
         .toast {
-            background: #0d1f14; border: 1px solid rgba(34,197,94,0.3);
-            border-left: 3px solid #22c55e; border-radius: 10px;
-            padding: 12px 16px; min-width: 260px; max-width: 340px;
-            display: flex; gap: 10px; align-items: flex-start;
-            animation: toastIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
-            font-size: 0.82rem;
+            background: white; border: 1px solid #e5e7eb; border-left: 4px solid #16a34a;
+            border-radius: 12px; padding: 12px 18px; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08); font-size: 0.8rem; font-weight: 600; color: #374151;
+            animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .toast.error { border-color: rgba(239,68,68,0.3); border-left-color: #ef4444; }
-        @keyframes toastIn { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:none} }
-
-        /* ── Responsive ── */
-        @media (max-width: 480px) {
-            .page-wrap { padding: 12px; }
-            .login-card { padding: 20px 18px; border-radius: 20px; }
-            .logo-name { font-size: 0.95rem; }
-            .welcome-title { font-size: 1.2rem; }
-            .roles-grid { gap: 6px; }
-            .role-btn { padding: 10px 4px; }
-        }
+        .toast.error { border-left-color: #ef4444; }
+        @keyframes toastIn { from{transform:translateY(20px);opacity:0;} to{transform:translateY(0);opacity:1;} }
     </style>
 </head>
 <body>
 
-<!-- Animated Background -->
-<div class="bg-scene">
-    <div class="bg-gradient"></div>
-    <div class="bg-grid"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+<!-- Real Background Field -->
+<div class="bg-container">
+    <div class="bg-overlay"></div>
+    <div class="sparkle-overlay"></div>
 </div>
 
-<!-- Floating Leaves -->
-<div id="leaves-container"></div>
-
-<!-- Main Page Wrap -->
+<!-- Page Contents Wrap -->
 <div class="page-wrap">
 
-    <!-- Brand Header -->
-    <div class="brand-header">
-        <div class="brand-logo">
-            <div class="logo-icon">🌾</div>
-            <div class="logo-text">
-                <span class="logo-name">Agri Market Connect</span>
-                <span class="logo-sub">Digital Agricultural Platform</span>
-            </div>
-        </div>
-        <p class="tagline">"Connecting Farmers. Empowering Agriculture. Growing Together."</p>
-        <div class="developer-credit">
-            <i class="fa-solid fa-code" style="color:#22c55e;font-size:0.65rem;"></i>
-            Developed by <strong>S. Mahendran</strong>
-        </div>
+    <!-- Circle Logo -->
+    <div class="brand-logo-container">
+        <svg class="brand-logo-img" viewBox="0 0 100 100">
+            <!-- Sun -->
+            <circle cx="65" cy="40" r="14" fill="#fbbf24"/>
+            <!-- Hills -->
+            <path d="M15,80 Q35,60 55,80" fill="#15803d"/>
+            <path d="M40,80 Q65,55 90,80" fill="#16a34a"/>
+            <!-- Plant -->
+            <path d="M50,75 L50,45" stroke="#22c55e" stroke-width="4" stroke-linecap="round"/>
+            <path d="M50,55 Q35,50 35,42 Q45,42 50,55" fill="#22c55e"/>
+            <path d="M50,50 Q65,45 65,37 Q55,37 50,50" fill="#22c55e"/>
+            <path d="M50,45 Q40,35 50,28 Q60,35 50,45" fill="#4ade80"/>
+        </svg>
     </div>
 
-    <!-- Glass Login Card -->
+    <!-- Headings -->
+    <h1 class="app-title">Agri Market Connect</h1>
+    <p class="tagline">Connecting Farmers. Empowering Agriculture. Growing Together.</p>
+    <div class="leaf-divider">🍃</div>
+    <div class="developer-badge">Developed By <strong>S.Mahendran</strong></div>
+
+    <!-- Login Container Card -->
     <div class="login-card">
-        <div class="card-shine"></div>
-
-        <!-- Welcome -->
-        <div class="welcome-title">👋 Welcome!</div>
-        <div class="welcome-sub">Please choose your role to continue</div>
-
-        <!-- Role Selector -->
-        <div class="role-label">Select Your Role</div>
-        <div class="roles-grid">
-            <button class="role-btn active" data-role="farmer" onclick="selectRole(this)">
-                <span class="role-emoji">👨‍🌾</span>
-                <span class="role-name">Farmer</span>
-            </button>
-            <button class="role-btn" data-role="buyer" onclick="selectRole(this)">
-                <span class="role-emoji">🛒</span>
-                <span class="role-name">Buyer</span>
-            </button>
-            <button class="role-btn" data-role="admin" onclick="selectRole(this)">
-                <span class="role-emoji">🛡️</span>
-                <span class="role-name">Admin</span>
-            </button>
+        
+        <!-- Welcome Title -->
+        <div class="welcome-section">
+            <h2 class="welcome-title">✨ Welcome!</h2>
+            <p class="welcome-subtitle">Please choose your role to continue</p>
         </div>
 
-        <div class="section-divider"></div>
+        <!-- Role Select Grid -->
+        <div class="roles-grid">
+            
+            <!-- Farmer -->
+            <button class="role-btn active" data-role="farmer" onclick="selectRole(this)">
+                <div class="role-avatar">
+                    <svg viewBox="0 0 64 64" width="44" height="44">
+                        <circle cx="32" cy="32" r="30" fill="#e8f5e9"/>
+                        <!-- Head -->
+                        <circle cx="32" cy="24" r="8" fill="#fdd835"/>
+                        <!-- Turban -->
+                        <path d="M24,20 Q32,10 40,20 Q32,15 24,20" fill="#1b5e20"/>
+                        <path d="M22,23 C22,17 42,17 42,23" fill="#2e7d32"/>
+                        <!-- Mustache -->
+                        <path d="M29,26 Q32,28 35,26" stroke="#212121" stroke-width="2" fill="none"/>
+                        <!-- Shirt -->
+                        <path d="M20,44 Q32,34 44,44 Z" fill="#2e7d32"/>
+                        <!-- Sprout in hand -->
+                        <path d="M22,42 L22,34" stroke="#1b5e20" stroke-width="2"/>
+                        <path d="M22,37 Q18,34 22,34 Z" fill="#4caf50"/>
+                        <path d="M22,39 Q26,36 22,36 Z" fill="#4caf50"/>
+                    </svg>
+                </div>
+                <span class="role-name">Farmer</span>
+                <div class="radio-indicator"></div>
+            </button>
 
-        <!-- Login Form -->
+            <!-- Buyer -->
+            <button class="role-btn" data-role="buyer" onclick="selectRole(this)">
+                <div class="role-avatar">
+                    <svg viewBox="0 0 64 64" width="44" height="44">
+                        <circle cx="32" cy="32" r="30" fill="#e1f5fe"/>
+                        <!-- Cart -->
+                        <path d="M18,22 L22,22 L26,36 L44,36 L48,26 L22,26" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="28" cy="44" r="3" fill="#0284c7"/>
+                        <circle cx="42" cy="44" r="3" fill="#0284c7"/>
+                        <!-- Sprout inside -->
+                        <path d="M34,26 L34,20" stroke="#10b981" stroke-width="2"/>
+                        <path d="M34,23 Q30,20 34,20 Z" fill="#10b981"/>
+                    </svg>
+                </div>
+                <span class="role-name">Buyer</span>
+                <div class="radio-indicator"></div>
+            </button>
+
+            <!-- Admin -->
+            <button class="role-btn" data-role="admin" onclick="selectRole(this)">
+                <div class="role-avatar">
+                    <svg viewBox="0 0 64 64" width="44" height="44">
+                        <circle cx="32" cy="32" r="30" fill="#f3e5f5"/>
+                        <!-- Shield -->
+                        <path d="M22,20 L32,15 L42,20 L42,34 Q42,44 32,48 Q22,44 22,34 Z" fill="#e040fb" stroke="#7b1fa2" stroke-width="2" stroke-linejoin="round"/>
+                        <!-- User inside -->
+                        <circle cx="32" cy="27" r="4" fill="#ffffff"/>
+                        <path d="M26,37 Q32,32 38,37 Z" fill="#ffffff"/>
+                    </svg>
+                </div>
+                <span class="role-name">Admin</span>
+                <div class="radio-indicator"></div>
+            </button>
+
+        </div>
+
+        <!-- Form fields -->
         <form id="login-form" onsubmit="handleLogin(event)">
-
+            
             <div class="field-group">
-                <div class="field-label"><i class="fa-solid fa-mobile-screen"></i> Mobile Number / Email</div>
                 <div class="input-wrap">
-                    <i class="fa-solid fa-mobile-screen input-icon"></i>
-                    <input id="mobile-input" type="text" class="field-input" placeholder="Enter mobile or email" autocomplete="username" required>
+                    <i class="fa-solid fa-phone input-icon"></i>
+                    <input id="mobile-input" type="text" class="field-input" placeholder="Mobile Number / Email" autocomplete="username" required>
                 </div>
             </div>
 
             <div class="field-group">
-                <div class="field-label"><i class="fa-solid fa-lock"></i> Password</div>
                 <div class="input-wrap">
-                    <i class="fa-solid fa-lock input-icon"></i>
-                    <input id="password-input" type="password" class="field-input" placeholder="Enter your password" autocomplete="current-password" required style="padding-right:44px;">
-                    <button type="button" class="password-toggle" id="toggle-pwd" onclick="togglePassword()">
-                        <i class="fa-regular fa-eye" id="pwd-eye-icon"></i>
+                    <i class="fa-solid fa-lock input-icon password-icon"></i>
+                    <input id="password-input" type="password" class="field-input" placeholder="Password" autocomplete="current-password" required style="padding-right:48px;">
+                    <button type="button" class="password-toggle" onclick="togglePassword()">
+                        <i class="fa-regular fa-eye" id="eye-icon"></i>
                     </button>
                 </div>
             </div>
 
+            <!-- Forgot Password Row -->
             <div class="forgot-row">
-                <a href="#" class="forgot-link" onclick="openOtpModal(event)">🔑 Forgot Password?</a>
+                <a href="#" class="forgot-link" onclick="openOtpModal(event)">Forgot Password?</a>
             </div>
 
+            <!-- Login Securely Button -->
             <button type="submit" class="login-btn" id="login-btn">
-                <div class="btn-pulse"></div>
-                <i class="fa-solid fa-rocket"></i>
-                <span id="btn-text">Login</span>
+                <i class="fa-solid fa-lock"></i>
+                <span id="btn-text">Login Securely</span>
+                <span class="sparkle-icon">✦</span>
             </button>
+
         </form>
 
         <!-- OR Divider -->
         <div class="or-divider">
             <div class="or-line"></div>
-            <div class="or-text">──── OR ────</div>
+            <div class="or-text">OR</div>
             <div class="or-line"></div>
         </div>
 
-        <!-- Social Login -->
-        <div class="social-grid">
+        <!-- Social login buttons -->
+        <div class="social-row">
             <button class="social-btn" onclick="googleLogin()">
-                <!-- Google Icon SVG -->
                 <svg class="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -434,159 +656,125 @@
                 Continue with Google
             </button>
             <button class="social-btn" onclick="aadhaarLogin()">
-                <span class="aadhaar-icon">🪪</span>
+                <div class="aadhaar-fingerprint"></div>
                 Aadhaar Login
             </button>
         </div>
 
         <!-- Register Link -->
         <div class="register-row">
-            Don't have an account?
-            <a href="#" class="register-link" onclick="goRegister(event)">Register Now →</a>
+            🌱 Don’t have an account? <a href="#" class="register-link" onclick="goRegister(event)">Register Now</a>
         </div>
+
     </div>
 </div>
 
-<!-- OTP Modal (Forgot Password) -->
+<!-- OTP Modal -->
 <div class="modal-backdrop" id="otp-modal">
     <div class="modal-card">
-        <div class="modal-title">🔐 Reset Password</div>
-        <div class="modal-sub" id="otp-step-msg">Enter your registered mobile number to receive OTP</div>
-
+        <h3 class="modal-title">🔐 Reset Password</h3>
+        <p class="modal-subtitle" id="otp-status-msg">Enter registered mobile to receive confirmation code</p>
+        
         <div id="otp-step-1">
-            <div class="field-group" style="margin-bottom:12px;">
-                <div class="input-wrap">
-                    <i class="fa-solid fa-mobile-screen input-icon"></i>
-                    <input id="reset-mobile" type="text" class="field-input" placeholder="Mobile number / email">
-                </div>
+            <div class="field-group" style="margin-bottom: 12px;">
+                <input id="reset-phone" type="text" class="field-input" placeholder="Mobile Number" style="padding-left:16px;">
             </div>
-            <button class="login-btn" style="font-size:0.9rem;" onclick="sendOtp()">
-                <i class="fa-solid fa-paper-plane"></i> Send OTP
-            </button>
+            <button class="login-btn" onclick="sendOtp()">Send Verification Code</button>
         </div>
 
         <div id="otp-step-2" style="display:none;">
-            <div class="otp-row">
-                <input class="otp-input" maxlength="1" oninput="otpNext(this,0)">
-                <input class="otp-input" maxlength="1" oninput="otpNext(this,1)">
-                <input class="otp-input" maxlength="1" oninput="otpNext(this,2)">
-                <input class="otp-input" maxlength="1" oninput="otpNext(this,3)">
+            <div class="otp-inputs">
+                <input class="otp-box" maxlength="1" oninput="focusNext(this, 0)">
+                <input class="otp-box" maxlength="1" oninput="focusNext(this, 1)">
+                <input class="otp-box" maxlength="1" oninput="focusNext(this, 2)">
+                <input class="otp-box" maxlength="1" oninput="focusNext(this, 3)">
             </div>
-            <div class="resend-link" onclick="sendOtp()">↩ Resend OTP</div>
-            <button class="login-btn" style="font-size:0.9rem;" onclick="verifyOtp()">
-                <i class="fa-solid fa-check-circle"></i> Verify & Reset
-            </button>
+            <button class="login-btn" onclick="verifyOtp()">Confirm OTP</button>
         </div>
 
-        <button onclick="closeOtpModal()" style="display:block;width:100%;margin-top:12px;background:none;border:none;color:var(--text-muted);font-size:0.8rem;cursor:pointer;font-family:'Outfit',sans-serif;">Cancel</button>
+        <button onclick="closeOtpModal()" style="display:block;width:100%;margin-top:12px;background:none;border:none;color:var(--text-muted);font-size:0.75rem;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;">Cancel</button>
     </div>
 </div>
 
-<!-- Toast Container -->
+<!-- Toast element -->
 <div class="toast-container" id="toast-container"></div>
 
 <script>
-    /* ── Floating Leaves ── */
-    (function createLeaves() {
-        const container = document.getElementById('leaves-container');
-        const leaves = ['🌿','🌱','🍃','🌾','🍀'];
-        for (let i = 0; i < 12; i++) {
-            const leaf = document.createElement('div');
-            leaf.className = 'leaf';
-            leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
-            leaf.style.cssText = `
-                left: ${Math.random() * 100}%;
-                font-size: ${0.8 + Math.random() * 0.8}rem;
-                animation-duration: ${8 + Math.random() * 12}s;
-                animation-delay: ${Math.random() * 10}s;
-            `;
-            container.appendChild(leaf);
-        }
-    })();
-
-    /* ── Role Selection ── */
     let currentRole = 'farmer';
+
     function selectRole(btn) {
         document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentRole = btn.dataset.role;
 
-        // Update login button color for admin
         const loginBtn = document.getElementById('login-btn');
         if (currentRole === 'admin') {
-            loginBtn.style.background = 'linear-gradient(135deg, #6366f1, #818cf8)';
-            loginBtn.style.boxShadow = '0 4px 24px rgba(99,102,241,0.35)';
+            loginBtn.style.background = 'linear-gradient(135deg, #7c3aed, #9333ea)';
+            loginBtn.style.boxShadow = '0 4px 15px rgba(124,58,237,0.3)';
         } else if (currentRole === 'buyer') {
-            loginBtn.style.background = 'linear-gradient(135deg, #0ea5e9, #38bdf8)';
-            loginBtn.style.boxShadow = '0 4px 24px rgba(14,165,233,0.35)';
+            loginBtn.style.background = 'linear-gradient(135deg, #0ea5e9, #0284c7)';
+            loginBtn.style.boxShadow = '0 4px 15px rgba(14,165,233,0.3)';
         } else {
-            loginBtn.style.background = 'linear-gradient(135deg, #16a34a, #22c55e)';
-            loginBtn.style.boxShadow = '0 4px 24px rgba(34,197,94,0.35)';
+            loginBtn.style.background = 'linear-gradient(135deg, #15803d, #16a34a)';
+            loginBtn.style.boxShadow = '0 4px 15px rgba(21,128,61,0.3)';
         }
     }
 
-    /* ── Password Toggle ── */
     function togglePassword() {
         const input = document.getElementById('password-input');
-        const icon = document.getElementById('pwd-eye-icon');
-        const isHidden = input.type === 'password';
-        input.type = isHidden ? 'text' : 'password';
-        icon.className = isHidden ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+        const icon = document.getElementById('eye-icon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'fa-regular fa-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'fa-regular fa-eye';
+        }
     }
 
-    /* ── Login Handler ── */
     function handleLogin(e) {
         e.preventDefault();
         const mobile = document.getElementById('mobile-input').value.trim();
         const password = document.getElementById('password-input').value;
-        const btn = document.getElementById('login-btn');
         const btnText = document.getElementById('btn-text');
-
-        if (!mobile || !password) { showToast('Please fill in all fields.', 'error'); return; }
-        if (password.length < 4) { showToast('Password must be at least 4 characters.', 'error'); return; }
-
-        btn.disabled = true;
-        btnText.textContent = 'Logging in...';
+        
+        btnText.textContent = 'Verifying...';
 
         setTimeout(() => {
-            btn.disabled = false;
-            btnText.textContent = 'Login';
+            btnText.textContent = 'Login Securely';
             
-            // Save state to sessionStorage
+            // Set session storage role and user
             sessionStorage.setItem('agri_role', currentRole);
             sessionStorage.setItem('agri_user', mobile);
             
-            showToast(`✅ Welcome ${currentRole.charAt(0).toUpperCase()+currentRole.slice(1)}! Redirecting...`, 'success');
+            showToast('✅ Login Successful! Opening Workspace...');
             setTimeout(() => {
                 window.location.href = 'index.html';
-            }, 1500);
-        }, 1800);
+            }, 1200);
+        }, 1200);
     }
 
-    /* ── Google Login ── */
     function googleLogin() {
-        showToast('Google OAuth: Redirecting...', 'info');
+        showToast('🔄 Redirecting to Google Login...');
         sessionStorage.setItem('agri_role', currentRole);
         sessionStorage.setItem('agri_user', 'google.user@agrimarket.com');
-        setTimeout(() => window.location.href = 'index.html', 1500);
+        setTimeout(() => { window.location.href = 'index.html'; }, 1000);
     }
 
-    /* ── Aadhaar Login ── */
     function aadhaarLogin() {
-        showToast('🪪 Aadhaar OTP verification starting...', 'info');
+        showToast('📲 Initializing Aadhaar Verification...');
         openOtpModal({ preventDefault: () => {} });
     }
 
-    /* ── Register ── */
     function goRegister(e) {
         e.preventDefault();
-        showToast('Redirecting to registration...', 'info');
+        showToast('🔄 Redirecting to Registration Form...');
         sessionStorage.setItem('agri_role', currentRole);
-        sessionStorage.setItem('agri_user', 'new.user@agrimarket.com');
-        setTimeout(() => window.location.href = 'index.html', 1200);
+        sessionStorage.setItem('agri_user', 'new.registration@agri.com');
+        setTimeout(() => { window.location.href = 'index.html'; }, 1000);
     }
 
-    /* ── OTP Modal ── */
+    // OTP Modal helpers
     function openOtpModal(e) {
         e.preventDefault();
         document.getElementById('otp-modal').classList.add('open');
@@ -595,54 +783,49 @@
         document.getElementById('otp-modal').classList.remove('open');
         document.getElementById('otp-step-1').style.display = 'block';
         document.getElementById('otp-step-2').style.display = 'none';
-        document.getElementById('otp-step-msg').textContent = 'Enter your registered mobile number to receive OTP';
+        document.getElementById('otp-status-msg').textContent = 'Enter registered mobile to receive confirmation code';
     }
     function sendOtp() {
-        const mobile = document.getElementById('reset-mobile').value.trim();
-        if (!mobile) { showToast('Please enter your mobile number.', 'error'); return; }
-        showToast(`📱 OTP sent to ${mobile.slice(-4).padStart(mobile.length,'•')}`, 'success');
+        const ph = document.getElementById('reset-phone').value.trim();
+        if (!ph) { showToast('⚠️ Please enter mobile number.', 'error'); return; }
+        showToast('📱 Verification Code Sent!');
         document.getElementById('otp-step-1').style.display = 'none';
         document.getElementById('otp-step-2').style.display = 'block';
-        document.getElementById('otp-step-msg').textContent = 'Enter the 4-digit OTP sent to your number';
-        document.querySelectorAll('.otp-input')[0].focus();
+        document.getElementById('otp-status-msg').textContent = 'Enter the 4-digit code sent to your mobile';
+        document.querySelectorAll('.otp-box')[0].focus();
     }
-    function otpNext(input, idx) {
-        if (input.value.length === 1) {
-            const all = document.querySelectorAll('.otp-input');
-            if (idx < 3) all[idx + 1].focus();
+    function focusNext(input, idx) {
+        if (input.value.length === 1 && idx < 3) {
+            document.querySelectorAll('.otp-box')[idx + 1].focus();
         }
     }
     function verifyOtp() {
-        const otp = [...document.querySelectorAll('.otp-input')].map(i => i.value).join('');
-        if (otp.length < 4) { showToast('Please enter the complete OTP.', 'error'); return; }
-        
+        showToast('✅ Verification Successful!');
         sessionStorage.setItem('agri_role', currentRole);
-        sessionStorage.setItem('agri_user', 'aadhaar.user@agrimarket.com');
-        
-        showToast('✅ OTP Verified! Logging you in...', 'success');
+        sessionStorage.setItem('agri_user', 'verified.user@agri.com');
         setTimeout(() => {
             closeOtpModal();
             window.location.href = 'index.html';
-        }, 1200);
+        }, 1000);
     }
 
-    /* ── Toast ── */
     function showToast(msg, type = 'success') {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
-        const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' };
-        const colors = { success: '#22c55e', error: '#ef4444', info: '#0ea5e9' };
         toast.className = `toast${type === 'error' ? ' error' : ''}`;
-        toast.style.borderLeftColor = colors[type];
-        toast.innerHTML = `<i class="fa-solid ${icons[type]||icons.info}" style="color:${colors[type]};margin-top:2px;"></i><span style="color:#e2e8f0;">${msg}</span>`;
+        toast.innerHTML = `<span style="color:#1f2937">${msg}</span>`;
         container.appendChild(toast);
-        setTimeout(() => { toast.style.animation = 'toastIn 0.3s reverse forwards'; setTimeout(() => toast.remove(), 300); }, 3000);
+        setTimeout(() => {
+            toast.style.animation = 'toastIn 0.3s reverse forwards';
+            setTimeout(() => toast.remove(), 300);
+        }, 2500);
     }
 
-    /* ── OTP Input Focus on click ── */
+    // Dismiss on click outside modal
     document.getElementById('otp-modal').addEventListener('click', function(e) {
         if (e.target === this) closeOtpModal();
     });
 </script>
+
 </body>
 </html>
