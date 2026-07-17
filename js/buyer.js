@@ -338,6 +338,13 @@ window.BuyerPortal = {
         if (!checkoutBtn) return;
 
         checkoutBtn.addEventListener("click", () => {
+            if (this.cart.length === 0) {
+                if (window.NotificationManager) {
+                    window.NotificationManager.createNotification("Cart Empty", "Add items to cart before checkout.", "error");
+                }
+                return;
+            }
+
             // Calculate cart total
             let total = 0;
             this.cart.forEach(item => {
@@ -348,11 +355,68 @@ window.BuyerPortal = {
             const payOrderId = document.getElementById("pay-order-id");
             const payAmountVal = document.getElementById("pay-amount-val");
             
-            payOrderId.textContent = Math.floor(Math.random() * 9000 + 1000);
+            const orderId = "ORD-" + Math.floor(Math.random() * 90000 + 10000);
+            payOrderId.textContent = orderId;
             payAmountVal.textContent = `₹${total.toFixed(2)}`;
+            payAmountVal.dataset.total = total;
+            payAmountVal.dataset.orderId = orderId;
 
             document.getElementById("payment-modal").classList.add("active");
         });
+
+        // Hook pay confirm button
+        const payConfirmBtn = document.getElementById("btn-pay-confirm");
+        if (payConfirmBtn) {
+            payConfirmBtn.addEventListener("click", async () => {
+                const payAmountVal = document.getElementById("pay-amount-val");
+                const total = parseFloat(payAmountVal.dataset.total || 0);
+                const orderId = payAmountVal.dataset.orderId || ("ORD-" + Date.now());
+                const buyer = sessionStorage.getItem('agri_user') || 'buyer@fresh.com';
+
+                const orderData = {
+                    id: orderId,
+                    buyer: buyer,
+                    items: this.cart.map(i => i.name).join(', '),
+                    crop: this.cart[0]?.name || 'Mixed',
+                    qty: this.cart.reduce((sum, i) => sum + i.quantity, 0),
+                    total: total,
+                    status: "pending",
+                    farmerLoc: "Salem, Tamil Nadu",
+                    buyerLoc: "Chennai, Tamil Nadu"
+                };
+
+                try {
+                    if (window.AgriDB) {
+                        await window.AgriDB.addOrder(orderData);
+                        await window.GlobalState.deductWallet(total);
+                        await window.GlobalState.loadOrdersFromDB();
+                    } else {
+                        window.GlobalState.orders.unshift(orderData);
+                        await window.GlobalState.deductWallet(total);
+                    }
+                } catch(err) {
+                    console.warn("[BuyerPortal] Order save failed:", err);
+                    window.GlobalState.orders.unshift(orderData);
+                    await window.GlobalState.deductWallet(total);
+                }
+
+                this.cart = [];
+                this.renderCart();
+                document.getElementById("payment-modal").classList.remove("active");
+
+                if (window.NotificationManager) {
+                    window.NotificationManager.createNotification(
+                        "Order Confirmed! 🎉",
+                        `Order ${orderId} placed for ₹${total.toFixed(2)}. Farmer notified!`,
+                        "success"
+                    );
+                }
+
+                // Trigger map truck animation
+                this.triggerTruckMovement();
+                window.GlobalState.renderFarmerOrders();
+            });
+        }
     },
 
     addToCart: function(id, name, price, qty, img) {

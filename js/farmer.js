@@ -128,7 +128,7 @@ window.FarmerHub = {
         const form = document.getElementById("add-crop-form");
         if (!form) return;
 
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
             
             const name = document.getElementById("crop-name").value;
@@ -137,10 +137,12 @@ window.FarmerHub = {
             const quantity = parseFloat(document.getElementById("crop-quantity").value);
             const harvestDate = document.getElementById("crop-harvest-date").value;
             const organic = document.getElementById("crop-organic").checked;
+            const username = sessionStorage.getItem('agri_user') || 'Rajesh Kumar';
 
             // Image simulation fallback
-            const imgPath = organic ? "https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&q=80&w=400" 
-                                    : "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&q=80&w=400";
+            const imgPath = organic 
+                ? "https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&q=80&w=400" 
+                : "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&q=80&w=400";
 
             const newCrop = {
                 id: "crop-" + Date.now().toString(36),
@@ -150,15 +152,30 @@ window.FarmerHub = {
                 quantity: quantity,
                 harvestDate: harvestDate,
                 organic: organic,
-                farmer: "Rajesh Kumar",
+                farmer: username,
                 location: "Salem, Tamil Nadu",
                 distance: "Local (You)",
+                fresh: true,
                 img: imgPath
             };
 
-            // Add to marketplace global state
+            try {
+                // Save to database first
+                if (window.AgriDB) {
+                    await window.AgriDB.addCrop(newCrop);
+                    // Reload crops from DB so full list updates
+                    await window.GlobalState.loadCropsFromDB();
+                } else {
+                    // Fallback: push to in-memory cache
+                    window.GlobalState._crops.unshift(newCrop);
+                }
+            } catch(err) {
+                console.warn("[FarmerHub] DB save failed, using memory fallback:", err);
+                window.GlobalState._crops.unshift(newCrop);
+            }
+
+            // Re-render marketplace with updated list
             if (window.GlobalState) {
-                window.GlobalState.crops.unshift(newCrop);
                 window.GlobalState.renderMarketplace();
                 window.GlobalState.updateStats();
             }

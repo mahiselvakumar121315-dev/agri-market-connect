@@ -1,0 +1,17 @@
+{
+  "name": "agri-market-connect-backend",
+  "version": "1.0.0",
+  "description": "Fullstack backend server for Agri Market Connect using Express and SQLite3",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
+  },
+  "author": "S. Mahendran",
+  "license": "ISC"
+}

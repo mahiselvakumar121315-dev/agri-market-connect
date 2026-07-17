@@ -143,72 +143,113 @@ window.NotificationManager = {
 
 /* ─── 2. GLOBAL STATE MANAGER ─────────────────────── */
 window.GlobalState = {
-    walletBalance: 42500,
+    walletBalance: 0,
+    _crops: [],    // in-memory cache loaded from DB
+    orders: [],    // in-memory cache loaded from DB
 
-    // Crops are loaded dynamically from MarketData
+    // Load crops from DB into memory cache
+    loadCropsFromDB: async function() {
+        try {
+            if (window.AgriDB) {
+                this._crops = await window.AgriDB.getCrops();
+            } else {
+                this._crops = window.MarketData ? window.MarketData.getAllCrops() : [];
+            }
+        } catch(e) {
+            console.warn('[GlobalState] DB crop load failed, using MarketData fallback:', e);
+            this._crops = window.MarketData ? window.MarketData.getAllCrops() : [];
+        }
+    },
+
+    // Load orders from DB into memory cache
+    loadOrdersFromDB: async function() {
+        try {
+            if (window.AgriDB) {
+                this.orders = await window.AgriDB.getOrders();
+            }
+        } catch(e) {
+            console.warn('[GlobalState] DB order load failed:', e);
+        }
+    },
+
+    // Load wallet from DB
+    loadWalletFromDB: async function() {
+        try {
+            const username = sessionStorage.getItem('agri_user') || 'buyer@fresh.com';
+            if (window.AgriDB) {
+                this.walletBalance = await window.AgriDB.getWalletBalance(username);
+            } else {
+                this.walletBalance = 42500;
+            }
+            this._updateWalletDisplay();
+        } catch(e) {
+            this.walletBalance = 42500;
+        }
+    },
+
+    _updateWalletDisplay: function() {
+        const display = document.getElementById("wallet-balance-display");
+        if (display) {
+            display.textContent = "₹" + this.walletBalance.toLocaleString("en-IN", { minimumFractionDigits: 2 });
+        }
+        const payDisplay = document.getElementById("pay-wallet-balance");
+        if (payDisplay) {
+            payDisplay.textContent = this.walletBalance.toLocaleString("en-IN");
+        }
+    },
+
+    // Get crops (from memory cache)
     get crops() {
-        return window.MarketData ? window.MarketData.getAllCrops() : [];
+        return this._crops.length > 0 ? this._crops : (window.MarketData ? window.MarketData.getAllCrops() : []);
     },
 
-
-    orders: [
-        {
-            id: "ord-4821",
-            buyer: "Hotel Fresh & Co",
-            crop: "Farm-Fresh Organic Tomatoes",
-            qty: 50,
-            total: 2250,
-            status: "pending",
-            farmerLoc: "Salem, Tamil Nadu",
-            buyerLoc: "Chennai, Tamil Nadu"
-        },
-        {
-            id: "ord-4790",
-            buyer: "GreenMart Stores",
-            crop: "Nashik Red Onions",
-            qty: 100,
-            total: 3200,
-            status: "dispatched",
-            farmerLoc: "Nashik, Maharashtra",
-            buyerLoc: "Pune, Maharashtra"
+    updateWallet: async function(amount) {
+        try {
+            const username = sessionStorage.getItem('agri_user') || 'buyer@fresh.com';
+            if (window.AgriDB) {
+                this.walletBalance = await window.AgriDB.updateWalletBalance(username, amount);
+            } else {
+                this.walletBalance += amount;
+            }
+        } catch(e) {
+            this.walletBalance += amount;
         }
-    ],
-
-    updateWallet: function(amount) {
-        this.walletBalance += amount;
-        const display = document.getElementById("wallet-balance-display");
-        if (display) {
-            display.textContent = "₹" + this.walletBalance.toLocaleString("en-IN", { minimumFractionDigits: 2 });
-        }
-        const payDisplay = document.getElementById("pay-wallet-balance");
-        if (payDisplay) {
-            payDisplay.textContent = this.walletBalance.toLocaleString("en-IN");
-        }
+        this._updateWalletDisplay();
     },
 
-    deductWallet: function(amount) {
-        this.walletBalance -= amount;
-        if (this.walletBalance < 0) this.walletBalance = 0;
-        const display = document.getElementById("wallet-balance-display");
-        if (display) {
-            display.textContent = "₹" + this.walletBalance.toLocaleString("en-IN", { minimumFractionDigits: 2 });
+    deductWallet: async function(amount) {
+        try {
+            const username = sessionStorage.getItem('agri_user') || 'buyer@fresh.com';
+            if (window.AgriDB) {
+                this.walletBalance = await window.AgriDB.updateWalletBalance(username, -amount);
+            } else {
+                this.walletBalance = Math.max(0, this.walletBalance - amount);
+            }
+        } catch(e) {
+            this.walletBalance = Math.max(0, this.walletBalance - amount);
         }
-        const payDisplay = document.getElementById("pay-wallet-balance");
-        if (payDisplay) {
-            payDisplay.textContent = this.walletBalance.toLocaleString("en-IN");
-        }
+        this._updateWalletDisplay();
     },
 
-    completeOrder: function(orderId) {
-        const order = this.orders.find(o => o.id === orderId);
-        if (order) {
-            order.status = "delivered";
-            this.renderFarmerOrders();
+    completeOrder: async function(orderId) {
+        try {
+            if (window.AgriDB) {
+                await window.AgriDB.updateOrderStatus(orderId, 'delivered');
+                await this.loadOrdersFromDB();
+            } else {
+                const order = this.orders.find(o => o.id === orderId);
+                if (order) order.status = 'delivered';
+            }
+        } catch(e) {
+            const order = this.orders.find(o => o.id === orderId);
+            if (order) order.status = 'delivered';
         }
+        this.renderFarmerOrders();
     },
 
     updateStats: function() {
-        const myListings = this.crops.filter(c => c.farmer === "Rajesh Kumar");
+        const username = sessionStorage.getItem('agri_user') || 'Rajesh Kumar';
+        const myListings = this.crops.filter(c => c.farmer === username || c.farmer === 'Rajesh Kumar');
         const listingEl = document.getElementById("farmer-active-listings-count");
         if (listingEl) listingEl.textContent = `${myListings.length} Crops`;
     },
@@ -424,23 +465,21 @@ window.Router = {
         document.querySelector(".main-content").scrollTop = 0;
     },
 
-    updateUserBadge: function(role) {
+    updateUserBadge: function(role, username) {
         const avatarEl = document.getElementById("current-user-avatar");
         const nameEl   = document.getElementById("current-user-name");
         const roleEl   = document.getElementById("current-user-role");
 
         const profiles = {
-            farmer: { avatar: "R", name: "Rajesh Kumar",        role: "Farmer — Salem, TN" },
-            buyer:  { avatar: "H", name: "Hotel Fresh & Co",    role: "Bulk Buyer — Chennai" },
-            admin:  { avatar: "A", name: "Admin Portal",         role: "System Administrator" }
+            farmer: { avatar: "F", name: "Farmer User",           role: "Farmer Dashboard" },
+            buyer:  { avatar: "B", name: "Buyer User",            role: "Buyer Dashboard" },
+            admin:  { avatar: "A", name: "Admin Portal",          role: "System Administrator" }
         };
 
-        const p = profiles[role];
-        if (p) {
-            avatarEl.textContent = p.avatar;
-            nameEl.textContent   = p.name;
-            roleEl.textContent   = p.role;
-        }
+        const p = profiles[role] || profiles.farmer;
+        if (avatarEl) avatarEl.textContent = username ? username.charAt(0).toUpperCase() : p.avatar;
+        if (nameEl)   nameEl.textContent   = username || p.name;
+        if (roleEl)   roleEl.textContent   = p.role;
     }
 };
 
@@ -628,38 +667,35 @@ window.ChatbotWidget = {
 
 
 /* ─── 7. APPLICATION BOOT ────────────────────────────── */
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     console.log("🌱 Agri Market Connect — Initializing...");
 
-    // Boot order: state first, then UI modules
+    // Step 1: Initialize database (IndexedDB or Server)
+    if (window.AgriDB) {
+        await window.AgriDB.init();
+    }
+
+    // Step 2: Load data from DB into state
+    await window.GlobalState.loadCropsFromDB();
+    await window.GlobalState.loadOrdersFromDB();
+    await window.GlobalState.loadWalletFromDB();
+
+    // Step 3: Render state into UI
     window.GlobalState.renderMarketplace();
     window.GlobalState.renderFarmerOrders();
     window.GlobalState.updateStats();
 
+    // Step 4: Initialize all modules
     window.NotificationManager.init();
     window.Router.init();
     window.ModalManager.init();
     window.ChatbotWidget.init();
-
-    // Farmer Hub features
     window.FarmerHub.init();
-
-    // Buyer Portal features
     window.BuyerPortal.init();
-
-    // Admin Panel charts + lists
     window.AdminPanel.init();
-
-    // Logistics module
     window.LogisticsCoordinator.init();
-
-    // Multi-lingual AI chatbot
     window.AgriChatbot.init();
-
-    // Weather monitor
     window.WeatherMonitor.init();
-
-    // Voice search
     window.VoiceSearch.init(function(query) {
         console.log("Voice captured: ", query);
     });
@@ -679,8 +715,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Set initial route based on logged in role
     const userRole = sessionStorage.getItem('agri_role') || 'farmer';
-    window.Router.updateUserBadge(userRole);
-    
+    const userName = sessionStorage.getItem('agri_user') || '';
+
+    // Update profile display
+    window.Router.updateUserBadge(userRole, userName);
+
     let initialTab = 'marketplace';
     if (userRole === 'farmer') initialTab = 'farmer';
     else if (userRole === 'buyer') initialTab = 'buyer';
@@ -694,7 +733,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => {
         window.NotificationManager.createNotification(
             "Platform Ready",
-            `Signed in as ${userRole.charAt(0).toUpperCase() + userRole.slice(1)}`,
+            `Signed in as ${userRole.charAt(0).toUpperCase() + userRole.slice(1)}${userName ? ' — ' + userName : ''}`,
             "success"
         );
     }, 1000);

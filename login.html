@@ -699,7 +699,14 @@
 <!-- Toast element -->
 <div class="toast-container" id="toast-container"></div>
 
+<script src="js/marketData.js"></script>
+<script src="js/db.js"></script>
 <script>
+    // Initialize AgriDB
+    window.addEventListener('DOMContentLoaded', async () => {
+        await window.AgriDB.init();
+    });
+
     let currentRole = 'farmer';
 
     function selectRole(btn) {
@@ -732,7 +739,7 @@
         }
     }
 
-    function handleLogin(e) {
+    async function handleLogin(e) {
         e.preventDefault();
         const mobile = document.getElementById('mobile-input').value.trim();
         const password = document.getElementById('password-input').value;
@@ -740,25 +747,37 @@
         
         btnText.textContent = 'Verifying...';
 
-        setTimeout(() => {
-            btnText.textContent = 'Login Securely';
-            
-            // Set session storage role and user
+        try {
+            const user = await window.AgriDB.login(mobile, password, currentRole);
             sessionStorage.setItem('agri_role', currentRole);
-            sessionStorage.setItem('agri_user', mobile);
+            sessionStorage.setItem('agri_user', user.username);
             
             showToast('✅ Login Successful! Opening Workspace...');
             setTimeout(() => {
                 window.location.href = 'index.html';
-            }, 1200);
-        }, 1200);
+            }, 1000);
+        } catch (err) {
+            showToast('❌ ' + err.message, 'error');
+            btnText.textContent = 'Login Securely';
+        }
     }
 
-    function googleLogin() {
+    async function googleLogin() {
         showToast('🔄 Redirecting to Google Login...');
-        sessionStorage.setItem('agri_role', currentRole);
-        sessionStorage.setItem('agri_user', 'google.user@agrimarket.com');
-        setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+        try {
+            // Check/create google user on-the-fly
+            const googleEmail = 'google.' + currentRole + '@agri.com';
+            try {
+                await window.AgriDB.register('Google User', googleEmail, googleEmail, 'googlePass123', currentRole);
+            } catch(e) {} // ignore if already registered
+            
+            const user = await window.AgriDB.login(googleEmail, 'googlePass123', currentRole);
+            sessionStorage.setItem('agri_role', currentRole);
+            sessionStorage.setItem('agri_user', user.username);
+            setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+        } catch (err) {
+            showToast('❌ ' + err.message, 'error');
+        }
     }
 
     function aadhaarLogin() {
@@ -766,12 +785,22 @@
         openOtpModal({ preventDefault: () => {} });
     }
 
-    function goRegister(e) {
+    async function goRegister(e) {
         e.preventDefault();
-        showToast('🔄 Redirecting to Registration Form...');
-        sessionStorage.setItem('agri_role', currentRole);
-        sessionStorage.setItem('agri_user', 'new.registration@agri.com');
-        setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+        const name = prompt("Enter your Full Name:");
+        if (!name) return;
+        const mobile = prompt("Enter your Mobile Number or Email (this will be your username):");
+        if (!mobile) return;
+        const password = prompt("Create a Password:");
+        if (!password) return;
+
+        showToast('🔄 Registering account...');
+        try {
+            await window.AgriDB.register(name, mobile, mobile, password, currentRole);
+            showToast('✅ Registration successful! Please log in.');
+        } catch (err) {
+            showToast('❌ ' + err.message, 'error');
+        }
     }
 
     // OTP Modal helpers
@@ -799,14 +828,26 @@
             document.querySelectorAll('.otp-box')[idx + 1].focus();
         }
     }
-    function verifyOtp() {
+    async function verifyOtp() {
         showToast('✅ Verification Successful!');
-        sessionStorage.setItem('agri_role', currentRole);
-        sessionStorage.setItem('agri_user', 'verified.user@agri.com');
-        setTimeout(() => {
-            closeOtpModal();
-            window.location.href = 'index.html';
-        }, 1000);
+        const ph = document.getElementById('reset-phone').value.trim() || 'otp.user@agri.com';
+        
+        try {
+            // Ensure user exists for demo
+            try {
+                await window.AgriDB.register('Verified User', ph, ph, 'otpPass123', currentRole);
+            } catch(e) {}
+            
+            const user = await window.AgriDB.login(ph, 'otpPass123', currentRole);
+            sessionStorage.setItem('agri_role', currentRole);
+            sessionStorage.setItem('agri_user', user.username);
+            setTimeout(() => {
+                closeOtpModal();
+                window.location.href = 'index.html';
+            }, 1000);
+        } catch (err) {
+            showToast('❌ ' + err.message, 'error');
+        }
     }
 
     function showToast(msg, type = 'success') {
