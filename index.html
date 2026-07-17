@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <script>
-        // Auth guard — redirect to splash if no session
+        // Auth guard — redirect to login if no session
         if (!sessionStorage.getItem('agri_role')) {
-            window.location.href = 'splash.html';
+            window.location.href = 'login.html';
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
