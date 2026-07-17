@@ -3,368 +3,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agri Market Connect — Login</title>
-    <meta name="description" content="Login to Agri Market Connect — India's smartest digital agri-marketplace connecting farmers directly with buyers.">
+    <title>Login — Agri Market Connect</title>
+    <meta name="description" content="Login to Agri Market Connect — India's premier digital agricultural marketplace for Farmers, Buyers and Admins.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary: #16a34a;
+            --primary-light: #22c55e;
+            --primary-dark: #15803d;
+            --primary-glow: rgba(34,197,94,0.25);
+            --secondary: #0ea5e9;
+            --bg: #060d0a;
+            --bg-card: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+            --border-active: rgba(34,197,94,0.5);
+            --text: #f0fdf4;
+            --text-muted: #64748b;
+            --text-sec: #94a3b8;
+            --danger: #ef4444;
+            --amber: #f59e0b;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ── Animated Background ── */
+        .bg-scene {
+            position: fixed; inset: 0; z-index: 0; overflow: hidden;
+        }
+        .bg-gradient {
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 20% 80%, rgba(22,163,74,0.18) 0%, transparent 60%),
+                        radial-gradient(ellipse 60% 50% at 80% 10%, rgba(14,165,233,0.12) 0%, transparent 55%),
+                        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(22,163,74,0.06) 0%, transparent 70%);
+        }
+        .bg-grid {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(34,197,94,0.04) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(34,197,94,0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove { from { transform: translateY(0); } to { transform: translateY(50px); } }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+        .orb-1 { width: 500px; height: 500px; background: rgba(22,163,74,0.15); left: -150px; bottom: -150px; animation-delay: 0s; }
+        .orb-2 { width: 350px; height: 350px; background: rgba(14,165,233,0.12); right: -100px; top: -100px; animation-delay: -4s; }
+        .orb-3 { width: 200px; height: 200px; background: rgba(34,197,94,0.08); left: 50%; top: 50%; animation-delay: -2s; }
+        @keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
+
+        /* Floating leaf particles */
+        .leaf { position: absolute; font-size: 1.2rem; opacity: 0.15; animation: leafFall linear infinite; }
+        @keyframes leafFall { 0%{transform:translateY(-100px) rotate(0deg);opacity:0;} 20%{opacity:0.15;} 80%{opacity:0.15;} 100%{transform:translateY(110vh) rotate(720deg);opacity:0;} }
+
+        /* ── Main Layout ── */
+        .page-wrap {
+            position: relative; z-index: 10;
+            width: 100%; max-width: 460px;
+            padding: 16px;
+            animation: pageIn 0.8s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes pageIn { from{opacity:0;transform:translateY(40px) scale(0.95)} to{opacity:1;transform:none} }
+
+        /* ── Brand Header ── */
+        .brand-header { text-align: center; margin-bottom: 24px; }
+        .brand-logo {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: linear-gradient(135deg, rgba(22,163,74,0.15), rgba(14,165,233,0.1));
+            border: 1px solid rgba(34,197,94,0.25);
+            border-radius: 16px; padding: 10px 18px; margin-bottom: 14px;
+        }
+        .logo-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; box-shadow: 0 4px 20px rgba(34,197,94,0.4);
+        }
+        .logo-text { text-align: left; }
+        .logo-name {
+            font-size: 1.05rem; font-weight: 800; letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #22c55e, #86efac);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; display: block;
+        }
+        .logo-sub { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
+
+        .tagline {
+            font-size: 0.78rem; color: var(--text-sec); line-height: 1.5;
+            font-style: italic; margin-bottom: 6px;
+        }
+        .developer-credit {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px; padding: 4px 12px;
+            font-size: 0.7rem; color: var(--text-muted);
+        }
+        .developer-credit strong { color: #22c55e; }
+
+        /* ── Card ── */
+        .login-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+            position: relative; overflow: hidden;
+        }
+        .card-shine {
+            position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(34,197,94,0.5), transparent);
+        }
+
+        /* ── Welcome ── */
+        .welcome-title {
+            font-size: 1.4rem; font-weight: 700; color: var(--text);
+            margin-bottom: 4px; text-align: center;
+        }
+        .welcome-sub { font-size: 0.82rem; color: var(--text-muted); text-align: center; margin-bottom: 20px; }
+
+        /* ── Role Selector ── */
+        .role-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .roles-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+        .role-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px; padding: 12px 6px;
+            cursor: pointer; transition: all 0.25s;
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            position: relative; overflow: hidden;
+        }
+        .role-btn .role-emoji { font-size: 1.5rem; }
+        .role-btn .role-name { font-size: 0.72rem; font-weight: 600; color: var(--text-sec); transition: color 0.25s; }
+        .role-btn:hover { border-color: var(--border-active); background: rgba(34,197,94,0.06); transform: translateY(-2px); }
+        .role-btn.active {
+            border-color: var(--primary-light);
+            background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(22,163,74,0.08));
+            box-shadow: 0 0 20px rgba(34,197,94,0.2);
+        }
+        .role-btn.active .role-name { color: #22c55e; }
+        .role-btn.active::after {
+            content: '✓'; position: absolute; top: 5px; right: 7px;
+            font-size: 0.6rem; background: #16a34a; color: white;
+            width: 14px; height: 14px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        /* Admin role — special */
+        .role-btn[data-role="admin"].active { border-color: #6366f1; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.05)); }
+        .role-btn[data-role="admin"].active .role-name { color: #818cf8; }
+        .role-btn[data-role="admin"].active::after { background: #6366f1; }
+
+        /* ── Divider ── */
+        .section-divider {
+            height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 18px 0;
+        }
+
+        /* ── Input Fields ── */
+        .field-group { margin-bottom: 14px; }
+        .field-label { font-size: 0.72rem; color: var(--text-sec); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+        .input-wrap { position: relative; }
+        .input-icon {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            color: var(--text-muted); font-size: 0.9rem; pointer-events: none;
+            transition: color 0.2s;
+        }
+        .field-input {
+            width: 100%; background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 14px; padding: 13px 14px 13px 40px;
+            font-size: 0.9rem; color: var(--text); font-family: 'Outfit', sans-serif;
+            outline: none; transition: all 0.25s;
+        }
+        .field-input::placeholder { color: var(--text-muted); }
+        .field-input:focus {
+            border-color: var(--primary-light);
+            background: rgba(34,197,94,0.06);
+            box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+        }
+        .field-input:focus + .input-icon, .input-wrap:focus-within .input-icon { color: var(--primary-light); }
+        .password-toggle {
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: var(--text-muted);
+            cursor: pointer; font-size: 0.9rem; transition: color 0.2s; padding: 0;
+        }
+        .password-toggle:hover { color: var(--primary-light); }
+
+        /* ── Forgot Password ── */
+        .forgot-row { display: flex; justify-content: flex-end; margin-top: -6px; margin-bottom: 14px; }
+        .forgot-link {
+            font-size: 0.75rem; color: var(--primary-light);
+            text-decoration: none; transition: opacity 0.2s;
+        }
+        .forgot-link:hover { opacity: 0.7; }
+
+        /* ── Login Button ── */
+        .login-btn {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            border: none; border-radius: 14px;
+            font-size: 1rem; font-weight: 700; color: white;
+            cursor: pointer; font-family: 'Outfit', sans-serif;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 24px rgba(34,197,94,0.35);
+            letter-spacing: 0.3px; position: relative; overflow: hidden;
+        }
+        .login-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(34,197,94,0.5); }
+        .login-btn:hover::before { opacity: 1; }
+        .login-btn:active { transform: translateY(0); }
+        .btn-pulse {
+            width: 8px; height: 8px; border-radius: 50%; background: white;
+            opacity: 0; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:0;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.5)} }
+
+        /* ── OR Divider ── */
+        .or-divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; }
+        .or-line { flex: 1; height: 1px; background: var(--border); }
+        .or-text { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+
+        /* ── Social Buttons ── */
+        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 6px; }
+        .social-btn {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 12px; padding: 11px 12px;
+            font-size: 0.8rem; font-weight: 600; color: var(--text-sec);
+            cursor: pointer; font-family: 'Outfit', sans-serif;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.25s;
+        }
+        .social-btn:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); color: var(--text); transform: translateY(-1px); }
+        .google-icon { width: 18px; height: 18px; }
+        .aadhaar-icon { font-size: 1.1rem; }
+
+        /* ── Register Link ── */
+        .register-row {
+            text-align: center; margin-top: 20px;
+            font-size: 0.8rem; color: var(--text-muted);
+        }
+        .register-link {
+            color: var(--primary-light); font-weight: 600;
+            text-decoration: none; margin-left: 4px; transition: opacity 0.2s;
+        }
+        .register-link:hover { opacity: 0.7; text-decoration: underline; }
+
+        /* ── OTP Modal ── */
+        .modal-backdrop {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px); z-index: 100;
+            display: none; align-items: center; justify-content: center;
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal-card {
+            background: #0a1510; border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 20px; padding: 28px; width: 90%; max-width: 360px;
+            animation: pageIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .modal-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .modal-sub { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 20px; }
+        .otp-row { display: flex; gap: 10px; margin-bottom: 16px; }
+        .otp-input {
+            flex: 1; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            padding: 14px 0; text-align: center; font-size: 1.3rem;
+            font-weight: 700; color: var(--text); font-family: 'Outfit', sans-serif;
+            outline: none; transition: all 0.2s;
+        }
+        .otp-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+        .resend-link { font-size: 0.75rem; color: var(--primary-light); cursor: pointer; text-align: center; margin-bottom: 16px; }
+
+        /* ── Toast ── */
+        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 200; display: flex; flex-direction: column; gap: 8px; }
+        .toast {
+            background: #0d1f14; border: 1px solid rgba(34,197,94,0.3);
+            border-left: 3px solid #22c55e; border-radius: 10px;
+            padding: 12px 16px; min-width: 260px; max-width: 340px;
+            display: flex; gap: 10px; align-items: flex-start;
+            animation: toastIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            font-size: 0.82rem;
+        }
+        .toast.error { border-color: rgba(239,68,68,0.3); border-left-color: #ef4444; }
+        @keyframes toastIn { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:none} }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .page-wrap { padding: 12px; }
+            .login-card { padding: 20px 18px; border-radius: 20px; }
+            .logo-name { font-size: 0.95rem; }
+            .welcome-title { font-size: 1.2rem; }
+            .roles-grid { gap: 6px; }
+            .role-btn { padding: 10px 4px; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- Animated Particle Background -->
-<canvas id="auth-bg-canvas"></canvas>
+<!-- Animated Background -->
+<div class="bg-scene">
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
 
-<!-- Ambient glow orbs -->
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+<!-- Floating Leaves -->
+<div id="leaves-container"></div>
 
-<!-- Main Layout -->
-<div class="auth-wrapper">
+<!-- Main Page Wrap -->
+<div class="page-wrap">
 
-    <!-- ═══ LEFT PANEL — Hero Brand ═══════════════ -->
-    <div class="auth-hero">
-        <div class="hero-content">
-
-            <!-- Brand Logo -->
-            <div class="hero-brand">
-                <div class="hero-logo"><i class="fa-solid fa-leaf"></i></div>
-                <div class="hero-logo-text">
-                    <h1>AgriMarket</h1>
-                    <span>Connect Platform</span>
-                </div>
-            </div>
-
-            <!-- Headline -->
-            <h2 class="hero-headline">
-                Direct Farm<br>
-                <span class="gradient-text">to Your Table</span><br>
-                Zero Middlemen.
-            </h2>
-
-            <p class="hero-desc">
-                India's most intelligent digital marketplace connecting 50,000+ farmers directly with buyers. Powered by AI, Blockchain & IoT.
-            </p>
-
-            <!-- Feature Pills -->
-            <div class="hero-features">
-                <div class="feature-pill">
-                    <div class="pill-icon">🤖</div>
-                    <span>AI-powered price prediction & demand forecasting</span>
-                </div>
-                <div class="feature-pill">
-                    <div class="pill-icon">🔗</div>
-                    <span>Blockchain traceability from seed to shelf</span>
-                </div>
-                <div class="feature-pill">
-                    <div class="pill-icon">🛰️</div>
-                    <span>Satellite crop monitoring & digital twin farm</span>
-                </div>
-                <div class="feature-pill">
-                    <div class="pill-icon">🎤</div>
-                    <span>Tamil voice assistant for every farmer</span>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <strong>50K+</strong>
-                    <span>Verified Farmers</span>
-                </div>
-                <div class="stat-item">
-                    <strong>₹184Cr</strong>
-                    <span>Revenue Generated</span>
-                </div>
-                <div class="stat-item">
-                    <strong>18 States</strong>
-                    <span>Pan-India Coverage</span>
-                </div>
+    <!-- Brand Header -->
+    <div class="brand-header">
+        <div class="brand-logo">
+            <div class="logo-icon">🌾</div>
+            <div class="logo-text">
+                <span class="logo-name">Agri Market Connect</span>
+                <span class="logo-sub">Digital Agricultural Platform</span>
             </div>
         </div>
-
-        <!-- Floating crop price cards -->
-        <div class="floating-cards">
-            <div class="float-card">
-                <div class="float-dot" style="background:#10b981"></div>
-                <span style="color:#f0fdf4;">🌾 Rice ↑ ₹54.50/kg</span>
-            </div>
-            <div class="float-card">
-                <div class="float-dot" style="background:#6366f1"></div>
-                <span style="color:#f0fdf4;">🍅 Tomato ₹42.00/kg</span>
-            </div>
-            <div class="float-card">
-                <div class="float-dot" style="background:#f59e0b"></div>
-                <span style="color:#f0fdf4;">🌶 Chilli ↑ ₹68.00/kg</span>
-            </div>
+        <p class="tagline">"Connecting Farmers. Empowering Agriculture. Growing Together."</p>
+        <div class="developer-credit">
+            <i class="fa-solid fa-code" style="color:#22c55e;font-size:0.65rem;"></i>
+            Developed by <strong>S. Mahendran</strong>
         </div>
     </div>
 
-    <!-- ═══ RIGHT PANEL — Auth Forms ══════════════ -->
-    <div class="auth-panel">
-        <div class="auth-card">
+    <!-- Glass Login Card -->
+    <div class="login-card">
+        <div class="card-shine"></div>
 
-            <!-- ── LOGIN FORM ───────────────────── -->
-            <div class="auth-form active" id="form-login">
-                <div class="form-header">
-                    <div class="form-badge"><i class="fa-solid fa-shield-halved"></i> Secure Login</div>
-                    <h2 class="form-title">Welcome Back 👋</h2>
-                    <p class="form-subtitle">Sign in to your Agri Market account</p>
-                </div>
+        <!-- Welcome -->
+        <div class="welcome-title">👋 Welcome!</div>
+        <div class="welcome-sub">Please choose your role to continue</div>
 
-                <!-- Role Tabs -->
-                <div class="role-tabs" id="login-role-tabs">
-                    <button class="role-tab active" data-role="farmer">
-                        <i class="fa-solid fa-wheat-awn"></i> Farmer
-                    </button>
-                    <button class="role-tab" data-role="buyer">
-                        <i class="fa-solid fa-basket-shopping"></i> Buyer
-                    </button>
-                    <button class="role-tab" data-role="admin">
-                        <i class="fa-solid fa-user-shield"></i> Admin
-                    </button>
-                </div>
+        <!-- Role Selector -->
+        <div class="role-label">Select Your Role</div>
+        <div class="roles-grid">
+            <button class="role-btn active" data-role="farmer" onclick="selectRole(this)">
+                <span class="role-emoji">👨‍🌾</span>
+                <span class="role-name">Farmer</span>
+            </button>
+            <button class="role-btn" data-role="buyer" onclick="selectRole(this)">
+                <span class="role-emoji">🛒</span>
+                <span class="role-name">Buyer</span>
+            </button>
+            <button class="role-btn" data-role="admin" onclick="selectRole(this)">
+                <span class="role-emoji">🛡️</span>
+                <span class="role-name">Admin</span>
+            </button>
+        </div>
 
-                <!-- Alert Box -->
-                <div class="auth-alert" id="login-alert"></div>
+        <div class="section-divider"></div>
 
-                <form id="login-form" novalidate>
-                    <div class="input-group">
-                        <label class="input-label" for="login-email">Email / Mobile Number</label>
-                        <div class="input-wrap">
-                            <input class="auth-input" type="text" id="login-email" placeholder="Enter email or mobile" autocomplete="username" required>
-                            <i class="fa-solid fa-envelope input-icon"></i>
-                        </div>
-                    </div>
+        <!-- Login Form -->
+        <form id="login-form" onsubmit="handleLogin(event)">
 
-                    <div class="input-group">
-                        <label class="input-label" for="login-password">Password</label>
-                        <div class="input-wrap">
-                            <input class="auth-input" type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password" required>
-                            <i class="fa-solid fa-lock input-icon"></i>
-                            <button type="button" class="pass-toggle" id="login-pass-toggle">
-                                <i class="fa-solid fa-eye-slash"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="forgot-link">
-                        <a href="#" onclick="showForm('form-forgot'); return false;">Forgot Password?</a>
-                    </div>
-
-                    <button type="submit" class="auth-submit-btn" id="login-submit-btn">
-                        <span class="btn-text"><i class="fa-solid fa-right-to-bracket"></i> Sign In</span>
-                        <div class="btn-spinner" id="login-spinner"></div>
-                    </button>
-                </form>
-
-                <div class="auth-divider">or continue with</div>
-                <div class="social-row">
-                    <a class="social-btn" href="#" onclick="socialLogin('google'); return false;">
-                        <img src="https://www.google.com/favicon.ico" width="16" alt="Google"> Google
-                    </a>
-                    <a class="social-btn" href="#" onclick="socialLogin('aadhaar'); return false;">
-                        <i class="fa-solid fa-id-card" style="color:#f97316"></i> Aadhaar
-                    </a>
-                </div>
-
-                <div class="form-switch">
-                    Don't have an account? <a onclick="showForm('form-register')">Create Account</a>
+            <div class="field-group">
+                <div class="field-label"><i class="fa-solid fa-mobile-screen"></i> Mobile Number / Email</div>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-mobile-screen input-icon"></i>
+                    <input id="mobile-input" type="text" class="field-input" placeholder="Enter mobile or email" autocomplete="username" required>
                 </div>
             </div>
 
-            <!-- ── REGISTER FORM ─────────────────── -->
-            <div class="auth-form" id="form-register">
-                <div class="form-header">
-                    <div class="form-badge" style="background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.25);color:var(--secondary);">
-                        <i class="fa-solid fa-user-plus"></i> New Account
-                    </div>
-                    <h2 class="form-title">Join AgriMarket 🌾</h2>
-                    <p class="form-subtitle">Start selling or buying directly — zero commission</p>
-                </div>
-
-                <!-- Role Tabs -->
-                <div class="role-tabs" id="register-role-tabs">
-                    <button class="role-tab active" data-role="farmer">
-                        <i class="fa-solid fa-wheat-awn"></i> Farmer
+            <div class="field-group">
+                <div class="field-label"><i class="fa-solid fa-lock"></i> Password</div>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input id="password-input" type="password" class="field-input" placeholder="Enter your password" autocomplete="current-password" required style="padding-right:44px;">
+                    <button type="button" class="password-toggle" id="toggle-pwd" onclick="togglePassword()">
+                        <i class="fa-regular fa-eye" id="pwd-eye-icon"></i>
                     </button>
-                    <button class="role-tab" data-role="buyer">
-                        <i class="fa-solid fa-basket-shopping"></i> Buyer
-                    </button>
-                </div>
-
-                <div class="auth-alert" id="register-alert"></div>
-
-                <form id="register-form" novalidate>
-                    <div class="input-group">
-                        <label class="input-label" for="reg-name">Full Name</label>
-                        <div class="input-wrap">
-                            <input class="auth-input" type="text" id="reg-name" placeholder="e.g. Rajesh Kumar" required>
-                            <i class="fa-solid fa-user input-icon"></i>
-                        </div>
-                    </div>
-
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                        <div class="input-group" style="margin-bottom:0">
-                            <label class="input-label" for="reg-mobile">Mobile</label>
-                            <div class="input-wrap">
-                                <input class="auth-input" type="tel" id="reg-mobile" placeholder="+91 XXXXX XXXXX" required>
-                                <i class="fa-solid fa-mobile input-icon"></i>
-                            </div>
-                        </div>
-                        <div class="input-group" style="margin-bottom:0">
-                            <label class="input-label" for="reg-state">State</label>
-                            <div class="input-wrap">
-                                <select class="auth-input" id="reg-state" style="padding-left:36px;">
-                                    <option value="">Select State</option>
-                                    <option>Tamil Nadu</option>
-                                    <option>Maharashtra</option>
-                                    <option>Punjab</option>
-                                    <option>Karnataka</option>
-                                    <option>Andhra Pradesh</option>
-                                    <option>Uttar Pradesh</option>
-                                    <option>Gujarat</option>
-                                    <option>Rajasthan</option>
-                                </select>
-                                <i class="fa-solid fa-location-dot input-icon"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input-group" style="margin-top:18px;">
-                        <label class="input-label" for="reg-email">Email Address</label>
-                        <div class="input-wrap">
-                            <input class="auth-input" type="email" id="reg-email" placeholder="you@email.com" required>
-                            <i class="fa-solid fa-envelope input-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label" for="reg-password">Set Password</label>
-                        <div class="input-wrap">
-                            <input class="auth-input" type="password" id="reg-password" placeholder="Min. 8 characters" id="reg-password" required>
-                            <i class="fa-solid fa-lock input-icon"></i>
-                            <button type="button" class="pass-toggle" id="reg-pass-toggle">
-                                <i class="fa-solid fa-eye-slash"></i>
-                            </button>
-                        </div>
-                        <div class="strength-bar-wrap" id="strength-bars">
-                            <div class="strength-segment" id="s1"></div>
-                            <div class="strength-segment" id="s2"></div>
-                            <div class="strength-segment" id="s3"></div>
-                            <div class="strength-segment" id="s4"></div>
-                            <span class="strength-label" id="strength-label">Weak</span>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="auth-submit-btn" id="register-submit-btn" style="background:linear-gradient(135deg,#6366f1,#4f46e5);box-shadow:0 6px 20px var(--secondary-glow);">
-                        <span class="btn-text"><i class="fa-solid fa-user-plus"></i> Create Account</span>
-                        <div class="btn-spinner" id="register-spinner"></div>
-                    </button>
-                </form>
-
-                <div class="form-switch">
-                    Already have an account? <a onclick="showForm('form-login')">Sign In</a>
                 </div>
             </div>
 
-            <!-- ── FORGOT PASSWORD FORM ──────────── -->
-            <div class="auth-form" id="form-forgot">
-                <div class="form-header">
-                    <div class="form-badge" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.25);color:var(--warning);">
-                        <i class="fa-solid fa-key"></i> Password Reset
-                    </div>
-                    <h2 class="form-title">Reset Password 🔐</h2>
-                    <p class="form-subtitle">We'll send a secure OTP to your registered mobile</p>
-                </div>
-
-                <!-- Step Progress -->
-                <div class="step-progress">
-                    <div class="step-dot active" id="fp-step-1"></div>
-                    <div class="step-dot" id="fp-step-2"></div>
-                    <div class="step-dot" id="fp-step-3"></div>
-                </div>
-
-                <div class="auth-alert" id="forgot-alert"></div>
-
-                <!-- Step 1: Enter Mobile -->
-                <div id="forgot-step-1">
-                    <div class="input-group">
-                        <label class="input-label" for="forgot-mobile">Registered Mobile / Email</label>
-                        <div class="input-wrap">
-                            <input class="auth-input" type="text" id="forgot-mobile" placeholder="Enter your mobile or email" required>
-                            <i class="fa-solid fa-mobile input-icon"></i>
-                        </div>
-                    </div>
-                    <button type="button" class="auth-submit-btn" id="btn-send-otp" style="background:linear-gradient(135deg,var(--warning),#d97706);box-shadow:0 6px 20px rgba(245,158,11,0.3);" onclick="sendOTP()">
-                        <i class="fa-solid fa-paper-plane"></i> Send OTP
-                    </button>
-                </div>
-
-                <!-- Step 2: Enter OTP -->
-                <div id="forgot-step-2" style="display:none;">
-                    <p style="font-size:0.8rem;text-align:center;margin-bottom:16px;color:var(--text-muted);">
-                        OTP sent to <strong id="otp-sent-to" style="color:var(--text-primary)"></strong>
-                    </p>
-                    <div class="otp-row" id="otp-inputs">
-                        <input class="otp-input" type="text" maxlength="1" id="otp-1">
-                        <input class="otp-input" type="text" maxlength="1" id="otp-2">
-                        <input class="otp-input" type="text" maxlength="1" id="otp-3">
-                        <input class="otp-input" type="text" maxlength="1" id="otp-4">
-                        <input class="otp-input" type="text" maxlength="1" id="otp-5">
-                        <input class="otp-input" type="text" maxlength="1" id="otp-6">
-                    </div>
-                    <div style="text-align:center;margin-bottom:18px;">
-                        <span style="font-size:0.75rem;color:var(--text-muted);">Expires in </span>
-                        <span id="otp-timer" style="color:var(--warning);font-weight:700;font-size:0.8rem;">02:00</span>
-                        &nbsp;·&nbsp;
-                        <a href="#" style="color:var(--primary);font-size:0.75rem;" onclick="sendOTP(); return false;">Resend</a>
-                    </div>
-                    <button type="button" class="auth-submit-btn" style="background:linear-gradient(135deg,var(--warning),#d97706);box-shadow:0 6px 20px rgba(245,158,11,0.3);" onclick="verifyOTP()">
-                        <i class="fa-solid fa-check"></i> Verify OTP
-                    </button>
-                </div>
-
-                <!-- Step 3: New Password -->
-                <div id="forgot-step-3" style="display:none;">
-                    <div class="input-group">
-                        <label class="input-label" for="new-pass">New Password</label>
-                        <div class="input-wrap">
-                            <input class="auth-input" type="password" id="new-pass" placeholder="Enter new password">
-                            <i class="fa-solid fa-lock input-icon"></i>
-                            <button type="button" class="pass-toggle" onclick="togglePass('new-pass', this)"><i class="fa-solid fa-eye-slash"></i></button>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label" for="confirm-pass">Confirm New Password</label>
-                        <div class="input-wrap">
-                            <input class="auth-input" type="password" id="confirm-pass" placeholder="Re-enter new password">
-                            <i class="fa-solid fa-lock input-icon"></i>
-                        </div>
-                    </div>
-                    <button type="button" class="auth-submit-btn" onclick="resetPassword()">
-                        <i class="fa-solid fa-shield-check"></i> Set New Password
-                    </button>
-                </div>
-
-                <div class="form-switch" style="margin-top:18px;">
-                    Remember it? <a onclick="showForm('form-login')">Back to Sign In</a>
-                </div>
+            <div class="forgot-row">
+                <a href="#" class="forgot-link" onclick="openOtpModal(event)">🔑 Forgot Password?</a>
             </div>
 
-        </div><!-- end auth-card -->
-    </div><!-- end auth-panel -->
+            <button type="submit" class="login-btn" id="login-btn">
+                <div class="btn-pulse"></div>
+                <i class="fa-solid fa-rocket"></i>
+                <span id="btn-text">Login</span>
+            </button>
+        </form>
 
-</div><!-- end auth-wrapper -->
+        <!-- OR Divider -->
+        <div class="or-divider">
+            <div class="or-line"></div>
+            <div class="or-text">──── OR ────</div>
+            <div class="or-line"></div>
+        </div>
 
-<!-- Developer Credit -->
-<div class="developer-credit">
-    <span class="dev-heart">♥</span>
-    Developed by <strong>S. Mahendran</strong> &nbsp;·&nbsp; Agri Market Connect &nbsp;·&nbsp; SIH 2026
+        <!-- Social Login -->
+        <div class="social-grid">
+            <button class="social-btn" onclick="googleLogin()">
+                <!-- Google Icon SVG -->
+                <svg class="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Continue with Google
+            </button>
+            <button class="social-btn" onclick="aadhaarLogin()">
+                <span class="aadhaar-icon">🪪</span>
+                Aadhaar Login
+            </button>
+        </div>
+
+        <!-- Register Link -->
+        <div class="register-row">
+            Don't have an account?
+            <a href="#" class="register-link" onclick="goRegister(event)">Register Now →</a>
+        </div>
+    </div>
 </div>
 
-<script src="js/auth.js"></script>
+<!-- OTP Modal (Forgot Password) -->
+<div class="modal-backdrop" id="otp-modal">
+    <div class="modal-card">
+        <div class="modal-title">🔐 Reset Password</div>
+        <div class="modal-sub" id="otp-step-msg">Enter your registered mobile number to receive OTP</div>
+
+        <div id="otp-step-1">
+            <div class="field-group" style="margin-bottom:12px;">
+                <div class="input-wrap">
+                    <i class="fa-solid fa-mobile-screen input-icon"></i>
+                    <input id="reset-mobile" type="text" class="field-input" placeholder="Mobile number / email">
+                </div>
+            </div>
+            <button class="login-btn" style="font-size:0.9rem;" onclick="sendOtp()">
+                <i class="fa-solid fa-paper-plane"></i> Send OTP
+            </button>
+        </div>
+
+        <div id="otp-step-2" style="display:none;">
+            <div class="otp-row">
+                <input class="otp-input" maxlength="1" oninput="otpNext(this,0)">
+                <input class="otp-input" maxlength="1" oninput="otpNext(this,1)">
+                <input class="otp-input" maxlength="1" oninput="otpNext(this,2)">
+                <input class="otp-input" maxlength="1" oninput="otpNext(this,3)">
+            </div>
+            <div class="resend-link" onclick="sendOtp()">↩ Resend OTP</div>
+            <button class="login-btn" style="font-size:0.9rem;" onclick="verifyOtp()">
+                <i class="fa-solid fa-check-circle"></i> Verify & Reset
+            </button>
+        </div>
+
+        <button onclick="closeOtpModal()" style="display:block;width:100%;margin-top:12px;background:none;border:none;color:var(--text-muted);font-size:0.8rem;cursor:pointer;font-family:'Outfit',sans-serif;">Cancel</button>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+    /* ── Floating Leaves ── */
+    (function createLeaves() {
+        const container = document.getElementById('leaves-container');
+        const leaves = ['🌿','🌱','🍃','🌾','🍀'];
+        for (let i = 0; i < 12; i++) {
+            const leaf = document.createElement('div');
+            leaf.className = 'leaf';
+            leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
+            leaf.style.cssText = `
+                left: ${Math.random() * 100}%;
+                font-size: ${0.8 + Math.random() * 0.8}rem;
+                animation-duration: ${8 + Math.random() * 12}s;
+                animation-delay: ${Math.random() * 10}s;
+            `;
+            container.appendChild(leaf);
+        }
+    })();
+
+    /* ── Role Selection ── */
+    let currentRole = 'farmer';
+    function selectRole(btn) {
+        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRole = btn.dataset.role;
+
+        // Update login button color for admin
+        const loginBtn = document.getElementById('login-btn');
+        if (currentRole === 'admin') {
+            loginBtn.style.background = 'linear-gradient(135deg, #6366f1, #818cf8)';
+            loginBtn.style.boxShadow = '0 4px 24px rgba(99,102,241,0.35)';
+        } else if (currentRole === 'buyer') {
+            loginBtn.style.background = 'linear-gradient(135deg, #0ea5e9, #38bdf8)';
+            loginBtn.style.boxShadow = '0 4px 24px rgba(14,165,233,0.35)';
+        } else {
+            loginBtn.style.background = 'linear-gradient(135deg, #16a34a, #22c55e)';
+            loginBtn.style.boxShadow = '0 4px 24px rgba(34,197,94,0.35)';
+        }
+    }
+
+    /* ── Password Toggle ── */
+    function togglePassword() {
+        const input = document.getElementById('password-input');
+        const icon = document.getElementById('pwd-eye-icon');
+        const isHidden = input.type === 'password';
+        input.type = isHidden ? 'text' : 'password';
+        icon.className = isHidden ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+    }
+
+    /* ── Login Handler ── */
+    function handleLogin(e) {
+        e.preventDefault();
+        const mobile = document.getElementById('mobile-input').value.trim();
+        const password = document.getElementById('password-input').value;
+        const btn = document.getElementById('login-btn');
+        const btnText = document.getElementById('btn-text');
+
+        if (!mobile || !password) { showToast('Please fill in all fields.', 'error'); return; }
+        if (password.length < 4) { showToast('Password must be at least 4 characters.', 'error'); return; }
+
+        btn.disabled = true;
+        btnText.textContent = 'Logging in...';
+
+        setTimeout(() => {
+            btn.disabled = false;
+            btnText.textContent = 'Login';
+            
+            // Save state to sessionStorage
+            sessionStorage.setItem('agri_role', currentRole);
+            sessionStorage.setItem('agri_user', mobile);
+            
+            showToast(`✅ Welcome ${currentRole.charAt(0).toUpperCase()+currentRole.slice(1)}! Redirecting...`, 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }, 1800);
+    }
+
+    /* ── Google Login ── */
+    function googleLogin() {
+        showToast('Google OAuth: Redirecting...', 'info');
+        sessionStorage.setItem('agri_role', currentRole);
+        sessionStorage.setItem('agri_user', 'google.user@agrimarket.com');
+        setTimeout(() => window.location.href = 'index.html', 1500);
+    }
+
+    /* ── Aadhaar Login ── */
+    function aadhaarLogin() {
+        showToast('🪪 Aadhaar OTP verification starting...', 'info');
+        openOtpModal({ preventDefault: () => {} });
+    }
+
+    /* ── Register ── */
+    function goRegister(e) {
+        e.preventDefault();
+        showToast('Redirecting to registration...', 'info');
+        sessionStorage.setItem('agri_role', currentRole);
+        sessionStorage.setItem('agri_user', 'new.user@agrimarket.com');
+        setTimeout(() => window.location.href = 'index.html', 1200);
+    }
+
+    /* ── OTP Modal ── */
+    function openOtpModal(e) {
+        e.preventDefault();
+        document.getElementById('otp-modal').classList.add('open');
+    }
+    function closeOtpModal() {
+        document.getElementById('otp-modal').classList.remove('open');
+        document.getElementById('otp-step-1').style.display = 'block';
+        document.getElementById('otp-step-2').style.display = 'none';
+        document.getElementById('otp-step-msg').textContent = 'Enter your registered mobile number to receive OTP';
+    }
+    function sendOtp() {
+        const mobile = document.getElementById('reset-mobile').value.trim();
+        if (!mobile) { showToast('Please enter your mobile number.', 'error'); return; }
+        showToast(`📱 OTP sent to ${mobile.slice(-4).padStart(mobile.length,'•')}`, 'success');
+        document.getElementById('otp-step-1').style.display = 'none';
+        document.getElementById('otp-step-2').style.display = 'block';
+        document.getElementById('otp-step-msg').textContent = 'Enter the 4-digit OTP sent to your number';
+        document.querySelectorAll('.otp-input')[0].focus();
+    }
+    function otpNext(input, idx) {
+        if (input.value.length === 1) {
+            const all = document.querySelectorAll('.otp-input');
+            if (idx < 3) all[idx + 1].focus();
+        }
+    }
+    function verifyOtp() {
+        const otp = [...document.querySelectorAll('.otp-input')].map(i => i.value).join('');
+        if (otp.length < 4) { showToast('Please enter the complete OTP.', 'error'); return; }
+        
+        sessionStorage.setItem('agri_role', currentRole);
+        sessionStorage.setItem('agri_user', 'aadhaar.user@agrimarket.com');
+        
+        showToast('✅ OTP Verified! Logging you in...', 'success');
+        setTimeout(() => {
+            closeOtpModal();
+            window.location.href = 'index.html';
+        }, 1200);
+    }
+
+    /* ── Toast ── */
+    function showToast(msg, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' };
+        const colors = { success: '#22c55e', error: '#ef4444', info: '#0ea5e9' };
+        toast.className = `toast${type === 'error' ? ' error' : ''}`;
+        toast.style.borderLeftColor = colors[type];
+        toast.innerHTML = `<i class="fa-solid ${icons[type]||icons.info}" style="color:${colors[type]};margin-top:2px;"></i><span style="color:#e2e8f0;">${msg}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.animation = 'toastIn 0.3s reverse forwards'; setTimeout(() => toast.remove(), 300); }, 3000);
+    }
+
+    /* ── OTP Input Focus on click ── */
+    document.getElementById('otp-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeOtpModal();
+    });
+</script>
 </body>
 </html>

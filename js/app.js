@@ -677,13 +677,24 @@ document.addEventListener("DOMContentLoaded", function() {
     updateClock();
     setInterval(updateClock, 1000);
 
+    // Set initial route based on logged in role
+    const userRole = sessionStorage.getItem('agri_role') || 'farmer';
+    window.Router.updateUserBadge(userRole);
+    
+    let initialTab = 'marketplace';
+    if (userRole === 'farmer') initialTab = 'farmer';
+    else if (userRole === 'buyer') initialTab = 'buyer';
+    else if (userRole === 'admin') initialTab = 'admin';
+    
+    window.Router.navigate(initialTab);
+
     console.log("✅ Agri Market Connect is live and ready.");
 
     // Welcome toast
     setTimeout(() => {
         window.NotificationManager.createNotification(
             "Platform Ready",
-            "Welcome to Agri Market Connect! Farmer direct marketplace is live.",
+            `Signed in as ${userRole.charAt(0).toUpperCase() + userRole.slice(1)}`,
             "success"
         );
     }, 1000);

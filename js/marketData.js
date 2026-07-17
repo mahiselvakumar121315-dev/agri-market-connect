@@ -46,6 +46,84 @@ window.MarketData = {
         const f = this._farmer();
         const days = Math.floor(Math.random() * 7);
         const d = new Date(); d.setDate(d.getDate() - days);
+        
+        // Accurate Unsplash photo IDs for the marketplace crops
+        const photoIds = {
+            1: "1592417817098-8f3d6eb19675", // Tomato
+            2: "1508747703725-719777637510", // Onion
+            3: "1518977676601-b53f82aba655", // Potato
+            4: "1659261200262-234e3d6a97e1", // Brinjal
+            5: "1574316315265-22d7de1f8dcb", // Ladies Finger
+            6: "1571680322279-a226e6a4cc2a", // Green Chilli
+            7: "1563565431-72e7d5a43d64", // Capsicum
+            8: "1592424005995-5db99754ae25", // Cabbage
+            9: "1568584711271-6c929fb49b60", // Cauliflower
+            10: "1598170845058-32b9d6a5da37", // Carrot
+            11: "1593280405106-e438ebe85f8a", // Beetroot
+            12: "1587411551600-4c1c3e77e8b4", // Radish
+            13: "1518977676601-b53f82aba655", // Turnip
+            20: "1567375698541-16ea507f6f22", // Pumpkin
+            21: "1568584711271-6c929fb49b60", // Cucumber
+            25: "1567375698541-16ea507f6f22", // Green Peas
+            26: "1576045057995-568f519a3161", // Spinach
+            32: "1506368465-96b11474a4f3", // Garlic
+            33: "1615486171434-60195e347895", // Ginger
+            34: "1571680322279-a226e6a4cc2a", // Sweet Potato
+            35: "1518977676601-b53f82aba655", // Mushroom
+            36: "1502390931570-2b4f74cbbc53", // Corn
+            37: "1601493700631-2b16ec4b4716", // Mango
+            38: "1603833665858-e61d17a86224", // Banana
+            39: "1560806887-1e4cd0b6fd6c", // Apple
+            40: "1611080668850-2445cff492a5", // Orange
+            41: "1611080668850-2445cff492a5", // Sweet Lime
+            42: "1568584711271-6c929fb49b60", // Lemon
+            43: "1567306301408-02e3d1945566", // Grapes
+            46: "1563114773-84221bd62daa", // Watermelon
+            48: "1490885578174-acda8905c2c1", // Pineapple
+            51: "1526424360340-9a3d76e4c7cb", // Coconut
+            52: "1526424360340-9a3d76e4c7cb", // Tender Coconut
+            56: "1464965911861-52ced6ad7097", // Strawberry
+            61: "1519162808237-d3ba7172d6f5", // Avocado
+            67: "1586201375761-83865001e31c", // Paddy
+            68: "1574323347407-f5e1ad6d020b", // Wheat
+            69: "1502390931570-2b4f74cbbc53", // Maize
+            70: "1574323347407-f5e1ad6d020b", // Bajra
+            71: "1574323347407-f5e1ad6d020b", // Ragi
+            72: "1574323347407-f5e1ad6d020b", // Jowar
+            73: "1574323347407-f5e1ad6d020b", // Barley
+            74: "1574323347407-f5e1ad6d020b", // Oats
+            75: "1574323347407-f5e1ad6d020b", // Foxtail Millet
+            76: "1559525839-b184a4d698c7", // Coffee
+            85: "1563212042-4fdbbd271f2a", // Groundnut
+            87: "1597848954834-3a2589f99cc2", // Sunflower
+            89: "1593452670390-e51c8a143f66", // Soybean
+            93: "1585916888851-4b04f1ff7abd", // Cotton
+            94: "1558618047-0e0e6df2e1ba", // Tea
+            99: "1615485500704-8e990f9900f7", // Turmeric
+            100: "1596700854448-6d2c4767223e", // Black Pepper
+            108: "1574516315265-22d7de1f8dcb", // Dry Red Chilli
+            111: "1490885578174-acda8905c2c1", // Jasmine
+            112: "1490885578174-acda8905c2c1", // Rose
+            113: "1490885578174-acda8905c2c1", // Marigold
+            114: "1490885578174-acda8905c2c1", // Lotus
+            115: "1490885578174-acda8905c2c1", // Chrysanthemum
+            116: "1490885578174-acda8905c2c1", // Hibiscus
+            117: "1490885578174-acda8905c2c1", // Tuberose
+            118: "1490885578174-acda8905c2c1", // Crossandra
+            119: "1563212042-4fdbbd271f2a", // Cashew
+            120: "1563212042-4fdbbd271f2a", // Almond
+            121: "1563212042-4fdbbd271f2a", // Walnut
+            122: "1563212042-4fdbbd271f2a", // Pistachio
+            123: "1563212042-4fdbbd271f2a", // Arecanut
+            124: "1586201375761-83865001e31c", // Organic Rice
+            127: "1574323347407-f5e1ad6d020b", // Organic Ragi
+            128: "1615485500704-8e990f9900f7", // Organic Turmeric
+            129: "1558618047-0e0e6df2e1ba"  // Honey
+        };
+
+        const photoId = photoIds[id] || "1574943320219-553eb213f72d"; // fallback to general greens
+        const imgUrl = `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=400`;
+
         return {
             id: `crop-${id}`,
             name: `${emoji} ${name}`,
@@ -58,7 +136,7 @@ window.MarketData = {
             location: f.loc,
             distance: f.dist,
             fresh: days <= 2,
-            img: `https://source.unsplash.com/400x300/?${encodeURIComponent(imgKw || name)},vegetable,india`
+            img: imgUrl
         };
     },
 
