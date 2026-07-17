@@ -3,7 +3,7 @@
    Caches all HTML, CSS, JS files for offline usage
    ==================================================== */
 
-const CACHE_NAME = 'agri-market-v1';
+const CACHE_NAME = 'agri-market-v2';
 const ASSETS = [
     '/',
     '/index.html',
