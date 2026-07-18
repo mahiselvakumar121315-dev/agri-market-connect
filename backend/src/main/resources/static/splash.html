@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri Market Connect — Loading</title>
+    <meta name="description" content="Agri Market Connect — Connecting Farmers, Empowering Agriculture, Growing Together.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/splash.css">
+</head>
+<body>
+
+<div id="splash-screen">
+
+    <!-- Skip Button -->
+    <button class="splash-skip" onclick="skipSplash()">Skip ⏭</button>
+
+    <!-- Sun -->
+    <div class="splash-sun"></div>
+
+    <!-- Clouds -->
+    <div class="splash-cloud cloud-1"></div>
+    <div class="splash-cloud cloud-2"></div>
+    <div class="splash-cloud cloud-3"></div>
+
+    <!-- Sparkles -->
+    <div class="splash-sparkle sp1"></div>
+    <div class="splash-sparkle sp2"></div>
+    <div class="splash-sparkle sp3"></div>
+    <div class="splash-sparkle sp4"></div>
+    <div class="splash-sparkle sp5"></div>
+    <div class="splash-sparkle sp6"></div>
+    <div class="splash-sparkle sp7"></div>
+    <div class="splash-sparkle sp8"></div>
+
+    <!-- Flying Birds SVG -->
+    <div class="splash-birds">
+        <svg width="80" height="30" viewBox="0 0 80 30">
+            <path d="M5,15 Q10,8 15,15" stroke-width="1.5"/>
+            <path d="M22,12 Q28,5 34,12" stroke-width="1.5"/>
+            <path d="M42,10 Q47,4 52,10" stroke-width="1.5"/>
+            <path d="M60,14 Q65,8 70,14" stroke-width="1.5"/>
+        </svg>
+    </div>
+
+    <!-- Floating Leaves -->
+    <div class="splash-leaf leaf-1">🍃</div>
+    <div class="splash-leaf leaf-2">🍂</div>
+    <div class="splash-leaf leaf-3">🌿</div>
+    <div class="splash-leaf leaf-4">🍃</div>
+    <div class="splash-leaf leaf-5">🍂</div>
+    <div class="splash-leaf leaf-6">🌿</div>
+    <div class="splash-leaf leaf-7">🍃</div>
+    <div class="splash-leaf leaf-8">🌱</div>
+
+    <!-- Butterflies -->
+    <div class="splash-butterfly butterfly-1">🦋</div>
+    <div class="splash-butterfly butterfly-2">🦋</div>
+    <div class="splash-butterfly butterfly-3">🦋</div>
+
+    <!-- Rain Animation Container -->
+    <div class="splash-rain-container" id="rain-container"></div>
+
+    <!-- Tractor loading animation -->
+    <div class="splash-tractor-loader">🚜</div>
+
+    <!-- Main Plant Animation Stage -->
+    <div class="splash-plant-stage" id="plant-stage">
+        <!-- Stage 1: Seed -->
+        <div class="anim-seed" id="anim-seed"></div>
+
+        <!-- Stage 2: Sprout (appears after seed) -->
+        <div class="anim-sprout" id="anim-sprout" style="display:none">
+            <div class="sprout-leaves">
+                <div class="sprout-leaf-left"></div>
+                <div class="sprout-leaf-right"></div>
+            </div>
+            <div class="sprout-stem"></div>
+        </div>
+
+        <!-- Stage 3: Growing Plant -->
+        <div class="anim-plant" id="anim-plant" style="display:none">
+            <div class="plant-stem" style="position:relative">
+                <div class="plant-leaves-row high" style="position:absolute;bottom:65px;left:50%;transform:translateX(-50%)">
+                    <div class="plant-leaf"></div>
+                    <div class="plant-leaf right"></div>
+                </div>
+                <div class="plant-leaves-row mid" style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%)">
+                    <div class="plant-leaf" style="width:38px;height:18px"></div>
+                    <div class="plant-leaf right" style="width:38px;height:18px"></div>
+                </div>
+                <div class="plant-leaves-row low" style="position:absolute;bottom:15px;left:50%;transform:translateX(-50%)">
+                    <div class="plant-leaf" style="width:30px;height:14px"></div>
+                    <div class="plant-leaf right" style="width:30px;height:14px"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stage 4: Wheat Crop -->
+        <div class="anim-wheat" id="anim-wheat" style="display:none">
+            <div style="position:relative;display:flex;align-items:flex-end;gap:6px">
+                <div style="display:flex;flex-direction:column;align-items:center">
+                    <div class="wheat-head" style="width:14px;height:38px;background:linear-gradient(to top,#a16207,#ca8a04,#fbbf24);border-radius:40% 40% 10% 10%;"></div>
+                    <div class="wheat-stem" style="width:4px;height:90px;background:linear-gradient(to top,#78350f,#ca8a04);"></div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center">
+                    <div class="wheat-head" style="animation-delay:0.2s"></div>
+                    <div class="wheat-stem"></div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center">
+                    <div class="wheat-head" style="width:14px;height:38px;background:linear-gradient(to top,#a16207,#ca8a04,#fbbf24);border-radius:40% 40% 10% 10%;"></div>
+                    <div class="wheat-stem" style="width:4px;height:90px;background:linear-gradient(to top,#78350f,#ca8a04);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rain water drops near plant -->
+    <div class="splash-raindrop-anim rd1" id="raindrops" style="display:none">💧</div>
+    <div class="splash-raindrop-anim rd2" style="display:none">💧</div>
+    <div class="splash-raindrop-anim rd3" style="display:none">💧</div>
+    <div class="splash-raindrop-anim rd4" style="display:none">💧</div>
+
+    <!-- Ground -->
+    <div class="splash-ground"></div>
+
+    <!-- Brand Text (appears at end) -->
+    <div class="splash-brand" id="splash-brand" style="opacity:0">
+        <span class="splash-brand-icon">🌾</span>
+        <h1>Agri Market Connect</h1>
+        <p class="splash-tagline">Connecting Farmers • Growing Futures</p>
+        <p class="splash-sub">Empowering Agriculture. Together We Grow.</p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="splash-progress-bar" id="splash-progress">
+        <div class="progress-track">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="progress-status" id="progress-status">🌱 Planting seeds...</div>
+    </div>
+
+    <!-- Version -->
+    <div class="splash-version">Agri Market Connect v2.0 · SIH 2026 · S. Mahendran</div>
+
+</div>
+
+<script>
+    // ── Rain drop generator ──────────────────────────
+    const rainContainer = document.getElementById('rain-container');
+    for (let i = 0; i < 60; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop';
+        drop.style.cssText = `
+            left: ${Math.random() * 100}%;
+            height: ${Math.random() * 20 + 8}px;
+            animation-duration: ${Math.random() * 0.8 + 0.5}s;
+            animation-delay: ${Math.random() * 2}s;
+        `;
+        rainContainer.appendChild(drop);
+    }
+
+    // ── Stage timeline orchestration ─────────────────
+    const stages = [
+        { delay: 300,  fn: () => { showStage('anim-seed'); updateStatus('🌱 Planting seeds...'); } },
+        { delay: 1000, fn: () => { showRainDrops(); updateStatus('💧 Nurturing with rain...'); } },
+        { delay: 2000, fn: () => { hideElement('anim-seed'); showStage('anim-sprout'); updateStatus('🌿 Sprout emerging...'); } },
+        { delay: 3400, fn: () => { hideElement('anim-sprout'); showStage('anim-plant'); updateStatus('🌱 Growing strong...'); } },
+        { delay: 4800, fn: () => { hideRainDrops(); hideElement('anim-plant'); showStage('anim-wheat'); updateStatus('🌾 Harvest ready!'); } },
+        { delay: 5600, fn: () => { showBrand(); updateStatus('✅ Welcome, Farmer!'); } },
+        { delay: 7800, fn: () => { goToLogin(); } },
+    ];
+
+    stages.forEach(s => setTimeout(s.fn, s.delay));
+
+    function showStage(id) {
+        const el = document.getElementById(id);
+        if (el) { el.style.display = ''; }
+    }
+    function hideElement(id) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    }
+    function showRainDrops() {
+        document.querySelectorAll('.splash-raindrop-anim').forEach(el => el.style.display = '');
+    }
+    function hideRainDrops() {
+        document.querySelectorAll('.splash-raindrop-anim').forEach(el => el.style.display = 'none');
+    }
+    function showBrand() {
+        const b = document.getElementById('splash-brand');
+        if (b) {
+            b.style.animation = 'brandAppear 1s ease forwards';
+            b.style.opacity = '1';
+        }
+    }
+    function updateStatus(text) {
+        const el = document.getElementById('progress-status');
+        if (el) el.textContent = text;
+    }
+    function goToLogin() {
+        const splash = document.getElementById('splash-screen');
+        splash.classList.add('fade-out');
+        setTimeout(() => { window.location.href = 'login.html'; }, 900);
+    }
+    function skipSplash() { goToLogin(); }
+</script>
+</body>
+</html>

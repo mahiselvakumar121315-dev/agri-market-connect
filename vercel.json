@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "name": "agri-market-connect",
+  "cleanUrls": true,
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/login.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}

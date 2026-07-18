@@ -1,8 +1,20 @@
-# Agri Market Connect - Git Ignore
-.DS_Store
+# Spring Boot target build files
+backend/target/
+*.class
+*.jar
+*.war
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.tmp
+
+# OS files
 Thumbs.db
-*.log
-*.env
-.env.local
-node_modules/
-.vscode/settings.json
+Desktop.ini
+.DS_Store
+
+# Temporary copy folders
+"Agri - Copy/"
+"Agri/"
