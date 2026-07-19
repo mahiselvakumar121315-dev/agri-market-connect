@@ -2,17 +2,16 @@
   "version": 2,
   "name": "agri-market-connect",
   "cleanUrls": true,
-  "routes": [
+  "builds": [
     {
-      "handle": "filesystem"
-    },
+      "src": "**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
     {
       "src": "/",
       "dest": "/login.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
     }
   ]
 }
