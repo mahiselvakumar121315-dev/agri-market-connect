@@ -43,6 +43,10 @@ window.AgriDB = {
 
     /* ── 1. AUTHENTICATION (Spring Boot JWT) ────────────── */
     login: async function(username, password, role) {
+        await this.init();
+        if (!username || !password) {
+            throw new Error("Please fill in both mobile/email and password.");
+        }
         if (this.isServer) {
             const res = await fetch(`${this.serverUrl}/api/v1/auth/login`, {
                 method: 'POST',
@@ -60,14 +64,13 @@ window.AgriDB = {
             }
             return data;
         } else {
-            if (role === 'admin' && (username !== 'admin@agri.com' || password !== 'admin123')) {
-                throw new Error("Invalid Admin credentials! Access denied.");
-            }
-            return { username, name: username.split('@')[0], role: role, token: 'demo-jwt-token' };
+            const displayName = username.includes('@') ? username.split('@')[0] : username;
+            return { username, name: displayName, role: role || 'farmer', token: 'demo-jwt-token' };
         }
     },
 
     register: async function(name, mobile, email, password, role) {
+        await this.init();
         const username = email || mobile;
         if (this.isServer) {
             const res = await fetch(`${this.serverUrl}/api/v1/auth/register`, {
